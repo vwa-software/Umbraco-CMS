@@ -152,7 +152,7 @@ namespace Umbraco.Core
             }
             catch (ArgumentException ex)
             {
-                LogHelper.Error(typeof(UriExtensions), "Failed to determine if request was client side", ex);
+                LogHelper.Error(typeof(UriExtensions), $"Failed to determine if request was client side from {url}", ex);
                 return false;
             }
         }
