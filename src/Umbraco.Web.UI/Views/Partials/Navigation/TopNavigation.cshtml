@@ -1,0 +1,72 @@
+﻿@inherits AmaziliaTemplatePage
+@using Umbraco.Web;
+@using Amazilia.Web.Mvc;
+@using Amazilia.Web.Extentions;
+@using Amazilia.Web.Controllers;
+
+@{
+    var site = Model.Content.Site();
+    var selection = site.Children;
+    var customer = Amazilia.Web.AmaziliaContext.Current.CurrentCustomer;
+    var currencies = this.CurrencyService.GetAllCurrencies();
+
+}
+
+
+<nav class="nav-bar">
+    <!-- uncomment this line if you don't want it to appear in the top navigation -->
+    <a class="nav-link @Html.Raw(Model.Content.Id == site.Id ? " navi-link--active" : "" )" href="@site.Url">@site.Name</a>
+    @foreach (var item in selection.Where(x => x.IsVisible()))
+    {
+        <a class="nav-link @(item.IsAncestorOrSelf(Model.Content) ? " nav-link--active" : null)" href="@item.Url">@item.Name</a>
+    }
+
+
+    @if (customer.Anonymous)
+    {
+        foreach (var item in selection.Where(x => !x.IsVisible()))
+        {
+            <a class="nav-link @(item.IsAncestorOrSelf(Model.Content) ? " nav-link--active" : null)" href="@item.Url">@item.Name</a>
+        }
+    }
+    else
+    {
+        <a class="nav-link" href="@Url.Action("logout", "MemberShip", new { redirectId = CurrentPage.Id, path = "",  area = "Amazilia" })">@customer.Member.Name  Log out</a>
+    }
+
+    @if (currencies.Count > 1)
+    {
+        using (Html.BeginUmbracoForm<MembershipController>("ChangeCurrency", new { area = "Amazilia" }))
+        {
+
+            @Html.Hidden("CurrencyId", "")
+
+            <div class="dropdown">
+                <a class="btn btn-link dropdown-toggle"  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    @Amazilia.Web.AmaziliaContext.Current.CurrentCustomer.Currency.Name
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="currencyChangeList">
+                    @foreach (var currency in currencies)
+                    {
+                        <li><a data-currencyid="@currency.Id" href="#">@currency.Name</a></li>
+                    }
+                </ul>
+            </div>
+
+        }
+    }
+
+    <div class="dropdown">
+        <a class="btn btn-link dropdown-toggle"  id="dropdownCart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Cart
+            <span class="caret"></span>
+        </a>
+        <div class="dropdown-menu amazilia-basketsectionhtml" aria-labelledby="dropdownCart" id="dropdownCart">
+            @Html.Action("Cart", "Basket", new { area = "Amazilia" })
+        </div>
+    </div>
+
+   
+</nav>
+

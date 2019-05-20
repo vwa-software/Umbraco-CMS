@@ -1,0 +1,108 @@
+﻿<div class="umb-editor" ng-controller="Amazilia.ProductInfoEditorController">
+    <div ng-if="model.isLoading">
+        <localize key="loading">Loading</localize>...
+    </div>
+    <div ng-if="!model.isLoading">
+        <umb-box>
+            <umb-box-header  title-key="amazilia_producttype"></umb-box-header>
+            <umb-box-content>
+                <select name="dropDownList"
+                        class="umb-editor umb-dropdown"
+                        ng-model="model.value.productTypeId">
+                    <option value="5">Simple product</option>
+                    <option value="10">Grouped product</option>
+                    <option value="15">Variant product</option>
+                </select>
+            </umb-box-content>
+        </umb-box>
+
+        <umb-box>
+            <umb-box-header title-key="sections_settings"></umb-box-header>
+            <umb-box-content>
+                <div class="row">
+                    <div class="span4">
+                        <localize key="amazilia_isGiftCard"></localize>
+                    </div>
+                    <div class="span4">
+                        <umb-toggle checked="model.value.isGiftCard"
+                                    on-click="toggle('isGiftCard')"
+                                    show-labels="false">
+                        </umb-toggle>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span4">
+                        <localize key="amazilia_isFreeShipping"></localize>
+                    </div>
+                    <div class="span4">
+                        <umb-toggle checked="model.value.isFreeShipping"
+                                    on-click="toggle('isFreeShipping')"
+                                    show-labels="false">
+                        </umb-toggle>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span4">
+                        <localize key="amazilia_isShipEnabled"></localize>
+                    </div>
+                    <div class="span4">
+                        <umb-toggle checked="model.value.isShipEnabled"
+                                    on-click="toggle('isShipEnabled')"
+                                    show-labels="false">
+                        </umb-toggle>
+                    </div>
+                </div>
+
+                <div class="row" ng-if="model.value.isShipEnabled && !model.value.isFreeShipping">
+                    <div class="span4">
+                        <localize key="amazilia_additionalShippingCharge"></localize>
+                    </div>
+                    <div class="span4">
+                        <input type="number" umb-editor umb-number ng-model="model.value.additionalShippingCharge" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span4">
+                        <localize key="amazilia_isTaxExempt"></localize>
+                    </div>
+                    <div class="span4">
+                        <umb-toggle checked="model.value.isTaxExempt"
+                                    on-click="toggle('isTaxExempt')"
+                                    show-labels="false">
+                        </umb-toggle>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span4">
+                        <localize key="amazilia_customerEntersPrice"></localize>
+                    </div>
+                    <div class="span4">
+                        <umb-toggle checked="model.value.customerEntersPrice"
+                                    on-click="toggle('customerEntersPrice')"
+                                    show-labels="false">
+                        </umb-toggle>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span4">
+                        <localize key="amazilia_isRental"></localize>
+                    </div>
+                    <div class="span4">
+                        <umb-toggle checked="model.value.isRental"
+                                    on-click="toggle('isRental')"
+                                    show-labels="false">
+                        </umb-toggle>
+                    </div>
+                </div>
+            </umb-box-content>
+        </umb-box>
+
+    </div>
+
+
+</div>
+
+
+

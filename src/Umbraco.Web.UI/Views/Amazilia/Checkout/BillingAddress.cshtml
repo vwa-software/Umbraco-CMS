@@ -1,0 +1,176 @@
+﻿@inherits UmbracoViewPage<AddresEditModel>
+@using Amazilia.Web.Models.Common
+@using Amazilia.Web.Controllers
+
+@*@if (!Model.OnePageCheckoutEnabled)
+    {
+        @Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Cart })
+    }*@
+
+<div class="page checkout-page billing-address-page">
+
+    @*@Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Address })*@
+
+    <div class="page-title">
+        @*<h1>@T("Checkout.BillingAddress")</h1>*@
+    </div>
+    <div class="page-body checkout-data">
+
+        @{using (Html.BeginUmbracoForm<CheckoutController>
+                                ("BillingAddressSubmit", new { area = "Amazilia" }))
+            {
+                <div class="billing-addresses">
+
+                    @*@if (Model.ShipToSameAddressAllowed)
+                        {
+                            <div class="section ship-to-same-address">
+                                <div class="selector">
+                                    @Html.CheckBoxFor(x => x.ShipToSameAddress)
+                                    <label for="@Html.FieldIdFor(model => model.ShipToSameAddress)">@T("Checkout.ShipToSameAddress")</label>
+                                </div>
+                            </div>
+                        }*@
+
+                    @if (Model.Addresses.Count() > 0)
+                    {
+                        <div class="section select-billing-address">
+                            <div class="title">
+                                <strong>Select billing address</strong>
+                            </div>
+                            <div class="address-grid row">
+
+                                @foreach (var item in Model.Addresses)
+                                {
+                                    <div class="col-md-4 ">
+
+                                        <div class="address-item list-group addressId@(item.Id) ">
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <ul class=" ">
+                                                        <li class="name">
+                                                            @item.FirstName @item.LastName
+                                                        </li>
+                                                        <li class="email">
+                                                            <span>@item.Email</span>
+                                                        </li>
+                                                        @if (item.PhoneNumber != null)
+                                                        {
+                                                            <li class="phone">
+                                                                <span>@item.PhoneNumber</span>
+                                                            </li>
+                                                        }
+                                                        @if (item.Company != null)
+                                                        {
+                                                            <li class="company">
+                                                                <span>@item.Company</span>
+                                                            </li>
+                                                        }
+                                                        <li class="address1">
+                                                            <span>@item.Address1</span>
+                                                        </li>
+                                                        @if (item.Address2 != null)
+                                                        {
+                                                            <li class="address2">
+                                                                <span>@item.Address2</span>
+                                                            </li>
+                                                        }
+
+                                                        <li class="city-state-zip">
+                                                            @item.ZipPostalCode  <text>,</text>  @item.City
+                                                        </li>
+
+                                                        @if (item.Country != null)
+                                                        {
+                                                            <li class="country">
+                                                                @item.Country.Name
+                                                            </li>
+                                                        }
+
+                                                        @*@if (!String.IsNullOrEmpty(item.FormattedCustomAddressAttributes))
+                                                                {
+                                                                                                <li class="custom-attributes-view">
+                                                                                                    @Html.Raw(item.FormattedCustomAddressAttributes)
+                                                                                                </li>
+                                                            }*@
+
+
+                                                    </ul>
+
+                                                </div>
+                                                <div class="col-xs-6">
+
+                                                    <div class="select-button @(Model.BillingAddressId.HasValue && Model.BillingAddressId.Value == item.Id ? "selected" : "")">
+
+                                                        <input type="button" value="Select" class="btn btn-primary" onclick="sellectAddress(@(item.Id))" />
+                                                        <div class="btn btn-success">Geselecteerd</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    @Html.HiddenFor(model => model.BillingAddressId)
+
+                    <script type="text/javascript">
+                        function sellectAddress(id) {
+                            $('#BillingAddressId').val(id);
+                            $('.select-button').removeClass('selected');
+                            $('.addressId' + id + ' .select-button').addClass('selected');
+                        }
+                    </script>
+                    <div class="section new-billing-address">
+                        <div class="title">
+                            @if (Model.Addresses.Count() > 0)
+                            {
+                                <strong>Or enter new billing address</strong>
+                            }
+                            else
+                            {
+                                <strong>Enter billing address</strong>
+                            }
+                        </div>
+
+                        <div class="enter-address">
+                            @{
+                                var validationSummary = Html.ValidationSummary(true);
+                            }
+                            @if (!MvcHtmlString.IsNullOrEmpty(validationSummary))
+                            {
+                                <div class="message-error">@validationSummary</div>
+                            }
+                            @{
+                                var dataDictAddress = new ViewDataDictionary();
+
+                                //Merge ModelState (required for validation)
+                                dataDictAddress.ModelState.Merge(ViewData.ModelState);
+                                //dataDictAddress.TemplateInfo.HtmlFieldPrefix = "EditAddress";
+
+                                @Html.Partial("~/views/amazilia/checkout/_CreateOrUpdateAddress.cshtml", Model, dataDictAddress)
+                            }
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="form-control">
+                            @Html.LabelFor(model => model.SkipBillingAddress, "Skip shipping address", new { @class = "col-md-4" })
+                            @Html.EditorFor(model => model.SkipBillingAddress, new { @class = "col-md-8" })
+                            @Html.ValidationMessageFor(model => model.SkipBillingAddress)
+                        </div>
+                                                
+                    </div>
+                </div>
+
+
+                <div class="buttons">
+                    <input type="submit" name="nextstep" value="Next" class="btn btn-success" />
+                </div>
+            }
+        }
+        
+    </div>
+</div>
+

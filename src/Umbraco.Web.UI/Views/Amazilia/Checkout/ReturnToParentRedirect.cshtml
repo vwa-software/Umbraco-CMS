@@ -1,0 +1,23 @@
+﻿@inherits UmbracoViewPage<PartialRedirectModel>
+@using Amazilia.Core.Web.Models.Common
+@using Amazilia.Web.Controllers
+
+@if (Model.Message != null)
+{
+    <div class="message">
+        @Model.Message
+    </div>
+
+    <script type="text/javascript">
+        window.setTimeout(function () {window.location.replace('@Model.RedirectUrl'); }, 3000);    
+    </script>
+
+}
+else
+{
+
+    <script type="text/javascript">
+    window.location.replace('@Model.RedirectUrl');
+    </script>
+
+}

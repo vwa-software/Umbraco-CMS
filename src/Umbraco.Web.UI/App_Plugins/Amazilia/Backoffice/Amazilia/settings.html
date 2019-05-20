@@ -1,0 +1,50 @@
+﻿<div ng-controller="Amazilia.RootController"  >
+    <div ng-controller="Amazilia.SettingsController">
+        <umb-load-indicator ng-if="page.loading"></umb-load-indicator>
+        <form name="contentForm"
+              ng-submit="Save()"
+              novalidate
+              val-form-manager>
+
+            <umb-editor-view ng-if="!page.loading">
+                <!--menu="$parent.menu"-->
+                <umb-editor-header name="'Configuration'"
+                                   name-locked="true"
+                                   hide-icon="false"
+                                   hide-description="false"
+                                   hide-alias="true">
+                </umb-editor-header>
+
+                <umb-editor-container>
+                    <div class="form-horizontal">
+                        <div class="umb-pane">
+                           
+                            <umb-control-group label="@amazilia_primaryExchangeRatecurrency">
+                                <select ng-options="currency.Value as currency.Text for currency in Data.Currencies" ng-model="Data.currencySettings.primaryExchangeRateCurrencyId"></select>
+                            </umb-control-group>
+                            <umb-control-group label="@amazilia_primaryStorecurrency">
+                                <select ng-options="currency.Value as currency.Text for currency in Data.Currencies" ng-model="Data.currencySettings.primaryStoreCurrencyId"></select>
+                            </umb-control-group>
+                        </div>
+                    </div>
+                </umb-editor-container>
+
+                <umb-editor-footer>
+                    <umb-editor-footer-content-left>
+                    </umb-editor-footer-content-left>
+                    <umb-editor-footer-content-right>
+                        <umb-button type="submit"
+                                    button-style="success"
+                                    state="saveButtonState"
+                                    shortcut="ctrl+s"
+                                    label="Save"
+                                    label-key="buttons_save"
+                                    disabled="contentForm.$invalid">
+                        </umb-button>
+                    </umb-editor-footer-content-right>
+                </umb-editor-footer>
+
+            </umb-editor-view>
+            </form>
+    </div>
+</div>

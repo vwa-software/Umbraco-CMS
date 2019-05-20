@@ -1,0 +1,34 @@
+﻿<div ng-controller="Amazilia.RootController"  >
+    <div ng-controller="Amazilia.EntityEditorController" ng-init="init(['tc_0', 'tc_4'])">
+        <umb-load-indicator ng-if="page.loading"></umb-load-indicator>
+
+     
+            <umb-editor-view ng-if="!page.loading">
+                <!--menu="$parent.menu"-->
+                <umb-editor-header name="'Shipping methods'"
+                                   name-locked="true"
+                                   hide-icon="false"
+                                   hide-description="false"
+                                   hide-alias="true">
+                </umb-editor-header>
+
+
+                <umb-editor-container>
+                    <div class="form-horizontal">
+                        <div class="umb-pane">
+                            <amz-gridview endpointurl="backoffice/Amazilia/shippingmethod" loading='page.loading' entityname="Shipping method"></amz-gridview>
+                        </div>
+                    </div>
+                </umb-editor-container>
+
+                <umb-editor-footer>
+                    <umb-editor-footer-content-left>
+                    </umb-editor-footer-content-left>
+                    <umb-editor-footer-content-right>
+                    </umb-editor-footer-content-right>
+                </umb-editor-footer>
+
+            </umb-editor-view>
+     
+    </div>
+</div>

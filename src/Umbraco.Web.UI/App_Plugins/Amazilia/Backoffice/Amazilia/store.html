@@ -1,0 +1,141 @@
+﻿<div ng-controller="Amazilia.RootController">
+    <div ng-controller="Amazilia.StoreEditorController">
+        <umb-load-indicator ng-if="page.loading"></umb-load-indicator>
+
+        <form name="contentForm"
+              ng-submit="Save()"
+              novalidate
+              val-form-manager>
+            <umb-editor-view ng-if="!page.loading" umb-tabs>
+                <!--menu="$parent.menu"-->
+                <umb-editor-header menu="page.menu" name="Data.Name"
+                                   name-locked="page.nameLocked"
+                                   tabs="Tabs"
+                                   hide-icon="false"
+                                   hide-description="false"
+                                   hide-alias="true">
+                </umb-editor-header>
+
+                <umb-editor-container>
+                    <umb-tabs-content view="true">
+                        <umb-tab id="tab0" rel="0">
+                            <umb-pane>
+                                <umb-editor-sub-header>
+                                    <umb-editor-sub-header-content-left>
+                                        <umb-editor-sub-header-section>
+                                            <localize ng-if="id=='0'" key="amazilia_addStore">Add store</localize>
+                                            <localize ng-if="id!='0'" key="amazilia_editStore">Add store</localize>:
+                                        </umb-editor-sub-header-section>
+                                    </umb-editor-sub-header-content-left>
+                                    <umb-editor-sub-header-content-right>
+
+                                        <umb-editor-sub-header-section>
+                                            <strong ng-show="actionInProgress" ng-bind="bulkStatus"></strong>
+                                            <div class="umb-loader-wrapper -bottom" ng-show="actionInProgress">
+                                                <div class="umb-loader"></div>
+                                            </div>
+                                        </umb-editor-sub-header-section>
+
+                                    </umb-editor-sub-header-content-right>
+                                </umb-editor-sub-header>
+                            </umb-pane>
+
+                            <div class="form-horizontal">
+                                <div class="umb-pane">
+
+
+                                    <umb-control-group label="@general_name">
+                                        <input name="store_name" type="text" maxlength="255" ng-model="Data.Name" required class="umb-editor umb-textstring" />
+                                        <span class="help-inline" val-msg-for="store_name" ng-show="contentForm.store_name.$invalid"><localize key="general_required">Required</localize></span>
+
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@general_url">
+                                        <input name="store_url" type="text" maxlength="512" ng-model="Data.Url" required class="umb-editor umb-textstring" />
+                                        <span class="help-inline" val-msg-for="store_url" ng-show="contentForm.store_url.$invalid"><localize key="general_required">Required</localize></span>
+                                    </umb-control-group>
+
+
+                                    <umb-control-group label="@amazilia_Hosts">
+                                        <input name="store_hosts" type="text" ng-model="Data.Hosts" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+
+                                    <!--<umb-control-group label="@amazilia_sslEnabled">
+                            <input type="checkbox" ng-model="Data.SslEnabled" class="umb-editor umb-textstring" />
+                        </umb-control-group>
+
+                        <umb-control-group label="@amazilia_secureUrl">
+                            <input type="text" maxlength="512" ng-model="Data.SecureUrl" class="umb-editor umb-textstring" />
+                        </umb-control-group>-->
+
+
+                                    <umb-control-group label="@sort_sortOrder">
+                                        <input type="number" ng-model="Data.DisplayOrder" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@amazilia_companyname">
+                                        <input type="text" maxlength="255" ng-model="Data.CompanyName" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+                                    <umb-control-group label="@amazilia_CompanyAddress">
+                                        <input type="text" maxlength="255" ng-model="Data.CompanyAddress" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+                                    <umb-control-group label="@amazilia_CompanyPhoneNumber">
+                                        <input type="text" maxlength="255" ng-model="Data.CompanyPhoneNumber" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+                                    <umb-control-group label="@amazilia_CompanyVat">
+                                        <input type="text" maxlength="255" ng-model="Data.CompanyVat" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+
+                                </div>
+                            </div>
+                        </umb-tab>
+                    </umb-tabs-content>
+
+                </umb-editor-container>
+
+
+                <umb-editor-footer>
+
+                    <umb-editor-footer-content-left>
+
+                    </umb-editor-footer-content-left>
+
+                    <umb-editor-footer-content-right>
+                        <umb-button type="button"
+                                    action="$parent.navigateUp()"
+                                    label="Return to list"
+                                    label-key="buttons_returnToList"
+                                    disabled="page.loading">
+                        </umb-button>
+                        <umb-button type="submit"
+                                    button-style="success"
+                                    state="vm.saveButtonState"
+                                    shortcut="ctrl+s"
+                                    label="Save"
+                                    label-key="buttons_save"
+                                    disabled="contentForm.$invalid">
+                        </umb-button>
+
+
+                        <!--<div class="btn-group umb-button">
+                <input type="button" id="btnSave" ng-click="Save()" class="btn btn-success enable_button_child" value="Opslaan" />
+            </div>-->
+                    </umb-editor-footer-content-right>
+
+                </umb-editor-footer>
+
+                <!--<div class="umb-tab-buttons umb-editor-drawer">
+        <div class="umb-editor-drawer-content">
+            <div class="umb-editor-drawer-content__right-side">
+                <div class="btn-group umb-button">
+                    <input type="button" id="btnSave" ng-click="Save()" class="btn btn-success enable_button_child" value="Opslaan" />
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+            </umb-editor-view>
+
+        </form>
+    </div>
+</div>

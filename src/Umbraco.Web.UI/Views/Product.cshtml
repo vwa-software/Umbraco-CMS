@@ -1,0 +1,92 @@
+﻿@inherits AmaziliaTemplatePage<Product>
+@using Amazilia.Web.Mvc;
+@using Amazilia.Web.Extentions;
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+
+    var product = ProductService.GetProductByContent(Model.Content);
+
+    var variant = product;
+
+    //todo, get the correct variant
+    if (product.ProductType == Amazilia.Core.Domain.Catalog.ProductType.GroupedProduct && Model.Content.Children().Count() > 0)
+    {
+        variant = ProductService.GetProductByContent(Model.Content.FirstChild());
+    }
+
+    //todo, get the correct variant
+    if (product.ProductType == Amazilia.Core.Domain.Catalog.ProductType.Variant)
+    {
+        product = ProductService.GetProductByContent(variant.UmbracoContent.Parent);
+    }
+
+    bool showPriceInclTax = true;
+}
+
+<!-- for the section we want to show the shop header -->
+@Html.Partial("~/Views/Partials/SectionHeader.cshtml", Model.Content.Parent)
+
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="product-image-container">
+                   <img class="product-image" src="@(Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("photos").FirstOrDefault().Url)" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h1>@(Model.Content.GetPropertyValue<String>("Product_Naam"))</h1>
+
+                @if (variant.ManageInventory && variant.StockQuantity > 0)
+                {
+                    <p><span>Total stock : @variant.StockQuantity</span></p>
+                }
+
+                @if (variant.HasFromToPrice)
+                {
+                    @variant.FormatedFromToPrice(showPriceInclTax)
+                }
+                else
+                {
+                    @variant.FormatedPrice(showPriceInclTax, 1)
+                }
+
+
+                @if (variant.TierPrices != null && variant.TierPrices.Where(a => a.Quantity > 1).Count() > 0)
+                {
+                    @Html.Partial("Amazilia/Product/TierPrices", variant)
+                }
+
+                @if (product.ProductType == Amazilia.Core.Domain.Catalog.ProductType.GroupedProduct)
+                {
+                    @Html.Partial("Amazilia/Product/VariantChoice", product)
+                }
+
+                <div class="product-teaser">@Model.Content.Description</div>
+                @Html.Partial("Amazilia/Basket/AddToBasketForm", variant)
+
+                @Html.ValidationSummary()
+
+                <div class="product-advantages">
+                    @if (Model.Content.Features != null)
+                    {
+                        foreach (var feature in Model.Content.Features)
+                        {
+                            <div class="product-advantage">
+                                <h4>@feature.GetPropertyValue("featureName")</h4>
+                                <h5>@feature.GetPropertyValue("featureDetails")</h5>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section section--sand">
+    <div class="container">
+        <!-- todo: Check if grid is empty via a property value converter -->
+        @*@Html.GetGridHtml(Model.Content, "bodyText", "bootstrap3-fluid")*@
+    </div>
+</section>

@@ -1,0 +1,70 @@
+﻿@inherits UmbracoViewPage<ShoppingCartModel>
+@using Amazilia.Web.Models.ShoppingCart
+@using Amazilia.Web.Extentions
+@{
+    // shopping cart summary
+
+    decimal total = 0;
+    bool shopPriceInclTax = true;
+}
+
+<div class="basket-cart-content">
+    @if (Model.Items.Count > 0)
+    {
+        <div class="table-wrapper">
+            <table class="table cart">
+              
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+
+                        <tr>
+                            <td class="product">
+                                <span class="text-nowrap"> @(item.Quantity)x <a href="@item.Product.UmbracoContent.Url" class="product-name">@item.Product.UmbracoContent.Name</a></span>
+                            </td>
+                            @*<td class="unit-price">
+                                <span class="product-unit-price">@item.UnitPrice.FormatPrice(true)</span>
+                            </td>*@
+
+                            <td class="subtotal">
+                                <span class="product-subtotal text-nowrap">@item.SubTotal.FormatPrice(shopPriceInclTax)</span>
+                                @*@if (!String.IsNullOrEmpty(item.Discount))
+                    {
+                        <div class="discount">
+                            @Umbraco.GetDictionaryValue("ShoppingCart.ItemYouSave", item.Discount)
+                        </div>
+                        if (item.MaximumDiscountedQty.HasValue)
+                        {
+                            <div class="discount-additional-info">
+                                @Umbraco.GetDictionaryValue("ShoppingCart.MaximumDiscountedQty", item.MaximumDiscountedQty.Value)
+                            </div>
+                        }
+                    }*@
+
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td class="product text-nowrap">
+                          Total 
+                        </td>
+                        @*<td class="unit-price">
+                            <span class="product-unit-price">@item.UnitPrice.FormatPrice(true)</span>
+                        </td>*@
+
+                        <td class="subtotal text-nowrap">
+                            @Model.SubTotal.FormatPrice(shopPriceInclTax)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="no-data">
+            Shopping cart is empty
+        </div>
+    }
+
+</div>

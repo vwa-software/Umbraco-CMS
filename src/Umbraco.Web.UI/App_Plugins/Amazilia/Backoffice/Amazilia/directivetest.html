@@ -1,0 +1,37 @@
+﻿
+<div ng-controller="Amazilia.RootController" endpoint.address="TaxCategory">
+    <div ng-controller="Amazilia.EntityEditorController">
+
+        <umb-load-indicator ng-if="page.loading"></umb-load-indicator>
+
+        <form name="contentForm"
+              novalidate
+              val-form-manager>
+            <umb-editor-view ng-if="!page.loading">
+                <!--menu="$parent.menu"-->
+                <umb-editor-header name="'Tax categories'"
+                                   name-locked="true"
+                                   hide-icon="false"
+                                   hide-description="false"
+                                   hide-alias="false">
+                </umb-editor-header>
+
+                <umb-editor-container>
+                    <div class="form-horizontal">
+                        <div class="umb-pane">
+                            <amz-gridview endpointurl="'backoffice/Amazilia/taxcategory'" loading='page.loading'" entityname="'Tax Category'"></amz-gridview>
+                        </div>
+                    </div>
+                </umb-editor-container>
+
+                <umb-editor-footer>
+                    <umb-editor-footer-content-left>
+                    </umb-editor-footer-content-left>
+                    <umb-editor-footer-content-right>
+
+                    </umb-editor-footer-content-right>
+                </umb-editor-footer>
+            </umb-editor-view>
+        </form>
+    </div>
+</div>

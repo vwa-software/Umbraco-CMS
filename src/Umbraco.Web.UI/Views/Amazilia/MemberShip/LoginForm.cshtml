@@ -1,0 +1,47 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<Amazilia.Web.Models.Membership.LoginModel>
+    @using System.Web.Mvc.Html
+    @using Umbraco.Web
+    @using Amazilia.Web.Controllers;
+
+    @{
+    Model.RedirectUrl = "~/";
+    }
+
+    <div class="panel panel-default">
+        <h2>Login</h2>
+        <div class="panel-body">
+            @using (Html.BeginUmbracoForm<MembershipController>
+                ("Login", new { area = "Amazilia" }))
+                {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Username)
+                    @Html.TextBoxFor(x => x.Username, new { @placeholder = "email address", @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Username)
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Password)
+                    @Html.PasswordFor(x => x.Password, new { @placeholder = "password", @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Password)
+                </div>
+
+
+                <div class="form-group"><input type="submit" value="Login" class="btn btn-default pull-right" /></div>
+
+                <div class="form-group checkbox">
+                    <label>
+                        @Html.CheckBoxFor(x => x.RememberMe) Remember Me
+                    </label>
+                    @Html.HiddenFor(x => x.RedirectUrl)
+                </div>
+                <div class="form-group">
+                    <a href="/login/forgot-password">
+                        Forgot your password?
+                    </a>
+                </div>
+                }
+        </div>
+    </div>

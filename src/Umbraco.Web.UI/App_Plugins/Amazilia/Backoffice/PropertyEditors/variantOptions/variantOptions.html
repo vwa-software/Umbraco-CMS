@@ -1,0 +1,8 @@
+<div ng-controller="Amazilia.PropertyEditors.VariantOptionsController">
+    <select name="dropDownList"
+            class="umb-editor umb-dropdown"
+            ng-change="updateSingleDropdownValue()"
+            ng-model="model.value"
+            ng-options="item.id as item.value for item in model.config.variantoptions">
+    </select>
+</div>

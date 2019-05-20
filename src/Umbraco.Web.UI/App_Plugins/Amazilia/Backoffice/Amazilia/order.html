@@ -1,0 +1,161 @@
+﻿<div ng-controller="Amazilia.RootController">
+    <div ng-controller="Amazilia.OrderController">
+        <umb-load-indicator ng-if="loading"></umb-load-indicator>
+
+        <form name="contentForm"
+              novalidate
+              val-form-manager>
+            <umb-editor-view ng-if="!loading" umb-tabs>
+
+                <!--menu="$parent.menu"-->
+                <umb-editor-header menu="page.menu" name="page.name"
+                                   name-locked="true"
+                                   tabs="tabs"
+                                   hide-icon="false"
+                                   hide-description="false"
+                                   hide-alias="true">
+                </umb-editor-header>
+
+                <umb-editor-container>
+                    <umb-tabs-content view="true">
+                        <umb-tab id="tab0" rel="0">
+                            <div class="form-horizontal">
+                                <umb-box>
+                                    <umb-box-content>
+
+                                        <umb-control-group label="@amazilia_orderId">
+                                            {{data.order.id}}
+                                        </umb-control-group>
+                                        <umb-control-group label="@amazilia_order">
+                                            {{data.order.customOrderNumber}}
+                                        </umb-control-group>
+                                        <umb-control-group label="@amazilia_orderstatus">
+                                            {{data.order.orderStatus}}
+                                        </umb-control-group>
+                                        <umb-control-group label="@amazilia_orderGuid">
+                                            {{data.order.orderGuid}}
+                                        </umb-control-group>
+                                        <umb-control-group label="@amazilia_store">
+                                            {{data.order.storeName}}
+                                        </umb-control-group>
+                                    </umb-box-content>
+                                </umb-box>
+                                <umb-box>
+                                    <umb-box-content>
+
+                                        <umb-control-group label="@amazilia_ordersubtotal">
+                                            {{data.order.orderSubtotalInclTax}}
+                                        </umb-control-group>
+                                        <umb-control-group label="@amazilia_ordershippingcost">
+                                            {{data.order.orderShippingInclTax}}
+                                        </umb-control-group>
+                                        <umb-control-group label="@amazilia_ordertotal">
+                                            {{data.order.orderTotal}}
+                                        </umb-control-group>
+                                        <umb-control-group label="@amazilia_paymentmethod">
+                                            {{data.order.paymentMethod}}
+                                        </umb-control-group>
+                                    </umb-box-content>
+                                </umb-box>
+                            </div>
+                        </umb-tab>
+                        <umb-tab id="tab1" rel="1">
+                            <div class="form-horizontal">
+
+                                <umb-box>
+                                    <umb-box-header><localize key="amazilia_billingAddress">Billing address</localize></umb-box-header>
+                                    <umb-box-content>
+                                        <umb-control-group label="@general_name">
+                                            {{data.order.billingAddress.FirstName}}   {{data.order.billingAddress.LastName}}
+                                        </umb-control-group>
+                                        <umb-control-group label="@general_email">
+                                            {{data.order.billingAddress.Email}}
+                                        </umb-control-group>
+                                        <umb-control-group label="@amazilia_address">
+                                            {{data.order.billingAddress.Address1}}<br />
+                                            {{data.order.billingAddress.Address2}}
+                                        </umb-control-group>
+                                        <umb-control-group label="@amazilia_city">
+                                            {{data.order.billingAddress.City}}
+                                        </umb-control-group>
+
+                                        <umb-control-group label="@amazilia_country">
+                                            {{data.order.billingAddress.Country.Name}}
+                                        </umb-control-group>
+
+                                        <umb-control-group label="@amazilia_zip">
+                                            {{data.order.billingAddress.ZipPostalCode}}
+                                        </umb-control-group>
+
+                                        <umb-control-group label="@amazilia_phone">
+                                            {{data.order.billingAddress.PhoneNumber}}
+                                        </umb-control-group>
+                                    </umb-box-content>
+                                </umb-box>
+
+                            </div>
+
+                        </umb-tab>
+                        <umb-tab id="tab2" rel="2">
+                            <umb-box>
+                                <umb-box-content>
+                                    <umb-table
+                                        items="data.order.orderItems"
+                                                item-properties="data.includeProperties"
+                                                >
+                                    </umb-table>
+
+                                </umb-box-content>
+                            </umb-box>
+                        </umb-tab>
+                        <umb-tab id="tab3" rel="3">
+
+                            <umb-box ng-repeat="note in data.order.orderNotes">
+                                <umb-box-header>
+                                  Note created on : {{note.createdOnUtc}}
+                                </umb-box-header>
+                                <umb-box-content>
+                                                                         
+                                        <div class="row">
+                                            <div class="span4">Display to customer</div>
+                                            <div class="span8">{{note.displayToCustomer}}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="span4">Note</div>
+                                            <div class="span8">{{note.note}}</div>
+                                        </div>
+                                    
+                                </umb-box-content>
+                            </umb-box>
+                        </umb-tab>
+                    </umb-tabs-content>
+
+                </umb-editor-container>
+
+
+                <umb-editor-footer>
+
+                    <umb-editor-footer-content-left>
+
+                    </umb-editor-footer-content-left>
+
+                    <umb-editor-footer-content-right>
+
+                        <umb-button type="button"
+                                    action="$parent.navigateUp()"
+                                    label="Return to list"
+                                    label-key="buttons_returnToList"
+                                    disabled="page.loading">
+                        </umb-button>
+
+
+
+                    </umb-editor-footer-content-right>
+
+                </umb-editor-footer>
+
+            </umb-editor-view>
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+﻿@inherits UmbracoViewPage<CheckoutShippingMethodModel>
+@using Amazilia.Web.Models.Checkout
+@using Amazilia.Web.Controllers
+@using Amazilia.Web.Extentions
+
+
+@*@if (!Model.OnePageCheckoutEnabled)
+    {
+        @Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Cart })
+    }*@
+
+<div class="page checkout-page paymentmethod-page">
+
+    <div class="page-title">
+        <h1> @Umbraco.GetDictionaryValue("ShippingMethod", "ShippingMethod")</h1>
+    </div>
+    @{using (Html.BeginUmbracoForm<CheckoutController>
+                                                 ("ShippingMethodSubmit", new { area = "Amazilia" }))
+        {
+
+            if (Model.Warnings.Count == 0)
+            {
+                <ul class="method-list">
+                    @for (int i = 0; i < Model.ShippingMethods.Count; i++)
+                    {
+                        var shippingMethod = Model.ShippingMethods[i];
+                        <li>
+                            <div class="method-name">
+                                <input id="shippingoption_@(i)" type="radio" name="shippingoption" value="@(shippingMethod.ShippingOption.ShippingRateComputationMethodId)_@(shippingMethod.ShippingOption.ShippingMethodId)" checked="@shippingMethod.Selected" />
+                                <label for="shippingoption_@(i)">@string.Format(Umbraco.GetDictionaryValue("Checkout.SelectShippingMethod.MethodAndFee", "{0} - ({1})"), shippingMethod.Name, shippingMethod.Fee.FormatPriceInclTax() )))</label>
+                            </div>
+                            @if (!String.IsNullOrEmpty(shippingMethod.Description))
+                            {
+                                <div class="method-description">
+                                    @Html.Raw(shippingMethod.Description)
+                                </div>
+                            }
+                        </li>
+                    }
+                </ul>
+                if (Model.NotifyCustomerAboutShippingFromMultipleLocations)
+                {
+                    <div class="multiple-locations">
+                        @Umbraco.GetDictionaryValue("Checkout.ShippingMethod.ShippingFromMultipleLocations", "Shipping from multiple locations")
+                    </div>
+                }
+
+            }
+            else
+            {
+                <div class="message-error">
+                    <ul>
+                        @foreach (var warning in Model.Warnings)
+                        {
+                            <li>@warning</li>
+                        }
+                    </ul>
+                </div>
+            }
+
+            <div class="buttons">
+                <input type="submit" name="nextstep" value="Next" class="btn btn-success" />
+            </div>
+        }
+    }
+</div>
+
+<script>
+
+    function getPaymenyInfo(path) {
+        // todo , load paymentinfo through ajax
+
+    }
+
+</script>

@@ -53,10 +53,13 @@ src/Umbraco.Web.UI/web.config
 src/Umbraco.Web.UI/Config/ClientDependency.config
 *.orig
 src/Umbraco.Tests/config/404handlers.config
-src/Umbraco.Web.UI/[Vv]iews/*.cshtml
-src/Umbraco.Web.UI/[Vv]iews/*.vbhtml
+# not ignore views.
+#src/Umbraco.Web.UI/[Vv]iews/*.cshtml
+#src/Umbraco.Web.UI/[Vv]iews/*.vbhtml
+#src/Umbraco.Web.UI/[Vv]iews/*
 src/Umbraco.Tests/[Cc]onfig/umbracoSettings.config
-src/Umbraco.Web.UI/[Vv]iews/*
+
+
 src/packages/
 src/packages/repositories.config
 
@@ -92,8 +95,8 @@ src/Umbraco.Web.UI/[Uu]ser[Cc]ontrols/
 src/Umbraco.Web.UI.Client/src/[Ll]ess/*.css
 src/Umbraco.Web.UI.Client/vwd.webinfo
 tools/NDepend/
-
-src/Umbraco.Web.UI/App_Plugins/*
+# Not ignore app_plugins
+#src/Umbraco.Web.UI/App_Plugins/*
 src/*.psess
 src/*.vspx
 src/Umbraco.Web.UI/[Uu]mbraco/[Jj]s/routes.js.*
@@ -143,3 +146,4 @@ build.out/
 build.tmp/
 build/Modules/*/temp/
 /src/.idea/*
+src/Umbraco.Web.UI/App_Plugins/StarterKit/

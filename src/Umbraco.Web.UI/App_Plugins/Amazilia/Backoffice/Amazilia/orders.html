@@ -1,0 +1,140 @@
+﻿<div ng-controller="Amazilia.RootController">
+    <div ng-controller="Amazilia.OrdersController">
+        <umb-load-indicator ng-if="page.loading"></umb-load-indicator>
+
+        <form name="contentForm"
+              novalidate
+              val-form-manager>
+            <umb-editor-view ng-if="!page.loading">
+
+                <!--menu="$parent.menu"-->
+               <umb-editor-header name="page.name"
+                                   name-locked="true"
+                                   hide-icon="false"
+                                   hide-description="false"
+                                   hide-alias="true">
+                </umb-editor-header>
+
+                <umb-editor-container>
+                    <!-- filter options look at: views\users\views\users-->
+                    <umb-pane ng-if="false">
+                        <umb-editor-sub-header>
+                            <umb-editor-sub-header-content-left>
+                                <umb-editor-sub-header-section>
+                                </umb-editor-sub-header-section>
+
+                            </umb-editor-sub-header-content-left>
+                            <umb-editor-sub-header-content-right>
+
+
+                                <umb-editor-sub-header-section>
+
+
+                                    <div class="umb-loader-wrapper -bottom" ng-show="loading">
+                                        <div class="umb-loader"></div>
+                                    </div>
+                                </umb-editor-sub-header-section>
+
+                            </umb-editor-sub-header-content-right>
+                        </umb-editor-sub-header>
+                    </umb-pane>
+
+                    <umb-pane>
+
+
+                        <div class="row">
+                            <div class="span4">
+
+                                <div class="control-group umb-control-group -no-border span4">
+                                    <div class="umb-el-wrap">
+                                        <label class="control-label"> <localize key="amazilia_startDate"></localize></label>
+                                        <div class="controls">
+                                            <umb-date-time-picker options="dateConfig"
+                                                                  on-change="datePickerChange(event, 'createdFrom')">
+                                                <span ng-if="filterOptions.createdFrom" class="label label-primary date">{{filterOptions.createdFrom}}<i class="icon-trash" ng-click="deleteDate($event, 'createdFrom')" localize="title" title="Delete price"></i></span>
+                                                <span ng-hide="filterOptions.createdFrom" class="label label-primary no-date">
+                                                    No date selected
+                                                </span>
+                                                <span class="add-on">
+                                                    <i class="icon-calendar"></i>
+                                                </span>
+                                            </umb-date-time-picker>
+                                        </div>
+                                    </div>
+                                </div>                               
+                            </div>
+                            <div class="span4">
+                                <div class="control-group umb-control-group -no-border span4">
+                                    <div class="umb-el-wrap">
+                                        <label class="control-label"> <localize key="amazilia_endDate"></localize></label>
+                                        <div class="controls">
+                                            <umb-date-time-picker on-change="datePickerChange(event, 'createdTo')">
+
+                                                <span ng-if="filterOptions.createdTo" class="label label-primary date">{{filterOptions.createdTo}}<i class="icon-trash" ng-click="deleteDate($event, 'createdTo')" localize="title" title="Delete price"></i></span>
+                                                <span ng-hide="filterOptions.createdTo" class="label label-primary no-date">
+                                                    No date selected
+                                                </span>
+
+                                                <span class="add-on">
+                                                    <i class="icon-calendar"></i>
+                                                </span>
+
+                                            </umb-date-time-picker>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="control-group umb-control-group -no-border span4">
+                                <div class="umb-el-wrap">
+                                    <label class="control-label"> Lastname</label>
+                                    <div class="controls">
+                                        <input type="text" ng-model="filterOptions.lastName" maxlength="75" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span4">
+
+                            </div>
+                            <div class="span1">
+                                <umb-button type="button"
+                                            action="doSearch()"
+                                            label="Search"
+                                            label-key="general_search"
+                                            disabled="loading">
+                                </umb-button>
+                            </div>
+                        </div>
+
+                    </umb-pane>
+                    <div class="form-horizontal">
+                        <div class="umb-pane">
+                            <umb-table items="Data.Items" item-properties="options.includeProperties" on-click="item_click">
+                            </umb-table>
+                        </div>
+                    </div>
+
+
+                    <!-- Pagination -->
+                    <div ng-if="!loading" class="flex justify-center">
+                        <umb-pagination ng-if="options.pager.totalPages"
+                                        page-number="options.pager.pageNumber"
+                                        total-pages="options.pager.totalPages"
+                                        on-change="changePageNumber(pageNumber)">
+                        </umb-pagination>
+                    </div>
+
+                </umb-editor-container>
+
+                <umb-editor-footer>
+                    <umb-editor-footer-content-left>
+                    </umb-editor-footer-content-left>
+                    <umb-editor-footer-content-right>
+
+                    </umb-editor-footer-content-right>
+                </umb-editor-footer>
+            </umb-editor-view>
+        </form>
+    </div>
+</div>

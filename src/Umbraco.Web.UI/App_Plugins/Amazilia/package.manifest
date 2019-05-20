@@ -1,0 +1,111 @@
+﻿//http://umbraco.github.io/Belle/#/tutorials/manifest
+{
+    // you can define multiple editors
+    "propertyEditors": [
+        {
+            /*this must be a unique alias*/
+            "alias": "Amazilia.PriceEditor",
+            /*the name*/
+            "name": "Amazilia price editor",
+            /*the icon*/
+            "icon": "icon-price-dollar",
+            /*grouping for "Select editor" dialog*/
+            "group": "Amazilia",
+
+            /*the HTML file we will load for the editor*/
+            "editor": {
+                "view": "~/App_Plugins/Amazilia/Backoffice/PropertyEditors/PriceEditor.html",
+                "valueType": "JSON"
+            }
+        },
+        {
+            /*this must be a unique alias*/
+            "alias": "Amazilia.ProductInfoEditor",
+            /*the name*/
+            "name": "Amazilia product info editor",
+            /*the icon*/
+            "icon": "icon-shopping-basket",
+            /*grouping for "Select editor" dialog*/
+            "group": "Amazilia",
+
+            /*the HTML file we will load for the editor*/
+            "editor": {
+                "view": "~/App_Plugins/Amazilia/Backoffice/PropertyEditors/ProductInfoEditor.html",
+                "valueType": "JSON"
+            }
+        },
+        {
+            /*this must be a unique alias*/
+            "alias": "Amazilia.CheckoutStepEditor",
+            /*the name*/
+            "name": "Amazilia checkout step state picker",
+            /*the icon*/
+            "icon": "icon-shopping-basket",
+            /*grouping for "Select editor" dialog*/
+            "group": "Amazilia",
+
+            /*the HTML file we will load for the editor*/
+            "editor": {
+                "view": "~/App_Plugins/Amazilia/Backoffice/PropertyEditors/CheckoutStepEditor.html",
+                "valueType": "INT"
+            }
+        },
+        {
+            /*this must be a unique alias*/
+            "alias": "Amazilia.InventoryEditor",
+            /*the name*/
+            "name": "Amazilia inventory editor",
+            /*the icon*/
+            "icon": "icon-bar-chart",
+            /*grouping for "Select editor" dialog*/
+            "group": "Amazilia",
+
+            /*the HTML file we will load for the editor*/
+            "editor": {
+                "view": "~/App_Plugins/Amazilia/Backoffice/PropertyEditors/ProductInventoryEditor/ProductInventoryEditor.html",
+                "valueType": "JSON"
+            }
+        }
+        //,
+        //{
+        //    /*this must be a unique alias*/
+        //    "alias": "Amazilia.VariantOptionsEditor",
+        //    /*the name*/
+        //    "name": "Amazilia variant options",
+        //    /*the icon*/
+        //    "icon": "icon-shopping-basket",
+        //    /*grouping for "Select editor" dialog*/
+        //    "group": "Amazilia",
+
+        //    /*the HTML file we will load for the editor*/
+        //    "editor": {
+        //        "view": "~/App_Plugins/Amazilia/Backoffice/PropertyEditors/variantOptions/variantoptions.html",
+        //        "valueType": "INT"
+        //    },
+        //    "prevalues": {
+        //        "fields": [
+        //            {
+        //                "label": "Enable something",
+        //                "description": "Add, remove or sort values for the list.",
+        //                "key": "variantoptions",
+        //                "view": "multivalues"
+        //            }
+        //        ]
+        //    }
+        //}
+
+
+    ],
+
+    //array of files we want to inject into the application on app_start
+    "javascript": [
+        "~/App_Plugins/Amazilia/Backoffice/amazilia.controller.js",
+        "~/App_Plugins/Amazilia/Backoffice/amazilia.directives.js",
+        "~/App_Plugins/Amazilia/Backoffice/amazilia.services.js",
+        "~/App_Plugins/Amazilia/Backoffice/PropertyEditors/propertyeditors.controller.js",
+        "~/App_Plugins/Amazilia/Backoffice/PropertyEditors/variantoptions/variantoptions.controller.js"
+    ],
+    "css": [
+        "~/App_Plugins/Amazilia/Backoffice/Amazilia.css"
+    ]
+}

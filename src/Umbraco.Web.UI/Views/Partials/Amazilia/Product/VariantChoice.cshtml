@@ -1,0 +1,15 @@
+﻿@inherits UmbracoViewPage<Amazilia.Core.Domain.Catalog.Product>
+@using Amazilia.Web.Extentions;
+<h4>Variants</h4>
+<div>
+
+    todo: create dropdown from the variants:
+
+
+    @foreach(var variant in Model.UmbracoContent.Children())
+    {
+        <div>
+            <a href="@variant.Url">@variant.Name</a> 
+        </div>
+    }
+</div>

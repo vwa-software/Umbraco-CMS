@@ -1,0 +1,23 @@
+﻿@inherits UmbracoViewPage<CheckoutPaymentMethodModel>
+@using Amazilia.Web.Models.Checkout
+@using Amazilia.Web.Controllers
+
+@*@if (!Model.OnePageCheckoutEnabled)
+    {
+        @Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Cart })
+    }*@
+
+<div class="page checkout-page paymentmethod-page">
+
+    @*@Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Address })*@
+
+    <div class="page-title">
+        @*<h1>@T("Checkout.BillingAddress")</h1>*@
+    </div>
+   
+    <p>Your order is placed.</p>
+    <div class="buttons">
+        <a href="/"  class="btn btn-success" >Continue shopping</a>
+    </div>
+
+</div>

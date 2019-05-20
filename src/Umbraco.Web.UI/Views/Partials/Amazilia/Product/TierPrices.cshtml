@@ -1,0 +1,21 @@
+﻿@inherits UmbracoViewPage<Amazilia.Core.Domain.Catalog.Product>
+@using Amazilia.Web.Extentions;
+<h4>Tier prices</h4>
+
+<table class="table tierprices">
+    <tr class="tierheader">
+        <td class="caption">Quantity</td>
+        @foreach (var tierprice in Model.TierPrices.Where(a => a.Quantity > 1))
+        {
+            <td class="quantity">@(tierprice.Quantity)+</td>
+        }
+    </tr>
+    <tr class="price">
+        <td class="caption">Price</td>
+        @foreach (var tierprice in Model.TierPrices.Where(a => a.Quantity > 1))
+        {
+            <td class="price">@tierprice.FormatPriceInclTax()</td>
+        }
+    </tr>
+</table>
+

@@ -1,0 +1,9 @@
+﻿@inherits UmbracoViewPage<CheckoutProgressModel>
+@using Amazilia.Web.Models.Checkout;
+@using Umbraco.Web;
+
+
+@foreach (var item in Model.Steps)
+{
+    <a class="nav-link nav-link--black nav-link--air-bottom @(item.Active ? "nav-link--active" : null) @(item.Clickable ?  null : "nav-link--disabled")" href="@(item.Clickable ? item.Url : null)">@item.Name</a>
+}

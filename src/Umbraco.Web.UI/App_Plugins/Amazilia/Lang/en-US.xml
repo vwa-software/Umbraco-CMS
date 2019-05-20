@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<language alias="en" intName="English (US)" localName="English (US)" lcid="" culture="en-US">
+    <area alias="sections">
+        <key alias="Amazilia">Amazilia</key>
+    </area>
+
+    <area alias="buttons">
+        <key alias="install">Install</key>
+        <key alias="uninstall">Uninstall</key>
+    </area>
+    <area alias="amazilia">
+         <!--Common-->
+        <key alias="startDate">Start date</key>
+        <key alias="endDate">End date</key>
+        <key alias="quantity">Quantity</key>        
+        <key alias="currency">Currency</key>
+        <key alias="limitedtostore">Limited to store</key>
+        <key alias="limitedtomembergroup">Limited to member group</key>
+        <key alias="limitedtocountry">Limited to country</key>
+        <key alias="installplugin">Install</key>
+        <key alias="installpluginDescription">Install or uninstall the plugin</key>
+        <key alias="rate">rate</key>
+        
+        <!--Stock-->
+        <key alias="stockinfo">Stock info</key>
+        <key alias="stockquantity">Stock quantity</key>
+        <key alias="manageinventory">Manage stock</key>
+        
+        <!--Store settings-->
+        <key alias="store">Store</key>
+        <key alias="stores">Stores</key>
+        <key alias="addStore">Add store</key>
+        <key alias="editStore">Edit store</key>
+
+        <!--Pricegroup settings-->
+        <key alias="editPriceGroup">Edit pricegroup</key>
+        <key alias="addPriceGroup">Add pricegroup</key>
+        <key alias="pricegroups">Price groups</key>
+        <key alias="nopricegroups">No pricegroups available, create one in the Amazilia section</key>
+        <key alias="pricegroupsaved">The pricegroup was successfuly saved</key>
+        <key alias="shippingcomputationgmethods">Shipping rate computing methods</key>
+        <key alias="warehouses">Warehouses</key>
+        
+        <key alias="amazilia_deleteprice">Delete price</key>
+        <key alias="settings">Settings</key>
+        <!--Tax category settings-->
+        <key alias="incltax">Incl. Tax</key>
+        <key alias="taxcategories">Tax categories</key>
+        <key alias="taxcategory">Tax category</key>
+        <key alias="addTaxCategory">Add tax category</key>
+        <key alias="editTaxCategory">Edit tax category</key>
+        
+          <!--Product settings-->
+        <key alias="price">Price</key>
+        <key alias="simple-product">Simple product</key>
+        <key alias="grouped-product">Grouped product</key>
+        <key alias="isGiftCard">Gift card</key>
+        <key alias="isFreeShipping">Free shipping</key>
+        <key alias="isShipEnabled">Sipping enabled</key>
+        <key alias="additionalShippingCharge">Additional shipping charge</key>
+        <key alias="customerEntersPrice">Customer enters price</key>
+        <key alias="isTaxExempt">Tax exempt</key>
+        <key alias="isRental">Rental</key>
+        
+        <!--Country settings-->
+        <key alias="countries">Countries</key>
+        <key alias="addCountry">Add country</key>
+        <key alias="editCountry">Edit country</key>
+        <key alias="paymentmethod">Payment method</key>
+        <key alias="paymentmethods">Payment methods</key>
+        <key alias="shippingmethod">Shipping method</key>
+
+        <key alias="shippingmethods">Shipping methods</key>
+
+
+        <key alias="twoLetterIsoCode">Two letter iso code</key>
+        <key alias="threeLetterIsoCode">Three letter iso code</key>
+        <key alias="numericIsoCode">Numeric iso code</key>
+        <key alias="allowsBilling">Allows billing</key>
+        <key alias="allowsShipping">Allows shipping</key>
+        <key alias="subjectToVat">SubjectToVat</key>
+
+        <!--Checkout steps ( propery editor )-->
+        <key alias="checkoutstep_Cart">Cart summary</key>
+        <key alias="checkoutstep_BillingAddress">BillingAddress</key>
+        <key alias="checkoutstep_ShippingAddress">ShippingAddress</key>
+        <key alias="checkoutstep_ShippingProvider">ShippingProvider</key>
+        <key alias="checkoutstep_PaymentProvider">PaymentProvider</key>
+        <key alias="checkoutstep_Confirm">Confirm</key>
+
+        <!--Orders-->
+        <key alias="orders">Orders</key>
+        <key alias="order">Order</key>
+        <key alias="orderId">Order id</key>
+        <key alias="orderstatus">Order status</key>
+        <key alias="orderGuid">Order guid</key>
+        <key alias="ordersubtotal">Subtotal</key>
+        <key alias="ordertotal">Total</key>
+        <key alias="ordershippingcost">Shipping cost</key>
+
+
+        <!--Email templates-->
+        <key alias="emailtemplates">Email templates</key>
+        <key alias="emailtemplatesaved">Email template saved</key>
+
+        <key alias="emailtemplate">Email template</key>
+
+        <key alias="addEmailTemplate">Add email template</key>
+        <key alias="editEmailTemplate">Edit email template</key>
+        <key alias="subject">Subject</key>
+        <key alias="templatePath">Template path</key>
+        <key alias="templatePath">Template path</key>
+        <key alias="fromDisplayname">From display name</key>
+        <key alias="fromfromEmail">From email address</key>
+        <key alias="replyToEmail">Reply email address</key>
+        <key alias="replyToDisplayName">Reply display name</key>
+        <key alias="subjecttemplate">Subject template path</key>
+        <key alias="subjectistemplate">Use template for subject?</key>
+
+        <key alias="generalconfiguration">Configuration</key>
+       <key alias="primaryExchangeRatecurrency">Primary exchange rate currency</key>
+        <key alias="primaryStorecurrency">Primary store currency</key>
+
+    </area>
+    
+    
+</language>

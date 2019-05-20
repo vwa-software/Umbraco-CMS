@@ -1,0 +1,75 @@
+﻿@inherits AmaziliaTemplatePage<Checkout>
+@using Amazilia.Web.Mvc;
+@using Amazilia.Web;
+@using Amazilia.Core.Domain.Catalog;
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+
+@{
+    Layout = "Master.cshtml";
+    Amazilia.Core.Domain.Orders.CheckoutStep step = AmaziliaHelper.GetCheckoutStepForContent(Model.Content);
+}
+
+@Html.Partial("~/Views/Partials/SectionHeader.cshtml")
+
+<section class="section">
+    <div class="container">
+        <div class="col-md-3">
+            <nav class="nav-bar nav-bar--list">
+                @Html.Action("CheckoutProgress", "Checkout", new { step = step, area = "Amazilia" })
+            </nav>
+        </div>
+        <div class="col-md-9">
+            @{ switch (step)
+                {
+                    case Amazilia.Core.Domain.Orders.CheckoutStep.Cart:
+                        <div>
+                            @Html.Action("Cart", "Checkout", new { area = "Amazilia" })
+                        </div>
+                        break;
+                    case Amazilia.Core.Domain.Orders.CheckoutStep.BillingAddress:
+                        <div>
+                            @Html.Action("BillingAddress", "Checkout", new { area = "Amazilia" })
+                        </div>
+                        break;
+                    case Amazilia.Core.Domain.Orders.CheckoutStep.ShippingAddress:
+                        <div>
+                            @Html.Action("ShippingAddress", "Checkout", new { area = "Amazilia" })
+                        </div>
+                        break;
+                    case Amazilia.Core.Domain.Orders.CheckoutStep.ShippingProvider:
+                        <div>
+                            @Html.Action("ShippingMethod", "Checkout", new { area = "Amazilia" })
+                        </div>
+                        break;
+
+                    case Amazilia.Core.Domain.Orders.CheckoutStep.PaymentProvider:
+                        <div>
+                            @Html.Action("PaymentMethod", "Checkout", new { area = "Amazilia" })
+                        </div>
+                        break;
+                    case Amazilia.Core.Domain.Orders.CheckoutStep.Confirm:
+                        <div>
+                            @Html.Action("Confirm", "Checkout", new { area = "Amazilia" })
+                        </div>
+                        break;
+
+                    case Amazilia.Core.Domain.Orders.CheckoutStep.Success:
+                        <div>
+                            @Html.Action("Success", "Checkout", new { area = "Amazilia" })
+                        </div>
+                        break;
+                }
+            }
+
+            @Html.ValidationSummary()
+
+        </div>
+      
+    </div>
+</section>
+
+<section class="cart">
+    <div class="container">
+        @Html.Action("Cart", "Basket", new { area = "Amazilia" })
+    </div>    
+</section>

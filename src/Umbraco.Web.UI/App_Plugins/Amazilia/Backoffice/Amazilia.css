@@ -1,0 +1,28 @@
+﻿/* Price editor */
+.amz-tier-price {
+    border: 1px solid #f3f3f5;
+    padding: 10px;
+    font-size: 13px;
+    text-shadow: none;
+    margin: 5px 0;
+}
+
+    .amz-tier-price .date {
+        cursor: pointer;
+        margin: 7px 0;
+        padding: 10px;
+        background: #03bfb3;
+        
+    }
+.amz-tier-price .no-date {
+        cursor: pointer;
+        margin: 7px 0;
+        padding: 10px;
+     
+}
+
+/* lanuage captions (email template)*/
+.controls.controls-row .language {
+    padding-top:6px;
+    font-weight:600;
+}

@@ -1,0 +1,14 @@
+﻿
+<div class="form-horizontal">
+    <div class="umb-pane">
+        {{Data}}
+        <umb-control-group label="@general_name">
+            <input name="store_name" type="text" maxlength="255" ng-model="Data.configModel.Name" required class="umb-editor umb-textstring" />
+            <span class="help-inline" val-msg-for="store_name" ng-show="contentForm.store_name.$invalid"><localize key="general_required">Required</localize></span>
+
+        </umb-control-group>
+
+    </div>
+</div>
+
+

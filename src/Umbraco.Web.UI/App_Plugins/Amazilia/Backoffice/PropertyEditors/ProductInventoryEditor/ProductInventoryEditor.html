@@ -1,0 +1,97 @@
+﻿<div class="umb-editor" ng-controller="Amazilia.ProductInventoryEditorController">
+    <div ng-if="model.isLoading">
+        <localize key="loading">Loading</localize>...
+    </div>
+    <div ng-if="!model.isLoading">
+
+        <umb-box>
+            <umb-box-header title-key="amazilia_stockinfo"></umb-box-header>           
+            <umb-box-content>
+                <div class="row">
+                    <div class="span4">
+                        <localize key="amazilia_manageinventory"></localize>
+                    </div>
+                    <div class="span4">
+                        <umb-toggle checked="model.value.manageInventory"
+                                    on-click="toggle('manageInventory')"
+                                    show-labels="false">
+                        </umb-toggle>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span4">
+                        <localize key="amazilia_minstockquantity"></localize>
+                    </div>
+                    <div class="span4">
+
+                        <input id="minstockquantity" name="minstockquantity"
+                               type="number"
+                               pattern="[0-9]+([,\.][0-9]+)?"
+                               class="umb-editor umb-number"
+                               ng-model="model.value.minStockQuantity" />
+
+                    </div>
+                </div>
+            </umb-box-content>
+        </umb-box>
+        
+        <div ng-repeat="warehouse in model.warehouses">
+            <umb-box>              
+                <umb-box-header title="Warehouse: {{warehouse.Name}}"></umb-box-header>
+
+                <umb-box-content>
+
+                    <div class="row">
+                        <div class="span4">
+                            <localize key="amazilia_stockquantity"></localize>
+                        </div>
+                        <div class="span4">
+                            <localize key="amazilia_reservedstockquantity"></localize>
+                        </div>
+                        <div class="span4">
+                            <localize key="amazilia_plannedstockquantity"></localize>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="span4">
+                            <input id="{{'warehouse_' + warehouse.Id}}" name="warehouse"
+                                   type="number"
+                                   pattern="[0-9]+([,\.][0-9]+)?"
+                                   class="umb-editor umb-number"
+                                   ng-model="model.value.stockQuantity[warehouse.Id].quantity" />
+                            <span class="help-inline" val-msg-for="warehouse" val-toggle-msg="amz_mandatory"><localize key="validation_invalidNumber">Not a number</localize></span>
+                        </div>
+
+                        <div class="span4">
+                            <input id="{{'warehouse_' + warehouse.Id}}" name="warehouse"
+                                   type="number"
+                                   pattern="[0-9]+([,\.][0-9]+)?"
+                                   class="umb-editor umb-number"
+                                   ng-model="model.value.stockQuantity[warehouse.Id].reserved" />
+                            <span class="help-inline" val-msg-for="warehouse" val-toggle-msg="amz_mandatory"><localize key="validation_invalidNumber">Not a number</localize></span>
+                        </div>
+
+                        <div class="span4">
+                            <input id="{{'warehouse_' + warehouse.Id}}" name="warehouse"
+                                   type="number"
+                                   pattern="[0-9]+([,\.][0-9]+)?"
+                                   class="umb-editor umb-number"
+                                   ng-model="model.value.stockQuantity[warehouse.Id].planned" />
+                            <span class="help-inline" val-msg-for="warehouse" val-toggle-msg="amz_mandatory"><localize key="validation_invalidNumber">Not a number</localize></span>
+                        </div>
+
+                    </div>
+
+                </umb-box-content>
+            </umb-box>
+        </div>
+
+        <div ng-if="model.warehouses.length === 0">
+            No warehouses yet, please create one, to maintain the stock inventory.
+        </div>
+    </div>
+</div>
+
+
+

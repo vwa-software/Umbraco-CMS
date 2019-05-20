@@ -1,0 +1,144 @@
+﻿<div ng-controller="Amazilia.RootController">
+    <div ng-controller="Amazilia.PriceGroupEditorController">
+        <umb-load-indicator ng-if="page.loading"></umb-load-indicator>
+
+        <form name="contentForm"
+              ng-submit="Save()"
+              novalidate
+              val-form-manager>
+            <umb-editor-view ng-if="!page.loading" umb-tabs>
+                <!--menu="$parent.menu"-->
+                <umb-editor-header menu="page.menu" name="Data.PriceGroup.Name"
+                                   name-locked="page.nameLocked"
+                                   tabs="Tabs"
+                                   hide-icon="false"
+                                   hide-description="false"
+                                   hide-alias="true">
+                </umb-editor-header>
+
+                <umb-editor-container>
+                    <umb-tabs-content view="true">
+                        <umb-tab id="tab0" rel="0">
+                            <umb-pane>
+                                <umb-editor-sub-header>
+                                    <umb-editor-sub-header-content-left>
+                                        <umb-editor-sub-header-section>
+                                            <localize ng-if="id=='0'" key="amazilia_addPriceGroup">Add pricegroup</localize>
+                                            <localize ng-if="id!='0'" key="amazilia_editPriceGroup">Edit pricegroup</localize>
+                                        </umb-editor-sub-header-section>
+                                    </umb-editor-sub-header-content-left>
+                                </umb-editor-sub-header>
+                            </umb-pane>
+
+                            <div class="form-horizontal">
+                                <div class="umb-pane">
+                                    <umb-control-group label="@general_name">
+                                        <input name="pricegroup_name" type="text" maxlength="255" ng-model="Data.PriceGroup.Name" required class="umb-editor umb-textstring" />
+                                        <span class="help-inline" val-msg-for="pricegroup_name" ng-show="contentForm.pricegroup_name.$invalid"><localize key="general_required">Required</localize></span>
+                                    </umb-control-group>
+                                 
+                                    <umb-control-group label="@general_alias">
+                                        <umb-generate-alias enable-lock="true"
+                                                            alias-from="Data.PriceGroup.Name"
+                                                            alias="Data.PriceGroup.Alias">
+                                        </umb-generate-alias>
+
+                                        <span class="help-inline" val-msg-for="pricegroup_name" ng-show="contentForm.lockedField.$invalid">{{contentForm.lockedFieldForm.lockedField.errorMsg}}</span>
+                                    </umb-control-group>
+                                  
+                                    <umb-control-group label="@amazilia_currency">
+                                        <select ng-options="currency.Value as currency.Text for currency in Data.Currencies" ng-model="Data.PriceGroup.CurrencyId"></select>
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@general_default">
+                                        <input name="pricegroup_default" type="checkbox" ng-model="Data.PriceGroup.Default" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+
+                                    <!--<umb-control-group label="@amazilia_sslEnabled">
+        <input type="checkbox" ng-model="Data.SslEnabled" class="umb-editor umb-textstring" />
+    </umb-control-group>
+
+    <umb-control-group label="@amazilia_secureUrl">
+        <input type="text" maxlength="512" ng-model="Data.SecureUrl" class="umb-editor umb-textstring" />
+    </umb-control-group>-->
+
+                                    <umb-control-group label="@amazilia_taxcategories" ng-if="Data.TaxCategories.length">
+                                        <div class="row" ng-repeat="taxcategory in Data.TaxCategories">
+                                            <span class="span2">{{taxcategory.Name}}</span>
+                                            <label class="span4" for=""><input type="number" ng-model="taxcategory.TaxRate" /><span>%</span></label>
+                                        </div>
+                                    </umb-control-group>
+
+
+                                    <umb-control-group label="@amazilia_limitedtostore" ng-if="Data.Stores.length">
+                                        <div ng-repeat="store in Data.Stores"> <label for=""><input type="checkbox" ng-model="store.Selected" />{{store.Text}}</label></div>
+                                    </umb-control-group>
+
+
+                                    <umb-control-group label="@amazilia_limitedtomembergroup" ng-if="Data.MemberGroups.length">
+                                        <div ng-repeat="membergroup in Data.MemberGroups"><label for=""><input type="checkbox" ng-model="membergroup.Selected" />{{membergroup.Text}}</label></div>
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@amazilia_limitedtocountry" ng-if="Data.Countries.length">
+                                        <div ng-repeat="country in Data.Countries"><label for=""><input type="checkbox" ng-model="country.Selected" />{{country.Text}}</label></div>
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@sort_sortOrder">
+                                        <input type="number" ng-model="Data.PriceGroup.DisplayOrder" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+
+                                </div>
+                            </div>
+                        </umb-tab>
+                    </umb-tabs-content>
+
+                </umb-editor-container>
+
+
+                <umb-editor-footer>
+
+                    <umb-editor-footer-content-left>
+
+                    </umb-editor-footer-content-left>
+
+                    <umb-editor-footer-content-right>
+
+                        <umb-button type="button"
+                                    action="$parent.navigateUp()"
+                                    label="Return to list"
+                                    label-key="buttons_returnToList"
+                                    disabled="page.loading">
+                        </umb-button>
+
+                        <umb-button type="submit"
+                                    button-style="success"
+                                    state="vm.saveButtonState"
+                                    shortcut="ctrl+s"
+                                    label="Save"
+                                    label-key="buttons_save"
+                                    disabled="contentForm.$invalid">
+                        </umb-button>
+
+
+                        <!--<div class="btn-group umb-button">
+                <input type="button" id="btnSave" ng-click="Save()" class="btn btn-success enable_button_child" value="Opslaan" />
+            </div>-->
+                    </umb-editor-footer-content-right>
+
+                </umb-editor-footer>
+
+                <!--<div class="umb-tab-buttons umb-editor-drawer">
+        <div class="umb-editor-drawer-content">
+            <div class="umb-editor-drawer-content__right-side">
+                <div class="btn-group umb-button">
+                    <input type="button" id="btnSave" ng-click="Save()" class="btn btn-success enable_button_child" value="Opslaan" />
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+            </umb-editor-view>
+
+        </form>
+    </div>
+</div>

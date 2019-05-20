@@ -1,0 +1,14 @@
+﻿@{
+    Layout = null;
+}
+<p>
+    U gaat betalen met de Manual payment info..
+
+</p>
+<p>
+    <label><input type="checkbox" value="1" name="paymentInfoCheck" />Gaat u hier mee akkoord></label>
+    <p class="error">
+        @Html.ValidationMessage("paymentInfoCheck")
+    </p>  
+
+</p>

@@ -1,0 +1,14 @@
+﻿<div class="umb-editor umb-radiobuttons" ng-controller="Amazilia.CheckoutStepEditor">
+    <div ng-if="model.isLoading">
+        <localize key="loading">Loading</localize>...
+    </div>
+
+    <ul class="unstyled" ng-if="!model.isLoading">
+        <li ng-repeat="item in model.items">
+            <label class="radio">
+                <input type="radio" name="radiobuttons-checkoutState" value="{{item.value}}" ng-model="model.value">
+                {{item.text}}
+            </label>
+        </li>
+    </ul>
+</div>

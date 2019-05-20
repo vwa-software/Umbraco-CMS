@@ -1,0 +1,46 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.ContentPage>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+}
+@Html.Partial("~/Views/Partials/SectionHeader.cshtml")
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <nav class="nav-bar nav-bar--list">
+                    @Html.Partial("~/Views/Partials/Navigation/SubNavigation.cshtml")
+                </nav>
+            </div>
+            <div class="col-md-6">
+                @Html.Action("LoginForm", "Membership", new { area = "Amazilia" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <nav class="nav-bar nav-bar--list">
+                    @Html.Partial("~/Views/Partials/Navigation/SubNavigation.cshtml")
+                </nav>
+            </div>
+            <div class="col-md-4">
+                <h3>Register as customer</h3>
+                @*Call to registration form action handeler on the membership controller, provide the membertype, and a array of membergroups the customer gets asigned to when registered*@
+                @Html.Action("RegistrationForm", "Membership", new { Membertype = "Customer", MemberGroups = new[] { "Customer" }, area = "Amazilia" })
+            </div>
+            <div class="col-md-4">
+                <h3>Register as Reseller</h3>
+                @*Call to registration form action handeler on the membership controller, provide the membertype, and a array of membergroups the customer gets asigned to when registered*@
+                @Html.Action("RegistrationForm", "Membership", new { Membertype = "B2B", MemberGroups = new[] { "B2B" }, area = "Amazilia" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-9">
+                <article>
+                    @Html.GetGridHtml(Model.Content, "bodyText", "bootstrap3-fluid")
+                </article>
+            </div>
+        </div>
+
+    </div>
+</section>

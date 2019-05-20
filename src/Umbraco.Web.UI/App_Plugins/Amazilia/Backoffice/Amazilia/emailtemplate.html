@@ -1,0 +1,168 @@
+﻿<div ng-controller="Amazilia.RootController">
+    <div ng-controller="Amazilia.EmailTemplateController">
+        <umb-load-indicator ng-if="page.loading"></umb-load-indicator>
+
+        <form name="contentForm"
+              ng-submit="Save()"
+              novalidate
+              val-form-manager>
+            <umb-editor-view ng-if="!page.loading" umb-tabs>
+                <!--menu="$parent.menu"-->
+                <umb-editor-header menu="page.menu" name="Data.emailTemplate.SystemName"
+                                   name-locked="page.nameLocked"
+                                   tabs="Tabs"
+                                   hide-icon="false"
+                                   hide-description="false"
+                                   hide-alias="true">
+                </umb-editor-header>
+
+                <umb-editor-container>
+                    <umb-tabs-content view="true">
+                        <umb-tab id="tab0" rel="0">
+                            <umb-pane>
+                                <umb-editor-sub-header>
+                                    <umb-editor-sub-header-content-left>
+                                        <umb-editor-sub-header-section>
+                                            <localize ng-if="id=='0'" key="amazilia_addEmailTemplate">Add email template</localize>
+                                            <localize ng-if="id!='0'" key="amazilia_editEmailTemplate">Edit email template</localize>
+                                        </umb-editor-sub-header-section>
+                                    </umb-editor-sub-header-content-left>
+                                </umb-editor-sub-header>
+                            </umb-pane>
+
+                            <div class="form-horizontal">
+                                <div class="umb-pane">
+                                    <umb-control-group label="@general_name">
+                                        <span ng-if="Data.emailTemplate.SystemName.length" class="umb-editor umb-textstring">{{Data.emailTemplate.SystemName}}</span>
+                                        <input ng-if="!Data.emailTemplate.SystemName.length" name="emailTemplate_name" type="text" maxlength="75" ng-model="Data.emailTemplate.SystemName" required class="umb-editor umb-textstring" />
+                                        <span class="help-inline" val-msg-for="emailTemplate_name" ng-show="contentForm.emailTemplate_name.$invalid"><localize key="general_required">Required</localize></span>
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@editcontenttype_description">
+                                        <textarea type="text" ng-model="Data.emailTemplate.Description" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@amazilia_subjectistemplate">
+                                        <input type="checkbox" name="emailTemplate_name" ng-model="Data.emailTemplate.SubjectIsView" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@amazilia_active">
+                                        <input type="checkbox" name="emailTemplate_Active" ng-model="Data.emailTemplate.Active" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+
+                                    
+
+                                    <umb-control-group ng-if="!Data.emailTemplate.SubjectIsView" label="@amazilia_subject">
+
+                                        <input name="emailTemplate_subject" type="text" maxlength="1000" ng-model="Data.emailTemplate.Subject" required class="umb-editor umb-textstring" />
+                                        <span class="help-inline" val-msg-for="emailTemplate_subject" ng-show="contentForm.emailTemplate_subject.$invalid"><localize key="general_required">Required</localize></span>
+                                        <div ng-repeat="lang in Data.languages">
+                                            <div class="language">{{lang.CultureName}}</div>
+                                            <input type="text" maxlength="1000" ng-model="Data.languageValues[lang.Id]['subject']" class="umb-editor umb-textstring" />
+                                        </div>
+
+                                    </umb-control-group>
+
+                                    <umb-control-group ng-if="Data.emailTemplate.SubjectIsView" label="@amazilia_subjecttemplate">
+                                        <input name="emailTemplate_subject" type="text" maxlength="1000" ng-model="Data.emailTemplate.Subject" required class="umb-editor umb-textstring" />
+                                        <span class="help-inline" val-msg-for="emailTemplate_subject" ng-show="contentForm.emailTemplate_subject.$invalid"><localize key="general_required">Required</localize></span>
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@amazilia_templatePath">
+                                        <input name="emailTemplate_templatePath" type="text" maxlength="260" ng-model="Data.emailTemplate.TemplatePath" required class="umb-editor umb-textstring" />
+                                        <span class="help-inline" val-msg-for="emailTemplate_templatePath" ng-show="contentForm.emailTemplate_templatePath.$invalid"><localize key="general_required">Required</localize></span>
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@amazilia_fromDisplayname">
+                                        <input name="emailTemplate_fromdisplayname" type="text" maxlength="500" ng-model="Data.emailTemplate.FromDisplayName" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@amazilia_fromEmail">
+                                        <input type="text" maxlength="500" ng-model="Data.emailTemplate.FromEmail" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@amazilia_replayToEmail">
+                                        <input type="text" maxlength="500" ng-model="Data.emailTemplate.ReplayToEmail" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@amazilia_replayToDisplayName">
+                                        <input type="text" maxlength="500" ng-model="Data.emailTemplate.ReplayToDisplayName" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+
+                                    <umb-control-group label="CC">
+                                        <input type="text" maxlength="500" ng-model="Data.emailTemplate.CC" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+                                    <umb-control-group label="BCC">
+                                        <input type="text" maxlength="500" ng-model="Data.emailTemplate.BCC" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+
+
+                                    <umb-control-group label="@amazilia_limitedtostore" ng-if="Data.stores.length">
+                                        <div ng-repeat="store in Data.stores"> <label><input type="checkbox" ng-model="store.Selected" />{{store.Text}}</label></div>
+                                    </umb-control-group>
+
+
+                                    <umb-control-group label="@amazilia_limitedtomembergroup" ng-if="Data.memberGroups.length">
+                                        <div ng-repeat="membergroup in Data.memberGroups"><label><input type="checkbox" ng-model="membergroup.Selected" />{{membergroup.Text}}</label></div>
+                                    </umb-control-group>
+
+
+                                    <umb-control-group label="@sort_sortOrder">
+                                        <input type="number" ng-model="Data.emailTemplate.DisplayOrder" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+
+                                </div>
+                            </div>
+                        </umb-tab>
+                    </umb-tabs-content>
+
+                </umb-editor-container>
+
+
+                <umb-editor-footer>
+
+                    <umb-editor-footer-content-left>
+
+                    </umb-editor-footer-content-left>
+
+                    <umb-editor-footer-content-right>
+
+                        <umb-button type="button"
+                                    action="$parent.navigateUp()"
+                                    label="Return to list"
+                                    label-key="buttons_returnToList"
+                                    disabled="page.loading">
+                        </umb-button>
+
+                        <umb-button type="submit"
+                                    button-style="success"
+                                    state="vm.saveButtonState"
+                                    shortcut="ctrl+s"
+                                    label="Save"
+                                    label-key="buttons_save"
+                                    disabled="contentForm.$invalid">
+                        </umb-button>
+
+
+                        <!--<div class="btn-group umb-button">
+                            <input type="button" id="btnSave" ng-click="Save()" class="btn btn-success enable_button_child" value="Opslaan" />
+                        </div>-->
+                    </umb-editor-footer-content-right>
+
+                </umb-editor-footer>
+
+                <!--<div class="umb-tab-buttons umb-editor-drawer">
+                    <div class="umb-editor-drawer-content">
+                        <div class="umb-editor-drawer-content__right-side">
+                            <div class="btn-group umb-button">
+                                <input type="button" id="btnSave" ng-click="Save()" class="btn btn-success enable_button_child" value="Opslaan" />
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+
+            </umb-editor-view>
+
+        </form>
+    </div>
+</div>

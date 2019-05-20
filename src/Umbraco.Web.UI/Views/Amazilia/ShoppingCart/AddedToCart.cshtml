@@ -1,0 +1,65 @@
+﻿@inherits UmbracoViewPage<Amazilia.Core.Domain.Catalog.Product>
+@using Amazilia.Core.Domain.Catalog
+@using Amazilia.Web.Extentions
+@{
+    Layout = null;
+}
+<div class="modal fade" id="amazilia_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <!-- Modal -->
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">@Model.Name added to your cart</h4>
+            </div>
+            <div class="modal-body">
+
+                <h4>This product is added to your cart:</h4>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="product-image-container">
+                            <img class="product-image" src="@(Model.UmbracoContent.GetPropertyValue<IEnumerable<IPublishedContent>>("photos").FirstOrDefault().Url)" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h1>@(Model.UmbracoContent.GetPropertyValue<string>("Product_Naam"))</h1>
+
+
+
+                        @if (Model.HasFromToPrice)
+                        {
+                            @Model.FormatedFromToPrice(true)
+                        }
+                        else
+                        {
+                            @Model.FormatedPrice(true, 1)
+                        }
+
+                        <div class="product-teaser">@Html.Raw(Model.UmbracoContent.GetPropertyValue<string>("Description"))</div>
+
+
+                        <div class="product-advantages">
+                            @if (Model.UmbracoContent.GetPropertyValue<IEnumerable<IPublishedContent>>("Features") != null)
+                            {
+                                foreach (var feature in Model.UmbracoContent.GetPropertyValue<IEnumerable<IPublishedContent>>("Features"))
+                                {
+                                    <div class="product-advantage">
+                                        <h4>@feature.GetPropertyValue("featureName")</h4>
+                                        <h5>@feature.GetPropertyValue("featureDetails")</h5>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

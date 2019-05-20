@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Web.UI", "Umbraco.Web.UI\Umbraco.Web.UI.csproj", "{4C4C194C-B5E4-4991-8F87-4373E24CC19F}"
 EndProject
@@ -100,6 +100,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{5B03EF4E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Tests.Benchmarks", "Umbraco.Tests.Benchmarks\Umbraco.Tests.Benchmarks.csproj", "{86DEB346-089F-4106-89C8-D852B9CF2A33}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Amazilia", "Amazilia", "{7CD513D3-A2F0-4AED-B249-30470224542C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amazilia.Core", "..\..\vwa-plugins-git\Amazilia.Core\Amazilia.Core.csproj", "{54F54202-2ED4-4631-B9D8-6A93BC42F641}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{2566D014-1A49-4C9B-AAD9-BEC0B44A0EEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amazilia.Plugins.Payment.Manual", "..\..\vwa-plugins-git\Plugins\Amazilia.Plugins.Payment.Manual\Amazilia.Plugins.Payment.Manual.csproj", "{CB91FFE3-EA54-4D5B-A518-E6F2720D757F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amazilia.Plugins.Shipping.FixedrateShipping", "..\..\vwa-plugins-git\Plugins\Amazilia.Plugins.Shipping.FixedrateShipping\Amazilia.Plugins.Shipping.FixedrateShi\Amazilia.Plugins.Shipping.FixedrateShipping.csproj", "{53A20E75-5617-4A05-8583-7B968A6950A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -168,6 +178,18 @@ Global
 		{86DEB346-089F-4106-89C8-D852B9CF2A33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86DEB346-089F-4106-89C8-D852B9CF2A33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86DEB346-089F-4106-89C8-D852B9CF2A33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54F54202-2ED4-4631-B9D8-6A93BC42F641}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54F54202-2ED4-4631-B9D8-6A93BC42F641}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54F54202-2ED4-4631-B9D8-6A93BC42F641}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54F54202-2ED4-4631-B9D8-6A93BC42F641}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB91FFE3-EA54-4D5B-A518-E6F2720D757F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB91FFE3-EA54-4D5B-A518-E6F2720D757F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB91FFE3-EA54-4D5B-A518-E6F2720D757F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB91FFE3-EA54-4D5B-A518-E6F2720D757F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53A20E75-5617-4A05-8583-7B968A6950A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53A20E75-5617-4A05-8583-7B968A6950A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53A20E75-5617-4A05-8583-7B968A6950A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53A20E75-5617-4A05-8583-7B968A6950A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -178,6 +200,10 @@ Global
 		{E3F9F378-AFE1-40A5-90BD-82833375DBFE} = {227C3B55-80E5-4E7E-A802-BE16C5128B9D}
 		{5B03EF4E-E0AC-4905-861B-8C3EC1A0D458} = {227C3B55-80E5-4E7E-A802-BE16C5128B9D}
 		{86DEB346-089F-4106-89C8-D852B9CF2A33} = {B5BD12C1-A454-435E-8A46-FF4A364C0382}
+		{54F54202-2ED4-4631-B9D8-6A93BC42F641} = {7CD513D3-A2F0-4AED-B249-30470224542C}
+		{2566D014-1A49-4C9B-AAD9-BEC0B44A0EEB} = {7CD513D3-A2F0-4AED-B249-30470224542C}
+		{CB91FFE3-EA54-4D5B-A518-E6F2720D757F} = {2566D014-1A49-4C9B-AAD9-BEC0B44A0EEB}
+		{53A20E75-5617-4A05-8583-7B968A6950A5} = {2566D014-1A49-4C9B-AAD9-BEC0B44A0EEB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B9072511-2B53-4676-9D37-2BAF47662040}

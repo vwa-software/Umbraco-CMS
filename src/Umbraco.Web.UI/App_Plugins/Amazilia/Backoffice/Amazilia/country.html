@@ -1,0 +1,227 @@
+﻿<div ng-controller="Amazilia.RootController">
+
+    <div ng-controller="Amazilia.CountryEditorController">
+        <umb-load-indicator ng-if="page.loading"></umb-load-indicator>
+       
+        <form name="contentForm"
+              ng-submit="Save()"
+              novalidate
+              val-form-manager>
+            <umb-editor-view ng-if="!page.loading" umb-tabs>
+
+                <umb-editor-header menu="page.menu" name="Data.Country.Name"
+                                   name-locked="page.nameLocked"
+                                   tabs="Tabs"
+                                   hide-icon="false"
+                                   hide-description="false"
+                                   hide-alias="true">
+                </umb-editor-header>
+
+                <umb-editor-container>
+                    <umb-tabs-content view="true">
+                        <umb-tab id="tab0" active rel="0">
+                            <umb-pane>
+                                <umb-editor-sub-header>
+                                    <umb-editor-sub-header-content-left>
+                                        <umb-editor-sub-header-section>
+                                            <localize ng-if="id=='0'" key="amazilia_addCountry"></localize>
+                                            <localize ng-if="id!='0'" key="amazilia_editCountry"></localize>:
+
+                                        </umb-editor-sub-header-section>
+                                    </umb-editor-sub-header-content-left>
+                                </umb-editor-sub-header>
+                            </umb-pane>
+
+                            <div class="form-horizontal">
+                                <div class="umb-pane">
+
+                                    <umb-control-group label="@general_name">
+                                        <input name="Country_name" type="text" maxlength="255" ng-model="Data.Country.Name" required class="umb-editor umb-textstring" />
+                                        <span class="help-inline" val-msg-for="Country_name" ng-show="contentForm.Country_name.$invalid"><localize key="general_required">Required</localize></span>
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@amazilia_twoLetterIsoCode">
+                                        <input name="Country_twoLetterIsoCode" type="text" maxlength="2" ng-model="Data.Country.TwoLetterIsoCode" required class="umb-editor umb-textstring" />
+                                        <span class="help-inline" val-msg-for="Country_twoLetterIsoCode" ng-show="contentForm.Country_twoLetterIsoCode.$invalid"><localize key="general_required">Required</localize></span>
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@amazilia_threeLetterIsoCode">
+                                        <input name="Country_threeLetterIsoCode" type="text" maxlength="3" ng-model="Data.Country.ThreeLetterIsoCode" required class="umb-editor umb-textstring" />
+                                        <span class="help-inline" val-msg-for="Country_threeLetterIsoCode" ng-show="contentForm.Country_threeLetterIsoCode.$invalid"><localize key="general_required">Required</localize></span>
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@amazilia_numericIsoCode">
+                                        <input name="Country_numericIsoCode" type="number" umb-number ng-model="Data.Country.NumericIsoCode" required class="umb-editor umb-textstring" />
+                                        <span class="help-inline" val-msg-for="Country_numericIsoCode" ng-show="contentForm.Country_numericIsoCode.$invalid"><localize key="general_required">Required</localize></span>
+                                    </umb-control-group>
+
+
+                                    <umb-control-group label="@amazilia_allowsBilling">
+                                        <umb-toggle checked="Data.Country.AllowsBilling"
+                                                    on-click="toggle('AllowsBilling')"
+                                                    show-labels="false">
+                                        </umb-toggle>
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@amazilia_allowsShipping">
+                                        <umb-toggle checked="Data.Country.AllowsShipping"
+                                                    on-click="toggle('AllowsShipping')"
+                                                    show-labels="false">
+                                        </umb-toggle>
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@amazilia_subjectToVat">
+                                        <umb-toggle checked="Data.Country.SubjectToVat"
+                                                    on-click="toggle('SubjectToVat')"
+                                                    show-labels="false">
+                                        </umb-toggle>
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@content_published">
+                                        <umb-toggle checked="Data.Country.Published"
+                                                    on-click="toggle('Published')"
+                                                    show-labels="false">
+                                        </umb-toggle>
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@amazilia_limitedtostore" ng-if="Data.Stores.length">
+                                        <div ng-repeat="store in Data.Stores"> <label for=""><input type="checkbox" ng-model="store.Selected" />{{store.Text}}</label></div>
+                                    </umb-control-group>
+
+                                    <umb-control-group label="@sort_sortOrder">
+                                        <input type="number" ng-model="Data.Country.DisplayOrder" class="umb-editor umb-textstring" />
+                                    </umb-control-group>
+
+                                </div>
+                            </div>
+                        </umb-tab>
+                        <umb-tab id="tab1" rel="1">
+
+                            <div class="form-horizontal">
+                                <div class="umb-pane">
+                                    <div class="umb-table">
+                                        <div class="umb-table-head">
+                                            <div class="umb-table-row">
+                                                <div class="umb-table-cell"></div>
+                                                <div class="umb-table-cell">
+                                                    <localize key="general_name"></localize>
+                                                </div>
+                                                <div class="umb-table-cell">
+                                                    <localize key="amazilia_abbreviation"></localize>
+                                                </div>
+                                                <div class="umb-table-cell">
+                                                    <localize key="content_published"></localize>
+                                                </div>
+                                                <div class="umb-table-cell">
+                                                    <localize key="sort_sortOrder"></localize>
+                                                </div>
+                                                <div class="umb-table-cell"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="umb-table-body umb-grid">
+                                            <div class="umb-table-row" ng-repeat="countryState in Data.Country.CountryStates">
+                                                <div class="umb-table-cell"></div>
+                                                <div class="umb-table-cell">
+                                                    <input ng-if="countryState.edit" type="text" ng-model="countryState.Name" />
+                                                    <div ng-if="!countryState.edit">{{countryState.Name}}</div>
+                                                </div>
+                                                <div class="umb-table-cell">
+                                                    <input ng-if="countryState.edit" type="text" ng-model="countryState.Abbreviation" />
+                                                    <div ng-if="!countryState.edit">{{countryState.Abbreviation}}</div>
+                                                </div>
+                                                <div class="umb-table-cell">
+                                                    <input ng-if="countryState.edit" type="checkbox" ng-model="countryState.Published" />
+                                                    <div ng-if="!countryState.edit">{{countryState.Published}}</div>
+                                                </div>
+                                                <div class="umb-table-cell">
+                                                    <input ng-if="countryState.edit" type="text" ng-model="countryState.DisplayOrder" />
+                                                    <div ng-if="!countryState.edit">{{countryState.DisplayOrder}}</div>
+                                                </div>
+                                                <div class="umb-table-cell ">
+                                                    <div class="umb-tools" style="overflow:visible">
+                                                        <div class="umb-control-tool" ng-if="!countryState.edit">
+                                                            <span ng-click="countryState.edit=true"><i class="icon icon-edit"></i></span>
+                                                            <i class="umb-control-tool-icon icon-trash" ng-click="togglePrompt(countryState)"></i>
+                                                            <umb-confirm-action ng-if="countryState.deletePrompt"
+                                                                                direction="left"
+                                                                                on-confirm="deleteState(countryState)"
+                                                                                on-cancel="hidePrompt(countryState)">
+                                                            </umb-confirm-action>
+                                                        </div>
+                                                        <div class="umb-control-tool" ng-if="countryState.edit">
+                                                            <span ng-click="countryState.edit=false"><i class="icon icon-check"></i></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="umb-table-row">
+                                                <div class="umb-table-cell"></div>  <div class="umb-table-cell"></div>  <div class="umb-table-cell"></div>
+                                                <div class="umb-table-cell">
+                                                    <div class="umb-tools">
+                                                        <span class="iconBox" ng-click="AddcountryState()"><i class="icon icon-add" title="add" localize="title"></i></span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </umb-tab>
+                    </umb-tabs-content>
+
+                </umb-editor-container>
+
+
+                <umb-editor-footer>
+
+                    <umb-editor-footer-content-left>
+
+                    </umb-editor-footer-content-left>
+
+                    <umb-editor-footer-content-right>
+                        <umb-button type="button"
+                                    action="$parent.navigateUp()"
+                                    label="Return to list"
+                                    label-key="buttons_returnToList"
+                                    disabled="page.loading">
+                        </umb-button>
+
+                        <umb-button type="submit"
+                                    button-style="success"
+                                    state="saveButtonState"
+                                    shortcut="ctrl+s"
+                                    label="Save"
+                                    label-key="buttons_save"
+                                    disabled="contentForm.$invalid">
+                        </umb-button>
+
+
+                        <!--<div class="btn-group umb-button">
+                        <input type="button" id="btnSave" ng-click="Save()" class="btn btn-success enable_button_child" value="Opslaan" />
+                    </div>-->
+                    </umb-editor-footer-content-right>
+
+                </umb-editor-footer>
+
+                <!--<div class="umb-tab-buttons umb-editor-drawer">
+                <div class="umb-editor-drawer-content">
+                    <div class="umb-editor-drawer-content__right-side">
+                        <div class="btn-group umb-button">
+                            <input type="button" id="btnSave" ng-click="Save()" class="btn btn-success enable_button_child" value="Opslaan" />
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+
+            </umb-editor-view>
+
+        </form>
+    </div>
+
+</div>

@@ -1,0 +1,59 @@
+﻿<div ng-controller="Amazilia.RootController">
+    <div ng-controller="Amazilia.ListEditorController">
+        <umb-load-indicator ng-if="page.loading"></umb-load-indicator>
+
+        <form name="contentForm"
+              novalidate
+              val-form-manager>
+            <umb-editor-view ng-if="!page.loading">
+
+                <!--menu="$parent.menu"-->
+                <umb-editor-header name="page.name"
+                                   name-locked="true"
+                                   hide-icon="false"
+                                   hide-description="false"
+                                   hide-alias="true">
+                </umb-editor-header>
+
+                <umb-editor-container>
+                    <!--<umb-pane>
+                        <umb-editor-sub-header>
+                            <umb-editor-sub-header-content-left>
+                                <umb-editor-sub-header-section>
+                                    <localize key="amazilia_taxcategories"></localize>
+                                </umb-editor-sub-header-section>
+                            </umb-editor-sub-header-content-left>
+                            <umb-editor-sub-header-content-right>
+
+                                <umb-editor-sub-header-section>
+                                    <strong ng-show="actionInProgress" ng-bind="bulkStatus"></strong>
+                                    <div class="umb-loader-wrapper -bottom" ng-show="actionInProgress">
+                                        <div class="umb-loader"></div>
+                                    </div>
+                                </umb-editor-sub-header-section>
+
+                            </umb-editor-sub-header-content-right>
+                        </umb-editor-sub-header>
+                    </umb-pane>-->
+                  
+                    <div class="form-horizontal">
+                        <div class="umb-pane">
+                            <umb-table items="Data.Items" item-properties="options.includeProperties" on-click="item_click">
+                            </umb-table>
+                        </div>
+                    </div>
+
+
+                </umb-editor-container>
+
+                <umb-editor-footer>
+                    <umb-editor-footer-content-left>
+                    </umb-editor-footer-content-left>
+                    <umb-editor-footer-content-right>
+
+                    </umb-editor-footer-content-right>
+                </umb-editor-footer>
+            </umb-editor-view>
+        </form>
+    </div>
+</div>

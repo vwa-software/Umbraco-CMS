@@ -1,0 +1,27 @@
+﻿<div ng-controller="Amazilia.RootController" endpoint.address="Warehouse">
+    <div ng-controller="Amazilia.EntityEditorController" ng-init="init(['tc_0', 'tc_6'])">
+        <umb-load-indicator ng-if="page.loading"></umb-load-indicator>
+        <umb-editor-view ng-if="!page.loading">
+            <!--menu="$parent.menu"-->
+            <umb-editor-header name="'Warehouses'"
+                               name-locked="true"
+                               hide-icon="false"
+                               hide-description="false"
+                               hide-alias="true">
+            </umb-editor-header>
+
+            <umb-editor-container>
+                <div class="form-horizontal">
+                    <div class="umb-pane">
+                        <amz-gridview endpointurl="backoffice/Amazilia/shippingmethod" actionsuffix="warehouse" loading='page.loading' entityname="Warehouse"></amz-gridview>
+                    </div>
+                </div>
+            </umb-editor-container>
+
+            <umb-editor-footer>
+              
+            </umb-editor-footer>
+        </umb-editor-view>
+
+    </div>
+</div>
