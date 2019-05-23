@@ -17,7 +17,8 @@
         </umb-box>       
         <div ng-repeat="pricegroup in model.priceGroups">
             <umb-box>
-                <umb-box-header title="{{pricegroup.Name}}"></umb-box-header>
+                
+                <umb-box-header title="{{pricegroup.Name}} ({{pricegroup.Currency.Name}})"></umb-box-header>
                 <umb-box-content>
                     <div class="row">
                         <div class="span2">

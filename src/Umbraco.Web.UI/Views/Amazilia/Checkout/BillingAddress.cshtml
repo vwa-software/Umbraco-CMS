@@ -16,8 +16,7 @@
     </div>
     <div class="page-body checkout-data">
 
-        @{using (Html.BeginUmbracoForm<CheckoutController>
-                                ("BillingAddressSubmit", new { area = "Amazilia" }))
+        @{using (Html.BeginUmbracoForm<CheckoutController>("BillingAddressSubmit", new { area = "Amazilia" }))
             {
                 <div class="billing-addresses">
 
@@ -33,16 +32,15 @@
 
                     @if (Model.Addresses.Count() > 0)
                     {
-                        <div class="section select-billing-address">
-                            <div class="title">
+                        <div class="select-billing-address">
+                            <h4 class="title text-center">
                                 <strong>Select billing address</strong>
-                            </div>
+                            </h4>
                             <div class="address-grid row">
 
                                 @foreach (var item in Model.Addresses)
                                 {
                                     <div class="col-md-4 ">
-
                                         <div class="address-item list-group addressId@(item.Id) ">
                                             <div class="row">
                                                 <div class="col-xs-6">
@@ -122,8 +120,8 @@
                             $('.addressId' + id + ' .select-button').addClass('selected');
                         }
                     </script>
-                    <div class="section new-billing-address">
-                        <div class="title">
+                    <div class="new-billing-address">
+                        <h4 class="title text-center">
                             @if (Model.Addresses.Count() > 0)
                             {
                                 <strong>Or enter new billing address</strong>
@@ -132,7 +130,7 @@
                             {
                                 <strong>Enter billing address</strong>
                             }
-                        </div>
+                        </h4>
 
                         <div class="enter-address">
                             @{
@@ -154,13 +152,12 @@
                         </div>
                     </div>
 
-                    <div class="section">
-                        <div class="form-control">
-                            @Html.LabelFor(model => model.SkipBillingAddress, "Skip shipping address", new { @class = "col-md-4" })
-                            @Html.EditorFor(model => model.SkipBillingAddress, new { @class = "col-md-8" })
+                    <div class="">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SkipBillingAddress, "Skip shipping address", new { @class = "col-md-3" })
+                            @Html.EditorFor(model => model.SkipBillingAddress, new { @class = "col-md-9" })
                             @Html.ValidationMessageFor(model => model.SkipBillingAddress)
-                        </div>
-                                                
+                        </div>                                                
                     </div>
                 </div>
 

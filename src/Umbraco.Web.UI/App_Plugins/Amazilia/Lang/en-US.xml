@@ -21,6 +21,13 @@
         <key alias="installplugin">Install</key>
         <key alias="installpluginDescription">Install or uninstall the plugin</key>
         <key alias="rate">rate</key>
+        <key alias ="tax">Tax</key>
+        <!--Tax -->
+        <key alias="tax">Tax</key>
+        <key alias="shippingIsTaxable">Shipping Taxable</key>
+        <key alias="shippingTaxCategory">Shipping tax category</key>
+        <key alias="paymentMethodAdditionalFeeIsTaxable">Paymentmethod fee is taxable</key>
+        <key alias="paymentMethodAdditionalFeeTaxCategory">Paymentmethod tax category</key>
         
         <!--Stock-->
         <key alias="stockinfo">Stock info</key>
@@ -98,6 +105,12 @@
         <key alias="ordersubtotal">Subtotal</key>
         <key alias="ordertotal">Total</key>
         <key alias="ordershippingcost">Shipping cost</key>
+        <key alias="anonymousCheckoutAllowed">Anonumous checkout</key>        
+        <key alias="anonymousCheckoutAllowed.description">Allow anonumous checkout?</key>
+        <key alias="orderFormat">OrderFormat</key>
+        <key alias="orderFormat.description">The custom order format, use {0} to insert the order id</key>
+        <key alias="orderIdOffset">Order ID offset</key>
+        <key alias="orderIdOffset.description">The offset of the custom order format</key>
 
 
         <!--Email templates-->

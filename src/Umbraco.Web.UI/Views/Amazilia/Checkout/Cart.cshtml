@@ -25,12 +25,11 @@
         @*we add enctype = "multipart/form-data" because "File upload" attribute control type requires it*@
         //using (Html.BeginRouteForm("ShoppingCart", FormMethod.Post, new { enctype = "multipart/form-data", id = "shopping-cart-form" }))
         //{
-        using (Html.BeginUmbracoForm<CheckoutController>
-                                              ("CartSubmit", new { area = "Amazilia" }))
+        using (Html.BeginUmbracoForm<CheckoutController>("CartSubmit", new { area = "Amazilia" }))
         {
             @Html.AntiForgeryToken()
             <div class="table-wrapper">
-                <table class="cart">
+                <table class="cart table">
                     <colgroup>
                         @if (Model.IsEditable)
                         {
@@ -114,50 +113,50 @@
                                             <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })"><img alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" title="@item.Picture.Title" /></a>
                                         </td>
                                     }*@
-                                <td class="product">
-
-                                    <a href="@item.Product.UmbracoContent.Name" class="product-name">@item.Product.UmbracoContent.Name</a>
-                                    @if (!String.IsNullOrEmpty(item.AttributeInfo))
-                                    {
-                                        <div class="attributes">
-                                            @Html.Raw(item.AttributeInfo)
-                                        </div>
-                                    }
-                                    @if (!String.IsNullOrEmpty(item.RecurringInfo))
-                                    {
-                                        <div class="recurring-info">
-                                            @Html.Raw(item.RecurringInfo)
-                                        </div>
-                                    }
-                                    @if (!String.IsNullOrEmpty(item.RentalInfo))
-                                    {
-                                        <div class="rental-info">
-                                            @Html.Raw(item.RentalInfo)
-                                        </div>
-                                    }
-                                    @if (Model.IsEditable && item.AllowItemEditing)
-                                    {
-                                        var editCartItemUrl = Url.RouteUrl("Product", new { SeName = item.ProductSeName });
-                                        editCartItemUrl = "todo";// webHelper.ModifyQueryString(editCartItemUrl, "updatecartitemid=" + item.Id, null);
-                                        <div class="edit-item">
-                                            <a href="@editCartItemUrl">@Umbraco.GetDictionaryValue("Common.Edit", "Edit")</a>
-                                        </div>
-                                    }
-                                    @if (item.Warnings.Count > 0)
-                                    {
-                                        <div class="message-error">
-                                            <ul>
-                                                @foreach (var warning in item.Warnings)
-                                                {
-                                                    <li>@warning</li>
-                                                }
-                                            </ul>
-                                        </div>
-                                    }
-                                </td>
+                                    <td class="product">
+                                        <label class="td-title">@Umbraco.GetDictionaryValue("ShoppingCart.Product(s)", "Products"):</label><br/>
+                                        <a href="@item.Product.UmbracoContent.Name" class="product-name">@item.Product.UmbracoContent.Name</a>
+                                        @if (!String.IsNullOrEmpty(item.AttributeInfo))
+                                        {
+                                            <div class="attributes">
+                                                @Html.Raw(item.AttributeInfo)
+                                            </div>
+                                        }
+                                        @if (!String.IsNullOrEmpty(item.RecurringInfo))
+                                        {
+                                            <div class="recurring-info">
+                                                @Html.Raw(item.RecurringInfo)
+                                            </div>
+                                        }
+                                        @if (!String.IsNullOrEmpty(item.RentalInfo))
+                                        {
+                                            <div class="rental-info">
+                                                @Html.Raw(item.RentalInfo)
+                                            </div>
+                                        }
+                                        @if (Model.IsEditable && item.AllowItemEditing)
+                                        {
+                                            var editCartItemUrl = Url.RouteUrl("Product", new { SeName = item.ProductSeName });
+                                            editCartItemUrl = "todo";// webHelper.ModifyQueryString(editCartItemUrl, "updatecartitemid=" + item.Id, null);
+                                            <div class="edit-item">
+                                                <a href="@editCartItemUrl">@Umbraco.GetDictionaryValue("Common.Edit", "Edit")</a>
+                                            </div>
+                                        }
+                                        @if (item.Warnings.Count > 0)
+                                        {
+                                            <div class="message-error">
+                                                <ul>
+                                                    @foreach (var warning in item.Warnings)
+                                                    {
+                                                        <li>@warning</li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        }
+                                    </td>
                                 <td class="unit-price">
                                     <label class="td-title">@Umbraco.GetDictionaryValue("ShoppingCart.UnitPrice", "Unit Price"):</label>
-                                    <span class="product-unit-price">@item.UnitPrice.FormatPriceInclTax()</span>
+                                    <span class="product-unit-price text-nowrap">@item.UnitPrice.FormatPriceInclTax()</span>
                                 </td>
                                 <td class="quantity">
                                     <label class="td-title">@Umbraco.GetDictionaryValue("ShoppingCart.Quantity", "Quantity"):</label>
@@ -174,7 +173,7 @@
                                         }
                                         else
                                         {
-                                            <input name="itemquantity@(item.Id)" @(item.Product.ManageInventory ? "max=" + item.Product.StockQuantity.ToString() : "") type="text" value="@(item.Quantity)" class="qty-input" />
+                                            <input name="itemquantity@(item.Id)" @(item.Product.ManageInventory ? "max=" + item.Product.StockQuantity.ToString() : "") type="number" value="@(item.Quantity)" class="qty-input" />
                                         }
 
                                     }

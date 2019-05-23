@@ -528,7 +528,8 @@ angular.module("umbraco")
             $scope.data.includeProperties = [
                 { alias: "name", header: "Name" },
                 { alias: "quantity", header: "Quantity" },
-                { alias: "priceInclTax", header: "Price" }
+                { alias: "priceInclTax", header: "PriceInclTax" },
+                { alias: "priceExclTax", header: "PriceExclTax" }
             ];
 
         }]);
@@ -833,7 +834,7 @@ angular.module("umbraco")
 
             $scope.Save = function () {
                 $scope.buttonState = "busy";
-                $scope.page.loading = true;
+              //  $scope.page.loading = true;
 
                 $http.post('backoffice/Amazilia/Settings/SaveSettings/', $scope.Data).then(function (res) {
                   

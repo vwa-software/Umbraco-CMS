@@ -6,7 +6,6 @@
     Layout = "Master.cshtml";
 
     var product = ProductService.GetProductByContent(Model.Content);
-
     var variant = product;
 
     //todo, get the correct variant
@@ -20,7 +19,7 @@
     {
         product = ProductService.GetProductByContent(variant.UmbracoContent.Parent);
     }
-
+    
     bool showPriceInclTax = true;
 }
 
@@ -60,7 +59,14 @@
 
                 @if (product.ProductType == Amazilia.Core.Domain.Catalog.ProductType.GroupedProduct)
                 {
+                    <h4>Properties</h4>
+                    <p>
+                        Size : @(variant.UmbracoContent.GetPropertyValue<string>("size"))<br />
+                        Color : @(variant.UmbracoContent.GetPropertyValue<string>("color"))<br />
+                    </p>
+
                     @Html.Partial("Amazilia/Product/VariantChoice", product)
+
                 }
 
                 <div class="product-teaser">@Model.Content.Description</div>

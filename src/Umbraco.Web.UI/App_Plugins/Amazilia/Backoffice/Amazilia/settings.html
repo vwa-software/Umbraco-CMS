@@ -1,4 +1,4 @@
-﻿<div ng-controller="Amazilia.RootController"  >
+﻿<div ng-controller="Amazilia.RootController">
     <div ng-controller="Amazilia.SettingsController">
         <umb-load-indicator ng-if="page.loading"></umb-load-indicator>
         <form name="contentForm"
@@ -17,15 +17,60 @@
 
                 <umb-editor-container>
                     <div class="form-horizontal">
-                        <div class="umb-pane">
-                           
-                            <umb-control-group label="@amazilia_primaryExchangeRatecurrency">
-                                <select ng-options="currency.Value as currency.Text for currency in Data.Currencies" ng-model="Data.currencySettings.primaryExchangeRateCurrencyId"></select>
-                            </umb-control-group>
-                            <umb-control-group label="@amazilia_primaryStorecurrency">
-                                <select ng-options="currency.Value as currency.Text for currency in Data.Currencies" ng-model="Data.currencySettings.primaryStoreCurrencyId"></select>
-                            </umb-control-group>
-                        </div>
+
+                        <umb-box>
+                            <umb-box-header title-key="amazilia_currency" description-key="amazilia_currency.description"></umb-box-header>
+                            <umb-box-content>
+                                <umb-control-group label="@amazilia_primaryExchangeRatecurrency">
+                                    <select ng-options="currency.Value as currency.Text for currency in Data.currencies" ng-model="Data.currencySettings.primaryExchangeRateCurrencyId"></select>
+                                </umb-control-group>
+                                <umb-control-group label="@amazilia_primaryStorecurrency">
+                                    <select ng-options="currency.Value as currency.Text for currency in Data.currencies" ng-model="Data.currencySettings.primaryStoreCurrencyId"></select>
+                                </umb-control-group>
+                            </umb-box-content>
+                        </umb-box>
+
+
+                        <umb-box>
+                            <umb-box-header title-key="amazilia_order" description="amazilia_order.description"></umb-box-header>
+                            <umb-box-content>
+                                <umb-control-group label="@amazilia_anonymousCheckoutAllowed" description="@amazilia_anonymousCheckoutAllowed.description">
+                                    <input type="checkbox" ng-model="Data.orderSettings.anonymousCheckoutAllowed" />
+                                </umb-control-group>
+                                <umb-control-group label="@amazilia_orderFormat" description="@amazilia_orderFormat.description">
+                                    <input type="text" ng-model="Data.orderSettings.orderFormat" />
+                                </umb-control-group>
+                                <umb-control-group label="@amazilia_orderIdOffset" description="@amazilia_orderIdOffset.description">
+                                    <input type="number" ng-model="Data.orderSettings.orderIdOffset" />
+                                </umb-control-group>
+                            </umb-box-content>
+                        </umb-box>
+
+
+                        <umb-box>
+                            <umb-box-header title-key="amazilia_tax" description="amazilia_tax.description"></umb-box-header>
+                            <umb-box-content>
+
+                                <umb-control-group label="@amazilia_shippingIsTaxable" >
+                                    <input type="checkbox" ng-model="Data.taxSettings.shippingIsTaxable" />
+                                </umb-control-group>
+                                <umb-control-group label="@amazilia_shippingTaxCategory">
+
+                                    <select ng-options="category.Value as category.Text for category in Data.taxCategories" ng-model="Data.taxSettings.shippingTaxCategoryId"></select>
+
+                                   
+                                </umb-control-group>
+                                <umb-control-group label="@amazilia_paymentMethodAdditionalFeeIsTaxable" >
+                                    <input type="checkbox" ng-model="Data.taxSettings.paymentMethodAdditionalFeeIsTaxable" />
+                                </umb-control-group>
+                                <umb-control-group label="@amazilia_paymentMethodAdditionalFeeTaxCategory">
+
+                                    <select ng-options="category.Value as category.Text for category in Data.taxCategories" ng-model="Data.taxSettings.paymentMethodAdditionalFeeTaxCategoryId"></select>
+                                    
+                                </umb-control-group>
+
+                            </umb-box-content>
+                        </umb-box>
                     </div>
                 </umb-editor-container>
 
@@ -45,6 +90,6 @@
                 </umb-editor-footer>
 
             </umb-editor-view>
-            </form>
+        </form>
     </div>
 </div>

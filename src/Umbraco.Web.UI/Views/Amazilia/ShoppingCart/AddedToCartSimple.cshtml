@@ -1,0 +1,51 @@
+﻿@inherits UmbracoViewPage<Amazilia.Core.Domain.Catalog.Product>
+@using Amazilia.Core.Domain.Catalog
+@using Amazilia.Web.Extentions
+@{
+    /**/
+
+    Layout = null;
+    bool showPriceInclTax = true;
+}
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="product-image-container">
+            <img class="product-image" src="@(Model.UmbracoContent.GetPropertyValue<IEnumerable<IPublishedContent>>("photos").FirstOrDefault().Url)" />
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h1>@(Model.UmbracoContent.GetPropertyValue<string>("Product_Naam"))</h1>
+        @if (Model.HasFromToPrice)
+        {
+            @Model.FormatedFromToPrice(showPriceInclTax)
+        }
+        else
+        {
+            @Model.FormatedPrice(showPriceInclTax, 1)
+        }
+
+        @if (Model.TierPrices != null && Model.TierPrices.Where(a => a.Quantity > 1).Count() > 0)
+        {
+            @Html.Partial("Amazilia/Product/TierPrices", Model)
+        }
+        <div class="product-teaser">@Html.Raw(Model.UmbracoContent.GetPropertyValue<string>("Description"))</div>
+
+
+        <div class="product-advantages">
+            @if (Model.UmbracoContent.GetPropertyValue<IEnumerable<IPublishedContent>>("Features") != null)
+            {
+                foreach (var feature in Model.UmbracoContent.GetPropertyValue<IEnumerable<IPublishedContent>>("Features"))
+                {
+                    <div class="product-advantage">
+                        <h4>@feature.GetPropertyValue("featureName")</h4>
+                        <h5>@feature.GetPropertyValue("featureDetails")</h5>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+

@@ -19,6 +19,14 @@
             </nav>
         </div>
         <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-12">
+                    <article>
+                        @Html.GetGridHtml(Model.Content, "bodyText", "bootstrap3-fluid")
+                    </article>
+                </div>
+            </div>
+
             @{ switch (step)
                 {
                     case Amazilia.Core.Domain.Orders.CheckoutStep.Cart:
@@ -68,8 +76,8 @@
     </div>
 </section>
 
-<section class="cart">
+@*<section class="cart">
     <div class="container">
         @Html.Action("Cart", "Basket", new { area = "Amazilia" })
     </div>    
-</section>
+</section>*@
