@@ -22,6 +22,13 @@
         <key alias="installpluginDescription">Install or uninstall the plugin</key>
         <key alias="rate">rate</key>
         <key alias ="tax">Tax</key>
+        <key alias ="tax.description">Tax settings</key>
+        <key alias ="sku">Sku</key>
+        <key alias ="active">Active</key>
+        <key alias ="producttype">Producttype</key>
+
+
+        
         <!--Tax -->
         <key alias="tax">Tax</key>
         <key alias="shippingIsTaxable">Shipping Taxable</key>
@@ -33,7 +40,17 @@
         <key alias="stockinfo">Stock info</key>
         <key alias="stockquantity">Stock quantity</key>
         <key alias="manageinventory">Manage stock</key>
+        <key alias="reservedstockquantity">Reserved stock</key>
+        <key alias="plannedstockquantity">Planned stock</key>
+        <key alias="minstockquantity">Minimal stock</key>
+
+
         
+        <!--Shipping property editor-->
+        <key alias="weight">Weight</key>
+        <key alias="width">Width</key>
+        <key alias="height">Height</key>
+   
         <!--Store settings-->
         <key alias="store">Store</key>
         <key alias="stores">Stores</key>
@@ -99,6 +116,8 @@
         <!--Orders-->
         <key alias="orders">Orders</key>
         <key alias="order">Order</key>
+        <key alias="order.description">Order settings</key>
+        
         <key alias="orderId">Order id</key>
         <key alias="orderstatus">Order status</key>
         <key alias="orderGuid">Order guid</key>
@@ -111,6 +130,17 @@
         <key alias="orderFormat.description">The custom order format, use {0} to insert the order id</key>
         <key alias="orderIdOffset">Order ID offset</key>
         <key alias="orderIdOffset.description">The offset of the custom order format</key>
+        <key alias="companyname">Company name</key>
+        <key alias="CompanyAddress">Company address</key>
+        <key alias="CompanyPhoneNumber">Company phone number</key>
+        <key alias="CompanyVat">Company vat nr</key>
+        <key alias="address">Address</key>
+        <key alias="city">City</key>
+        <key alias="country">Country</key>
+        <key alias="zip">Zip</key>
+        <key alias="phone">Phone</key>
+
+
 
 
         <!--Email templates-->
@@ -125,12 +155,13 @@
         <key alias="templatePath">Template path</key>
         <key alias="templatePath">Template path</key>
         <key alias="fromDisplayname">From display name</key>
-        <key alias="fromfromEmail">From email address</key>
+        <key alias="fromEmail">From email address</key>
         <key alias="replyToEmail">Reply email address</key>
         <key alias="replyToDisplayName">Reply display name</key>
         <key alias="subjecttemplate">Subject template path</key>
         <key alias="subjectistemplate">Use template for subject?</key>
 
+       
         <key alias="generalconfiguration">Configuration</key>
        <key alias="primaryExchangeRatecurrency">Primary exchange rate currency</key>
         <key alias="primaryStorecurrency">Primary store currency</key>
