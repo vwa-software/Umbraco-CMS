@@ -1,0 +1,40 @@
+﻿<!--https://our.umbraco.com/documentation/tutorials/Creating-a-Custom-Dashboard/-->
+<form name="contentForm"
+	  novalidate
+	  val-form-manager>
+
+	<umb-editor-view ng-controller="ETC.Connector.SettingsController as vm">
+
+		<umb-editor-container >
+			<div class="welcome-dashboard">
+				<div class="welcome-dashboard">
+					<h3>Settings</h3>
+				</div>
+				<div class="form-horizontal">
+					<div class="umb-pane">
+						<umb-control-group label="Google Api key" description="Deze key is nodig om geografische coordinaten op te zoeken">
+							<input id="gaKey" type="text" name="GaKey" ng-model="Data.GaKey" required class="umb-editor umb-textstring" />
+						</umb-control-group>
+					</div>
+				</div>
+				<div class="form-horizontal">
+					<div class="umb-pane">
+						<umb-control-group label="Private Key" description="De Private API Key">
+							<input id="gaKey" type="text" name="PrivateKey" ng-model="Data.PrivateKey" required class="umb-editor umb-textstring" />
+						</umb-control-group>
+					</div>
+				</div>
+			</div>
+		</umb-editor-container>
+		<div class="umb-tab-buttons umb-editor-drawer">
+			<div class="umb-editor-drawer-content">
+				<div class="umb-editor-drawer-content__right-side">
+					<div class="btn-group umb-button">
+						<input type="button" id="btnCommit" ng-click="Commit()" class="btn btn-success enable_button_child" value="Opslaan" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</umb-editor-view>
+</form>

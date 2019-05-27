@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language alias="en" intName="English (UK)" localName="English (UK)" lcid="" culture="en-GB">
+	<creator>
+		<name>The Umbraco community</name>
+		<link>https://our.umbraco.com/documentation/Extending-Umbraco/Language-Files</link>
+	</creator>
+	<area alias="sections">
+		<key alias="ETCConnector">ETCConnector</key>
+		
+	</area>
+	
+	<area alias="ETCConnector">
+		<!--<key alias="sections_ETCConnector">ETC Connector</key>
+		<key alias="ETCConnector">ETC Connector</key>-->
+		
+	</area>
+</language>

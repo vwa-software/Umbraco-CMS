@@ -1,0 +1,151 @@
+﻿@model List<ETC.Connector.Model.ETC.HKLivingInvoice>
+@using ETC.B2B.WEB
+
+@{
+	var paging = new Paging(10);
+	paging.CalculatePages(Model.Count);
+	var sortedList = Model.OrderBy(a => a.Date).Skip((int)paging.Skip).Take(paging.Take).ToList();
+}
+
+@if (Model.Count == 0)
+{
+	<div style="font-size:12px; padding:10px 10px 10px 0px;"><blockquote>no invoices found</blockquote></div>
+}
+else
+{
+	<div class="row invoice head">
+		<div class="col-md-6">
+			invoice number
+		</div>
+		<div class="col-md-2">
+			invoice date
+		</div>
+		<div class="col-md-2">
+			total
+		</div>
+		<div class="col-md-2 invoicepdf">
+			<i class="fas fa-file-pdf"></i>
+		</div>
+	</div>
+
+	foreach (var invoice in sortedList)
+	{
+
+		<div id="wrapper-acc" class="accordionButton">
+			<div class="row invoice acc">
+				<div class="col-md-6 invoicenr">
+					invoice #@invoice.InvoiceNr
+				</div>
+				<div class="col-md-2 invoicedate">
+					@invoice.Date.ToShortDateString()
+				</div>
+				<div class="col-md-2 invoicetotal">
+					@invoice.Total.ToString("C")				
+				</div>
+
+				<div class="col-md-2 invoicepdf">
+					@if (!string.IsNullOrWhiteSpace(invoice.PathToPdf))
+					{
+						<a href="@invoice.PathToPdf"><i class="fas fa-file-pdf"></i></a>
+					}
+					<i class="fas fa-sort-down sort"></i>
+				</div>
+			</div>
+		</div>
+
+		<div class="invoiceitemswrapper accordionContent">
+
+			@if (invoice.HKLivingInvoiceItems.Count > 0)
+			{
+				<div class="row invoiceitem head">
+					<div class="col-md-2 artnr">
+						article number
+					</div>
+					<div class="col-md-6 artname">
+						name
+					</div>
+					<div class="col-md-2 artamount">
+						amount
+					</div>
+					<div class="col-md-2 artprice">
+						price
+					</div>
+				</div>
+				<div class="hk_accordion">
+
+
+					@foreach (var invoiceItem in invoice.HKLivingInvoiceItems)
+					{
+						<div class="row invoiceitem">
+							<div class="col-md-2 invoice">
+								@invoiceItem.Code
+							</div>
+							<div class="col-md-6 idescription">
+								@invoiceItem.Description
+							</div>
+							<div class="col-md-2 iamount">
+								@invoiceItem.Quantity.ToString("0.##")
+							</div>
+							<div class="col-md-2 iprice">
+								@((invoiceItem.TotalPriceEx + invoiceItem.TotalPriceVAT).ToString("C"))
+							</div>
+						</div>
+					}
+				</div>
+			}
+			else
+			{
+				<div class="empty">
+					No invoice line items available
+				</div>
+			}
+		</div> }
+
+	if (paging.TotalPages > 1)
+	{
+		//Paging
+		<div class="row row col-12 pagination" style="margin:20px 0px 0px 0px">
+			<nav aria-label="Page navigation" class="hk_pagination">
+				<ul class="pagination">
+					@RenderPaging(paging, paging.CurrentPage)
+				</ul>
+			</nav>
+		</div>
+	}
+
+}
+
+
+@helper RenderPaging(Paging paging, long currentId)
+{
+	/**/
+
+	<li class="page-item"><a class="@(paging.CurrentPage > 1 ? "" : "disabled") fas fa-step-backward" @(paging.CurrentPage > 1 ? "href=?page=" + paging.PreviousPage : "disabled")>&nbsp;</a></li>
+
+	if (paging.StartPageToShow > 1)
+	{
+		<li class="page-item"><a href="?page=1">1..</a><text>&nbsp;</text></li>
+	}
+
+	for (var i = paging.StartPageToShow; i <= paging.EndPageToShow; i++)
+	{
+		if (paging.CurrentPage == i)
+		{
+			<span><span>@i</span></span>
+		}
+		else
+		{
+			<li class="page-item"><a href="?page=@i">@i</a><text>&nbsp;</text></li>
+		}
+	}
+
+
+	if (paging.EndPageToShow < paging.TotalPages)
+	{
+		<li class="page-item"><a href="?page=@paging.TotalPages">...@paging.TotalPages</a><text>&nbsp;</text></li>
+	}
+
+
+	<li class="page-item"><a class="@(paging.CurrentPage < paging.TotalPages ? "" : "disabled") fas fa-step-forward" @(paging.CurrentPage < paging.TotalPages ? "href=?page=" + paging.NextPage : "disabled")>&nbsp;</a></li>
+
+}

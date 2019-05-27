@@ -110,6 +110,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amazilia.Plugins.Payment.Ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amazilia.Plugins.Shipping.FixedrateShipping", "..\..\vwa-plugins-git\Plugins\Amazilia.Plugins.Shipping.FixedrateShipping\Amazilia.Plugins.Shipping.FixedrateShi\Amazilia.Plugins.Shipping.FixedrateShipping.csproj", "{53A20E75-5617-4A05-8583-7B968A6950A5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "M-Plus", "M-Plus", "{F4B9D8FB-CF5D-4C40-999B-A67C9BA0947B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connector", "..\..\m-plus\Connector\Connector.csproj", "{8676B298-5256-4ABD-9C4C-ED0E2B853EA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETC.Connector", "..\..\m-plus\ETC.Connector\ETC.Connector.csproj", "{9E19F0F0-0050-419E-8EBD-AC97DCA967BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -190,6 +196,14 @@ Global
 		{53A20E75-5617-4A05-8583-7B968A6950A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53A20E75-5617-4A05-8583-7B968A6950A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53A20E75-5617-4A05-8583-7B968A6950A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8676B298-5256-4ABD-9C4C-ED0E2B853EA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8676B298-5256-4ABD-9C4C-ED0E2B853EA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8676B298-5256-4ABD-9C4C-ED0E2B853EA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8676B298-5256-4ABD-9C4C-ED0E2B853EA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E19F0F0-0050-419E-8EBD-AC97DCA967BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E19F0F0-0050-419E-8EBD-AC97DCA967BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E19F0F0-0050-419E-8EBD-AC97DCA967BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E19F0F0-0050-419E-8EBD-AC97DCA967BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -204,6 +218,8 @@ Global
 		{2566D014-1A49-4C9B-AAD9-BEC0B44A0EEB} = {7CD513D3-A2F0-4AED-B249-30470224542C}
 		{CB91FFE3-EA54-4D5B-A518-E6F2720D757F} = {2566D014-1A49-4C9B-AAD9-BEC0B44A0EEB}
 		{53A20E75-5617-4A05-8583-7B968A6950A5} = {2566D014-1A49-4C9B-AAD9-BEC0B44A0EEB}
+		{8676B298-5256-4ABD-9C4C-ED0E2B853EA2} = {F4B9D8FB-CF5D-4C40-999B-A67C9BA0947B}
+		{9E19F0F0-0050-419E-8EBD-AC97DCA967BB} = {F4B9D8FB-CF5D-4C40-999B-A67C9BA0947B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B9072511-2B53-4676-9D37-2BAF47662040}

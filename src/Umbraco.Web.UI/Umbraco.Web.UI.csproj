@@ -508,6 +508,16 @@
     <Content Include="App_Plugins\Amazilia\Lang\en-US.xml" />
     <Content Include="App_Plugins\Amazilia\Plugins\Amazilia.Plugins.Payment.Manual\Config.html" />
     <Content Include="App_Plugins\Amazilia\Plugins\Amazilia.Plugins.Shipping.Manual\Config.html" />
+    <Content Include="App_Plugins\ETCConnector\BackOffice\ETCConnector\edit.controller.js" />
+    <Content Include="App_Plugins\ETCConnector\BackOffice\ETCConnector\edit.html" />
+    <Content Include="App_Plugins\ETCConnector\BackOffice\ETCConnector\settings.controller.js" />
+    <Content Include="App_Plugins\ETCConnector\BackOffice\settings.html" />
+    <Content Include="App_Plugins\ETCConnector\Css\spider.css" />
+    <Content Include="App_Plugins\ETCConnector\Css\spider.svg" />
+    <Content Include="App_Plugins\ETCConnector\Directives\database-rule.html" />
+    <Content Include="App_Plugins\ETCConnector\Directives\spider-rule.html" />
+    <Content Include="App_Plugins\ETCConnector\install.sql" />
+    <Content Include="App_Plugins\ETCConnector\lang\en-us.xml" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.controller.js" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.htm" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.resource.js" />
@@ -556,6 +566,10 @@
     <Content Include="Umbraco\Install\Views\Web.config" />
     <Content Include="App_Plugins\ModelsBuilder\package.manifest" />
     <Content Include="App_Plugins\Amazilia\package.manifest" />
+    <Content Include="App_Plugins\ETCConnector\package.manifest" />
+    <Content Include="App_Plugins\ETCConnector\Views\Account\Invoices.cshtml" />
+    <Content Include="App_Plugins\ETCConnector\Views\Account\Orders.cshtml" />
+    <Content Include="App_Plugins\ETCConnector\Views\web.config" />
     <None Include="Config\404handlers.Release.config">
       <DependentUpon>404handlers.config</DependentUpon>
     </None>
