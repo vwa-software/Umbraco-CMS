@@ -390,7 +390,7 @@ angular.module("umbraco")
             $scope.Data = {};
             $scope.Data.Items = {};
 
-            $scope.loading = true;
+            $scope.page.loading = true;
 
             $scope.options = {};
 
@@ -401,9 +401,9 @@ angular.module("umbraco")
 
 
             var getOrders = function () {
-                $scope.loading = true;
+                $scope.page.loading = true;
                 $http.post('backoffice/Amazilia/Order/Orders', $scope.filterOptions).then(function (response) {
-                    $scope.loading = false;
+                    $scope.page.loading = false;
                     if (response.data.Ok) {
                         $scope.Data.Items = response.data.Data.items;
                         $scope.options.includeProperties = response.data.Data.properties;
@@ -422,11 +422,11 @@ angular.module("umbraco")
                         $scope.buttonState = "success";
                     }
                     else {
-                        $scope.loading = false;
+                        $scope.page.loading = false;
                         notificationsService.error("Error loading list", response.data.Message);
                     }
                 }, function (error) {
-                    $scope.loading = false;
+                        $scope.page.loading = false;
                     notificationsService.error("Error loading list", error);
                 });
             };

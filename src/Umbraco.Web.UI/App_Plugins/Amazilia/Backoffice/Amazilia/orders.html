@@ -1,47 +1,28 @@
 ﻿<div ng-controller="Amazilia.RootController">
     <div ng-controller="Amazilia.OrdersController">
-        <umb-load-indicator ng-if="page.loading"></umb-load-indicator>
-
+      
         <form name="contentForm"
               novalidate
               val-form-manager>
-            <umb-editor-view ng-if="!page.loading">
+            <umb-editor-view>
 
                 <!--menu="$parent.menu"-->
-               <umb-editor-header name="page.name"
+                <umb-editor-header name="page.name"
                                    name-locked="true"
                                    hide-icon="false"
                                    hide-description="false"
                                    hide-alias="true">
+
+                   
+
                 </umb-editor-header>
 
                 <umb-editor-container>
+
                     <!-- filter options look at: views\users\views\users-->
-                    <umb-pane ng-if="false">
-                        <umb-editor-sub-header>
-                            <umb-editor-sub-header-content-left>
-                                <umb-editor-sub-header-section>
-                                </umb-editor-sub-header-section>
-
-                            </umb-editor-sub-header-content-left>
-                            <umb-editor-sub-header-content-right>
-
-
-                                <umb-editor-sub-header-section>
-
-
-                                    <div class="umb-loader-wrapper -bottom" ng-show="loading">
-                                        <div class="umb-loader"></div>
-                                    </div>
-                                </umb-editor-sub-header-section>
-
-                            </umb-editor-sub-header-content-right>
-                        </umb-editor-sub-header>
-                    </umb-pane>
+                   
 
                     <umb-pane>
-
-
                         <div class="row">
                             <div class="span4">
 
@@ -61,7 +42,7 @@
                                             </umb-date-time-picker>
                                         </div>
                                     </div>
-                                </div>                               
+                                </div>
                             </div>
                             <div class="span4">
                                 <div class="control-group umb-control-group -no-border span4">
@@ -102,14 +83,30 @@
                                             action="doSearch()"
                                             label="Search"
                                             label-key="general_search"
-                                            disabled="loading">
+                                            disabled="page.loading">
                                 </umb-button>
                             </div>
                         </div>
 
                     </umb-pane>
                     <div class="form-horizontal">
+                        
+                            <umb-editor-sub-header>
+                                <umb-editor-sub-header-content-left>
+                                    <umb-editor-sub-header-section>
+                                    </umb-editor-sub-header-section>
+                                </umb-editor-sub-header-content-left>
+                                <umb-editor-sub-header-content-right>
+                                    <umb-editor-sub-header-section>
+                                        <div class="umb-loader-wrapper -bottom">
+                                            <div class="umb-loader" ng-if="page.loading"></div>
+                                        </div>
+                                    </umb-editor-sub-header-section>
+                                </umb-editor-sub-header-content-right>
+                            </umb-editor-sub-header>
+                        
                         <div class="umb-pane">
+
                             <umb-table items="Data.Items" item-properties="options.includeProperties" on-click="item_click">
                             </umb-table>
                         </div>

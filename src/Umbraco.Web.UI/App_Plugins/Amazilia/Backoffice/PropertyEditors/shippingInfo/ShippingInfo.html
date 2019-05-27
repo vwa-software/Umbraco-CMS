@@ -1,0 +1,84 @@
+﻿<div class="umb-editor" ng-controller="Amazilia.ShippingInfoEditorController">
+    <div ng-if="model.isLoading">
+        <localize key="loading">Loading</localize>...
+    </div>
+    <div ng-if="!model.isLoading">
+        
+        <umb-box>
+            <umb-box-header title-key="sections_settings"></umb-box-header>
+            <umb-box-content>
+
+                <div class="row">
+                    <div class="span4">
+                        <localize key="amazilia_isFreeShipping"></localize>
+                    </div>
+                    <div class="span4">
+                        <umb-toggle checked="model.value.isFreeShipping"
+                                    on-click="toggle('isFreeShipping')"
+                                    show-labels="false">
+                        </umb-toggle>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span4">
+                        <localize key="amazilia_isShipEnabled"></localize>
+                    </div>
+                    <div class="span4">
+                        <umb-toggle checked="model.value.isShipEnabled"
+                                    on-click="toggle('isShipEnabled')"
+                                    show-labels="false">
+                        </umb-toggle>
+                    </div>
+                </div>
+
+                <div class="row" ng-if="model.value.isShipEnabled && !model.value.isFreeShipping">
+                    <div class="span4">
+                        <localize key="amazilia_additionalShippingCharge"></localize>
+                    </div>
+                    <div class="span4">
+                        <input type="number" umb-editor umb-number ng-model="model.value.additionalShippingCharge" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="span4">
+                        <localize key="amazilia_weight"></localize>
+                    </div>
+                    <div class="span4">
+                        <input type="number" umb-editor umb-number ng-model="model.value.weight" />
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="span4">
+                        <localize key="amazilia_height"></localize>
+                    </div>
+                    <div class="span4">
+                        <input type="number" umb-editor umb-number ng-model="model.value.height" />
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="span4">
+                        <localize key="amazilia_width"></localize>
+                    </div>
+                    <div class="span4">
+                        <input type="number" umb-editor umb-number ng-model="model.value.width" />
+                    </div>
+                </div>
+
+
+               
+
+            </umb-box-content>
+        </umb-box>
+
+    </div>
+
+
+</div>
+
+
+

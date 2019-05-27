@@ -173,8 +173,7 @@ angular.module("umbraco")
                 try {
                     $scope.model.value = angular.fromJson($scope.model.value);
                 } catch (e) {
-                    $scope.model.value = {
-                        isShipEnabled: true,
+                    $scope.model.value = {                       
                         productTypeId: 5
                     };
                 }
@@ -205,6 +204,54 @@ angular.module("umbraco")
 
 
 /*
+* Amazilia.ProductInfoEditorController, used in the PriceEditor property editor 
+*/
+angular.module("umbraco")
+    .controller("Amazilia.ShippingInfoEditorController",
+        ['$scope',
+            function ($scope) {
+                $scope.model.isLoading = true;
+
+                if ($scope.model.value === undefined || $scope.model.value === null) {
+                    $scope.model.value = {
+                        isShipEnabled: true
+                    };
+                }
+
+                if (typeof ($scope.model.value) === 'string') {
+                    try {
+                        $scope.model.value = angular.fromJson($scope.model.value);
+                    } catch (e) {
+                        $scope.model.value = {
+                            isShipEnabled: true
+                        };
+                    }
+                }
+                $scope.model.isLoading = false;
+
+                $scope.toggle = function (property) {
+                    $scope.model.value[property] = !$scope.model.value[property];
+                };
+
+                $scope.validateMandatory = function (el, a) {
+                    //set isValid too true so that if this property isnt marked as mandatory on the document type the property is allways valid
+                    var isValid = true;
+
+                    return {
+                        isValid: isValid,
+                        errorMsg: "Value cannot be empty",
+                        errorKey: "amz_mandatory"
+                    };
+                };
+
+                $scope.$on("formSubmitting", function (ev, args) {
+                    // todo validation?
+                    console.log($scope.model.value);
+                });
+            }
+        ]);
+
+/*
 * Amazilia.ProductInfoEditorController, used in the PriceEditor property editor
 */
 angular.module("umbraco")
@@ -230,8 +277,12 @@ angular.module("umbraco")
                             defaultValue.stockQuantity[$scope.model.warehouses[i].Id] = { reserved: 0, quantity: 0, planned: 0 };
                         }
 
-                        //map the default value
-                        $scope.model.value = Amazilia.extend($scope.model.value, defaultValue);
+                        if (typeof $scope.model.value === "string") {
+                            $scope.model.value = defaultValue;
+                        } else {
+                            //map the default value
+                            $scope.model.value = Amazilia.extend($scope.model.value, defaultValue);
+                        }
 
                         
                         for (let i in $scope.model.warehouses) {

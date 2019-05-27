@@ -503,6 +503,7 @@
     <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\ProductInfoEditor.html" />
     <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\ProductInventoryEditor\ProductInventoryEditor.html" />
     <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\propertyeditors.controller.js" />
+    <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\shippingInfo\ShippingInfoEditor.html" />
     <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\variantOptions\variantOptions.controller.js" />
     <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\variantOptions\variantOptions.html" />
     <Content Include="App_Plugins\Amazilia\Lang\en-US.xml" />

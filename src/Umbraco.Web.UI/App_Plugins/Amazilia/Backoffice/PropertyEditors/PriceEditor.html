@@ -48,7 +48,8 @@
                                    ng-model="model.value.priceGroups[pricegroup.Id].InclTax" />
                         </div>
                     </div>
-
+                    <umb-box-header title="Tierprices" ng-if="model.value.priceGroups[pricegroup.Id].TierPrices.length"></umb-box-header>
+                 
                     <div ng-repeat="tierPrice in model.value.priceGroups[pricegroup.Id].TierPrices" class="amz-tier-price">
                         <div class="row">
                             <div class="span1">
