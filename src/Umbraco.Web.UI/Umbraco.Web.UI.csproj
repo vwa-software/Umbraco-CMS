@@ -520,6 +520,7 @@
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.htm" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.resource.js" />
     <Content Include="bin\dotless.Core.dll" />
+    <Content Include="bin\System.Net.Http.Formatting.dll" />
     <Content Include="Config\grid.editors.config.js" />
     <Content Include="Config\Lang\cs-CZ.user.xml" />
     <Content Include="Config\Lang\da-DK.user.xml" />
@@ -668,6 +669,7 @@
     </Content>
     <Content Include="scripts\lib\bootstrap.js.map" />
     <Content Include="scripts\lib\bootstrap.min.js.map" />
+    <None Include="Properties\PublishProfiles\Ontwikkel.pubxml" />
     <None Include="Umbraco\Config\Create\UI.Release.xml">
       <DependentUpon>UI.xml</DependentUpon>
     </None>
@@ -866,7 +868,9 @@
     </Content>
     <Content Include="Config\scripting.config" />
     <Content Include="Config\feedProxy.config" />
-    <Content Include="Config\applications.config" />
+    <Content Include="Config\applications.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Config\trees.config">
       <SubType>Designer</SubType>
     </Content>
