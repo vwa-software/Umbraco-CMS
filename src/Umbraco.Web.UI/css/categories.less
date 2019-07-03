@@ -1,0 +1,140 @@
+﻿@import "variables.less";
+
+.categories {
+    .list-group-item {
+        margin-top: 10px;
+        background-color: @background-category;
+    }
+
+    .list-group-item.active {
+        background-color: @background-category-selected;
+    }
+}
+
+
+/* Preperation methods*/
+.preparation-method-tile {
+    background-color: @background-preperationMethod;
+    margin: 5px;
+    padding: 5px 10px;
+    display: inline-block;
+    min-height:43px;
+}
+
+
+.col-products {
+    background-color: @background-products;
+}
+
+
+.products {
+    /* Article which is not in cart */
+    article {
+        padding: 5px;
+        margin-bottom: 5px;
+        background-color: @background-product;
+        position: relative;
+        /* Add to cart button (not in cart) */
+        .product-button {
+            position: absolute;
+            right: 15px;
+            bottom: 0px;
+
+            .quantity {
+                display: none;
+            }
+        }
+
+        .product-button.on {
+        }
+    }
+    /* Article which is in cart */
+    article.on {
+        /* Add to cart button ( in cart) */
+        .product-button {
+            button.addtocart {
+                display: none;
+            }
+
+            .quantity {
+                display: inline-block;
+            }
+        }
+    }
+
+    .preparation-methods {
+        width: 100%;
+
+        .expand {
+            width: 100%;
+        }
+
+        .collapsable {
+            .row {
+                padding-top: 15px;
+            }
+
+            transition-property: max-height;
+            transition-duration: .5s;
+            transition-timing-function: ease-in-out;
+            max-height: 0px;
+            overflow: hidden;
+        }
+
+        .icon-product-expand {
+            transition-property: all;
+            transition-duration: .5s;
+            border: @border-light;
+            cursor: pointer;
+        }
+
+        .preparation-method-tile.addtocart {
+            cursor: pointer;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preparation-method-tile .quantity {
+           
+            position: absolute;
+            left: -@spinner-block-width * 3 - 20;
+            transition-property: left;
+            transition-duration: .5s;
+            transition-timing-function: ease-in-out;
+        }
+
+        .sub-tile {
+            transition-property: padding-left;
+            transition-duration: .5s;
+            transition-timing-function: ease-in-out;
+        }
+
+        .preparation-method.on {
+            .preparation-method-tile {
+                border: solid 1px @background-preperationMethod-on;
+            }
+
+            .preparation-method-tile .quantity {
+                display: block;
+                left: 5px;
+            }
+
+            .sub-tile {
+                padding-left: @spinner-block-width *3 + 5;
+            }
+        }
+    }
+    /* Expanded */
+    .preparation-methods.expanded {
+        .icon-product-expand {
+            transform: rotate(180deg);
+            background: @background-dark;
+            color: #FFF;
+        }
+
+        .collapsable {
+            max-height: 300px;
+        }
+    }
+}

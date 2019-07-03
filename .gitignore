@@ -31,7 +31,7 @@ App_Data/TEMP/*
 [Uu]mbraco/[Pp]resentation/[Ff]onts/*
 [Uu]mbraco/[Pp]resentation/[Cc]ss/*
 
-src/Umbraco.Web.UI/[Cc]ss/*
+#src/Umbraco.Web.UI/[Cc]ss/*
 src/Umbraco.Web.UI/App_Code/*
 src/Umbraco.Web.UI/App_Data/*
 src/Umbraco.Tests/App_Data/*
@@ -41,7 +41,7 @@ src/Umbraco.Web.UI/[Mm]acro[Ss]cripts/*
 !src/Umbraco.Web.UI/[Mm]acro[Ss]cripts/[Ww]eb.[Cc]onfig
 src/Umbraco.Web.UI/[Xx]slt/*
 src/Umbraco.Web.UI/[Ii]mages/*
-src/Umbraco.Web.UI/[Ss]cripts/*
+#src/Umbraco.Web.UI/[Ss]cripts/*
 src/Umbraco.Web.UI/Web.*.config.transformed
 
 umbraco/presentation/umbraco/plugins/uComponents/uComponentsInstaller.ascx

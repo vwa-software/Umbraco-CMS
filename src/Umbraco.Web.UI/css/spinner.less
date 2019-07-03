@@ -1,0 +1,59 @@
+﻿@import "variables.less";
+
+
+/* Number spinner */
+.number-spinner {
+    position: relative;
+    border: solid 1px rgb(238, 238, 238);
+    width: @spinner-block-width *3;
+}
+
+.number-spinner input {
+    margin: 0px 0px;
+    border: 0px;
+    text-align: center;
+    width: @spinner-block-width;
+    height: @spinner-block-width;
+    margin-left: @spinner-block-width;
+}
+
+.number-spinner span {
+    position: absolute;
+    width: @spinner-block-width;
+    height: @spinner-block-width;
+    font-size: 1.1em;
+    background: @background-button;
+    top: 0px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.number-spinner .plus {
+    color: @spinner-plus-color;
+    right: 0px;
+}
+
+.number-spinner .min {
+    color: @spinner-min-color;
+    left: 0px;
+}
+
+@media (max-width: @breakpoint-sm) {
+
+  
+    .number-spinner {
+        width: @spinner-block-width-sm * 3;
+    }
+
+    .number-spinner input {
+        width: @spinner-block-width-sm;
+        height: @spinner-block-width-sm;
+        margin-left: @spinner-block-width-sm;
+    }
+
+    .number-spinner span {
+        width: @spinner-block-width-sm;
+        height: @spinner-block-width-sm;
+        font-size: 1.6em;
+    }
+}

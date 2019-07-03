@@ -1,0 +1,55 @@
+﻿@import "variables.less";
+
+body {
+    overflow-x: hidden;
+}
+
+/* Main header */
+header .navbar {
+    background-color: @background-header;
+}
+
+/* Sub header */
+.sub-header {
+    background-color: @background-subheader;
+    position: fixed;
+    width: 100%;
+    top: @header-height;
+    height: @sub-header-height;
+    z-index: 1040;
+}
+
+/* Main container */
+main {
+    margin-top: @header-height + @sub-header-height;
+    min-height: 80vh;
+}
+
+/* loading */
+.loading {
+    width: 100%;
+    margin-top: 25px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 100%;
+    display: none;
+    position: absolute;
+}
+
+.loading.show {
+    display: block;
+    z-index: 999999;
+}
+
+/* Icons general */
+.icon-round {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    border-radius: 35px 35px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 5px;
+}
+
