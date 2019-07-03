@@ -16,7 +16,7 @@ angular.module("umbraco").controller("Umbraco.Overlays.TreePickerController",
             searchFromId: dialogOptions.startNodeId,
             searchFromName: null,
             showSearch: false,
-            ignoreUserStartNodes: dialogOptions.ignoreUserStartNodes,
+            dataTypeId: dialogOptions.dataTypeId,
             results: [],
             selectedSearchResults: []
         }
@@ -30,7 +30,7 @@ angular.module("umbraco").controller("Umbraco.Overlays.TreePickerController",
         var node = dialogOptions.currentNode;
 
         //This is called from ng-init
-        //it turns out it is called from the angular html : / Have a look at views/common / overlays / contentpicker / contentpicker.html you'll see ng-init. 
+        //it turns out it is called from the angular html : / Have a look at views/common / overlays / contentpicker / contentpicker.html you'll see ng-init.
         //this is probably an anti pattern IMO and shouldn't be used
         $scope.init = function (contentType) {
 
@@ -138,8 +138,8 @@ angular.module("umbraco").controller("Umbraco.Overlays.TreePickerController",
             if (dialogOptions.startNodeId)
                 params.push("startNodeId=" + dialogOptions.startNodeId);
 
-            if (dialogOptions.ignoreUserStartNodes)
-                params.push("ignoreUserStartNodes=" + dialogOptions.ignoreUserStartNodes);
+            if (dialogOptions.dataTypeId)
+                params.push("dataTypeId=" + dialogOptions.dataTypeId);
 
             if (dialogOptions.customTreeParams)
                 params.push(dialogOptions.customTreeParams);
