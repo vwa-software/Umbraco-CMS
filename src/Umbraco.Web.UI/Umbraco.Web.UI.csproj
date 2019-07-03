@@ -134,6 +134,9 @@
       <HintPath>..\packages\ClientDependency-Mvc5.1.8.0.0\lib\net45\ClientDependency.Core.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ClientDependency.Less, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClientDependency-Less.1.9.0\lib\ClientDependency.Less.dll</HintPath>
+    </Reference>
     <Reference Include="dotless.Core, Version=1.5.2.0, Culture=neutral, PublicKeyToken=96b446c9e63eae34, processorArchitecture=MSIL">
       <HintPath>..\packages\dotless.1.5.2\lib\dotless.Core.dll</HintPath>
     </Reference>
@@ -354,6 +357,10 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Content Include="App_Code\PWA\PwaCacheController.cs" />
+    <Content Include="App_Code\Settings\Constants.cs" />
+    <Content Include="App_Code\Controllers\AsyncController.cs" />
+    <Content Include="App_Code\Models\AsyncResultModel.cs" />
     <Compile Include="Config\splashes\NoNodes.aspx.cs">
       <DependentUpon>noNodes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -498,6 +505,7 @@
     <Content Include="App_Plugins\Amazilia\Backoffice\Amazilia\store.html" />
     <Content Include="App_Plugins\Amazilia\Backoffice\Amazilia\taxcategorie.html" />
     <Content Include="App_Plugins\Amazilia\Backoffice\Amazilia\warehouse.html" />
+    <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\CategoryViewEditor\CategoryViewEditor.html" />
     <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\CheckoutStepEditor.html" />
     <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\PriceEditor.html" />
     <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\ProductInfoEditor.html" />
@@ -522,6 +530,7 @@
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.controller.js" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.htm" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.resource.js" />
+    <Content Include="bin\dotless.Core.dll" />
     <Content Include="Config\grid.editors.config.js" />
     <Content Include="Config\Lang\cs-CZ.user.xml" />
     <Content Include="Config\Lang\da-DK.user.xml" />
@@ -541,6 +550,29 @@
     <Content Include="Config\Lang\ru-RU.user.xml" />
     <Content Include="Config\Lang\sv-SE.user.xml" />
     <Content Include="Config\Lang\zh-CN.user.xml" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="css\lib\bootstrap.css" />
+    <Content Include="css\lib\bootstrap.min.css" />
+    <Content Include="css\siderbar.less" />
+    <Content Include="css\lib\bootstrap.css.map" />
+    <Content Include="css\lib\bootstrap.min.css.map" />
+    <Content Include="css\amazilia.less" />
+    <Content Include="css\lib\mainframe.less" />
+    <Content Include="css\mainframe.less" />
+    <Content Include="css\categories.less" />
+    <Content Include="css\cart.less" />
+    <Content Include="css\spinner.less" />
+    <None Include="css\theme-food.less" />
+    <Content Include="scripts\Amazilia.js" />
+    <Content Include="scripts\binder.js" />
+    <Content Include="scripts\lib\bootstrap.js" />
+    <Content Include="scripts\lib\bootstrap.min.js" />
+    <Content Include="scripts\lib\jquery-3.4.1.min.js" />
+    <Content Include="scripts\lib\jquery.validate.min.js" />
+    <Content Include="scripts\lib\jquery.validate.unobtrusive.min.js" />
+    <Content Include="scripts\PWA.js" />
+    <Content Include="service-worker.js" />
+    <Content Include="scripts\site.js" />
     <Content Include="Umbraco\Config\Lang\cs.xml" />
     <Content Include="Umbraco\ClientRedirect.aspx" />
     <Content Include="Umbraco\Config\Lang\tr.xml" />
@@ -636,6 +668,8 @@
     </None>
     <Content Include="Umbraco\Install\Views\Index.cshtml" />
     <Content Include="Media\Web.config" />
+    <Content Include="css\variables.less" />
+    <Content Include="manifest.json" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -643,6 +677,8 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </Content>
+    <Content Include="scripts\lib\bootstrap.js.map" />
+    <Content Include="scripts\lib\bootstrap.min.js.map" />
     <None Include="Umbraco\Config\Create\UI.Release.xml">
       <DependentUpon>UI.xml</DependentUpon>
     </None>
@@ -923,21 +959,15 @@
     <Content Include="Views\Amazilia\ShoppingCart\AddedToCart.cshtml" />
     <Content Include="Views\Amazilia\ShoppingCart\Cart.cshtml" />
     <Content Include="Views\Amazilia\ShoppingCart\Cart_Editable.cshtml" />
-    <Content Include="Views\Blog.cshtml" />
-    <Content Include="Views\Blogpost.cshtml" />
     <Content Include="Views\Checkout.cshtml" />
-    <Content Include="Views\Contact.cshtml" />
     <Content Include="Views\ContentPage.cshtml" />
     <Content Include="Views\Forgotpassword.cshtml" />
     <Content Include="Views\Home.cshtml" />
     <Content Include="Views\Login.cshtml" />
     <Content Include="Views\Master.cshtml" />
-    <Content Include="Views\People.cshtml" />
-    <Content Include="Views\Person.cshtml" />
     <Content Include="Views\Product.cshtml" />
     <Content Include="Views\Products.cshtml" />
     <Content Include="Views\Resetpassword.cshtml" />
-    <Content Include="Views\Variant.cshtml" />
     <Content Include="Views\Partials\Amazilia\Basket\AddToBasketForm.cshtml" />
     <Content Include="Views\Partials\Amazilia\Messages\CustomerPasswordRecoveryMessage.cshtml" />
     <Content Include="Views\Partials\Amazilia\Messages\CustomerRegisteredNotificationMessage.cshtml" />
@@ -947,10 +977,14 @@
     <Content Include="Views\Partials\Amazilia\Messages\OrderPlacedStoreOwnerNotification.cshtml" />
     <Content Include="Views\Partials\Amazilia\Product\TierPrices.cshtml" />
     <Content Include="Views\Partials\Amazilia\Product\VariantChoice.cshtml" />
-    <Content Include="Views\Partials\Navigation\SubNavigation.cshtml" />
     <Content Include="Views\Partials\Navigation\TopNavigation.cshtml" />
     <Content Include="Views\Amazilia\ShoppingCart\AddedToCartSimple.cshtml" />
     <Content Include="Views\Amazilia\ShoppingCart\AddedToCartVariant.cshtml" />
+    <Content Include="Views\Ordering.cshtml" />
+    <Content Include="Views\Partials\Navigation\SideNavigation.cshtml" />
+    <Content Include="Views\PwaCache\pwa.cshtml" />
+    <Content Include="Views\Partials\Navigation\Categories.cshtml" />
+    <Content Include="Views\Async\Products.cshtml" />
     <None Include="Web.Debug.config.transformed" />
     <None Include="web.Template.Debug.config">
       <DependentUpon>Web.Template.config</DependentUpon>
@@ -1108,7 +1142,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="App_Plugins\Amazilia\Backoffice\Amazilia\Stores\" />
-    <Folder Include="Views\Home\" />
+    <Folder Include="Content\images\icons\" />
     <Folder Include="Views\MacroPartials\" />
   </ItemGroup>
   <ItemGroup>

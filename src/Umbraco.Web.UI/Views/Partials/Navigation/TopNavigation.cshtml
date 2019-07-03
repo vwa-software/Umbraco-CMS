@@ -13,60 +13,64 @@
 }
 
 
-<nav class="nav-bar">
-    <!-- uncomment this line if you don't want it to appear in the top navigation -->
-    <a class="nav-link @Html.Raw(Model.Content.Id == site.Id ? " navi-link--active" : "" )" href="@site.Url">@site.Name</a>
-    @foreach (var item in selection.Where(x => x.IsVisible()))
-    {
-        <a class="nav-link @(item.IsAncestorOrSelf(Model.Content) ? " nav-link--active" : null)" href="@item.Url">@item.Name</a>
-    }
+<nav class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
 
+        <!-- uncomment this line if you don't want it to appear in the top navigation -->
+        <li class="nav-item">
+            <a class="nav-link @Html.Raw(Model.Content.Id == site.Id ? " navi-link--active" : "" )" href="@site.Url">@site.Name</a>
+        </li>
 
-    @if (customer.Anonymous)
-    {
-        foreach (var item in selection.Where(x => !x.IsVisible()))
+        @foreach (var item in selection.Where(x => x.IsVisible()))
         {
-            <a class="nav-link @(item.IsAncestorOrSelf(Model.Content) ? " nav-link--active" : null)" href="@item.Url">@item.Name</a>
+            <li class="nav-item">
+                <a class="nav-link @(item.IsAncestorOrSelf(Model.Content) ? " nav-link--active" : null)" href="@item.Url">@item.Name</a>
+            </li>
         }
-    }
-    else
-    {
-        <a class="nav-link" href="@Url.Action("logout", "MemberShip", new { redirectId = CurrentPage.Id, path = "",  area = "Amazilia" })">@customer.Member.Name  Log out</a>
-    }
 
-    @if (currencies.Count > 1)
-    {
-        using (Html.BeginUmbracoForm<MembershipController>("ChangeCurrency", new { area = "Amazilia" }))
+
+        @if (customer.Anonymous)
         {
-
-            @Html.Hidden("CurrencyId", "")
-
-            <div class="dropdown">
-                <a class="btn btn-link dropdown-toggle"  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    @Amazilia.Web.AmaziliaContext.Current.CurrentCustomer.Currency.Name
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="currencyChangeList">
-                    @foreach (var currency in currencies)
-                    {
-                        <li><a data-currencyid="@currency.Id" href="#">@currency.Name</a></li>
-                    }
-                </ul>
-            </div>
-
+            foreach (var item in selection.Where(x => !x.IsVisible()))
+            {
+                <li class="nav-item">
+                    <a class="nav-link @(item.IsAncestorOrSelf(Model.Content) ? " nav-link--active" : null)" href="@item.Url">@item.Name</a>
+                </li>
+            }
         }
-    }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("logout", "MemberShip", new { redirectId = CurrentPage.Id, path = "",  area = "Amazilia" })">@customer.Member.Name  Log out</a>
+            </li>
+        }
 
-    <div class="dropdown">
-        <a class="btn btn-link dropdown-toggle"  id="dropdownCart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            Cart
-            <span class="caret"></span>
-        </a>
-        <div class="dropdown-menu amazilia-basketsectionhtml" aria-labelledby="dropdownCart" id="dropdownCart">
-            @Html.Action("Cart", "Basket", new { area = "Amazilia" })
-        </div>
-    </div>
+        @if (currencies.Count > 1)
+        {
+            using (Html.BeginUmbracoForm<MembershipController>("ChangeCurrency", new { area = "Amazilia" }))
+            {
 
-   
+                @Html.Hidden("CurrencyId", "")
+
+                <li class="nav-item dropdown">
+                    <a class="btn btn-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        @Amazilia.Web.AmaziliaContext.Current.CurrentCustomer.Currency.Name
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="currencyChangeList">
+                        @foreach (var currency in currencies)
+                        {
+                            <li class="dropdown-item"><a data-currencyid="@currency.Id" href="#">@currency.Name</a></li>
+                        }
+                    </ul>
+                </li>
+
+            }
+        }
+
+      
+
+    </ul>
+
 </nav>
 

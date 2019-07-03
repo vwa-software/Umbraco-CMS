@@ -84,6 +84,119 @@ angular.module("umbraco")
     }]);
 
 
+angular.module("umbraco")
+    .factory("amzpriceservice", ['$http', '$q', function ($http, $q) {
+
+        var _data = null;
+
+        function loadFromService(deferred, type) {
+
+            $http.get('backoffice/Amazilia/PriceGroup/GetPriceGroups/', {
+                cache: false
+            }).then(function (response) {
+                if (response.data.Ok) {
+                    _data = {
+                        "priceGroups": response.data.Data.priceGroups,
+                        "taxCategories": response.data.Data.taxCategories
+                    };
+                    deferred.resolve(_data[type]);
+                }
+                else {
+                    deferred.reject(response.data.Message);
+                }
+            }, function (error) {
+                deferred.reject(error);
+            });
+        }
+
+        var service = {
+            /*
+                Returns all the pricegroups 
+            */
+            getPriceGroups: function () {
+                var deferred = $q.defer();
+
+                if (_data) {
+                    deferred.resolve(_data.priceGroups);
+                    return deferred.promise;
+                }
+
+                loadFromService(deferred, "priceGroups");
+
+                return deferred.promise;
+            },
+            /*
+                 Returns all the taxcategories
+            */
+            getTaxCategories: function () {
+                var deferred = $q.defer();
+
+                if (_data) {
+                    deferred.resolve(_data.taxCategories);
+                    return deferred.promise;
+                }
+
+                loadFromService(deferred, "taxCategories");
+
+                return deferred.promise;
+                
+            },
+
+            /*
+                Gets the pricegroup by id
+            */
+            getPriceGroupById: function (id) {
+
+                var deferred = $q.defer();
+
+                $http.get('backoffice/Amazilia/PriceGroup/GetPriceGroupById/' + id, {
+                    cache: false
+                }).then(function (response) {
+                    if (response.data.Ok) {
+                        deferred.resolve(response.data.Data);
+                    }
+                    else {
+                        deferred.reject(response.data.Message);
+                    }
+                }, function (error) {
+                        deferred.reject(error);
+                 });
+
+                return deferred.promise;
+
+            },
+
+            savePriceGroup: function (data) {
+                var deferred = $q.defer();
+
+                // reload next time
+                this.setDirty();
+
+                $http.post('backoffice/Amazilia/PriceGroup/SavePriceGroup/', data).then(function (res) {
+                    // returns Amazilia.Backoffice.Models.JsonResultOfType<PriceGroup>
+                    if (!res.data.Ok) {
+                        deferred.reject(res.data.Message);
+                        return;
+                    }
+                    deffered.resolve(res);
+                },
+                function (response) {
+                    deferred.reject(response.data.Message);
+                });
+
+                return deferred.promise;
+            },
+
+            setDirty: function () {
+                _data = null;
+            }
+        };
+
+        return service;
+
+    }]);
+
+
 
 angular.module("umbraco")
     .factory("amzlocalizationservice", ['$http', '$q', function ($http, $q) {
@@ -141,7 +254,7 @@ var Amazilia = function () {
                         doCopy = true;
                     } else if (angular.isObject(src)) {
                         this.extend(dst[key], src);
-                    }                    
+                    }
                 }
 
                 if (doCopy) {
@@ -159,7 +272,7 @@ var Amazilia = function () {
                     } else {
                         dst[key] = src;
                     }
-                }               
+                }
             }
 
             return dst;

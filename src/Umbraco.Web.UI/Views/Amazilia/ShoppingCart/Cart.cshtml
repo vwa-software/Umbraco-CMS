@@ -1,6 +1,8 @@
 ﻿@inherits UmbracoViewPage<ShoppingCartModel>
 @using Amazilia.Web.Models.ShoppingCart
 @using Amazilia.Web.Extentions
+@using Amazilia.Web.Controllers;
+
 @{
     // shopping cart summary
 
@@ -8,63 +10,89 @@
     bool shopPriceInclTax = true;
 }
 
-<div class="basket-cart-content">
-    @if (Model.Items.Count > 0)
-    {
-        <div class="table-wrapper">
-            <table class="table cart">
-              
-                <tbody>
-                    @foreach (var item in Model.Items)
-                    {
+<div class="basket-cart-content pt-md-4">
+    <div class="loading">
+        Loading
+    </div>
+    <div class="basket-table">
+        <div class="basket-row-header">
+            <span class="icon-round icon-shopping-cart"></span>
+            <span>Mijn bestelling</span>
+            <input type="checkbox" class="d-none" name="removeallfromcart" value="all" />
+            <button class="btn cart-remove-all float-right">Verwijder lijst</button>
+        </div>
 
-                        <tr>
-                            <td class="product">
-                                <span class="text-nowrap"> @(item.Quantity)x <a href="@item.Product.UmbracoContent.Url" class="product-name">@item.Product.UmbracoContent.Name</a></span>
-                            </td>
-                            @*<td class="unit-price">
-                                <span class="product-unit-price">@item.UnitPrice.FormatPrice(true)</span>
-                            </td>*@
 
-                            <td class="subtotal">
-                                <span class="product-subtotal text-nowrap">@item.SubTotal.FormatPrice(shopPriceInclTax)</span>
-                                @*@if (!String.IsNullOrEmpty(item.Discount))
+        @if (Model.Items.Count > 0)
+        {
+            using (Html.BeginUmbracoForm<BasketController>("UpdateCart", new { area = "Amazilia" }, new { role = "form", @class = "updatecart" }))
+            {
+                @* cart-items, dont change the ID of this container, clientscript depends on it. *@
+                <div class="cart-items" id="cart-items">
+                    @foreach (var item in Model.Items.Where(a => a.isGroupRootItem))
                     {
-                        <div class="discount">
-                            @Umbraco.GetDictionaryValue("ShoppingCart.ItemYouSave", item.Discount)
-                        </div>
-                        if (item.MaximumDiscountedQty.HasValue)
-                        {
-                            <div class="discount-additional-info">
-                                @Umbraco.GetDictionaryValue("ShoppingCart.MaximumDiscountedQty", item.MaximumDiscountedQty.Value)
+                        <div class="row">
+                            <div class="quantity">
+                                <div class="number-spinner">
+                                    <span class="min">-</span>
+                                    <input data-id="@item.ProductId" type="text" class="spinner quantity" name="itemquantity@(item.Id)" value="@item.Quantity" />
+                                    <span class="plus">+</span>
+                                </div>
                             </div>
-                        }
-                    }*@
-
-                            </td>
-                        </tr>
+                            <div class="product">
+                                <span class="text-nowrap">@item.Product.UmbracoContent.Name</span>
+                            </div>
+                            <div class="subtotal">
+                                <span class="product-subtotal text-nowrap">@item.SubTotal.FormatPrice(shopPriceInclTax)</span>
+                            </div>
+                            <div class="remove">
+                                @*do not remove or rename removefromcart, these are used in javascript logic*@
+                                <input type="checkbox" class="d-none" name="removefromcart" value="@item.Id" />
+                                <span class="icon-trash removefromcart" title="Verwijder"></span>
+                            </div>
+                        </div>
+                        <div class="row gr-code-@item.GroupCode">
+                            <div class="additional">
+                                @foreach (var additional in item.Children)
+                                {
+                                <div class="preparation-method-tile cart prep-id-@additional.ProductId">
+                                    <input data-id="@additional.ProductId" data-parentid="@item.ProductId" type="hidden" class="quantity" name="itemquantity@(additional.Id)" value="@additional.Quantity" />
+                                    <span class="quantity-label">@(additional.Quantity)</span>x @additional.Product.UmbracoContent.Name @additional.SubTotal.FormatPrice(shopPriceInclTax)
+                                </div>
+                                }
+                            </div>
+                        </div>
                     }
-                    <tr>
-                        <td class="product text-nowrap">
-                          Total 
-                        </td>
-                        @*<td class="unit-price">
-                            <span class="product-unit-price">@item.UnitPrice.FormatPrice(true)</span>
-                        </td>*@
-
-                        <td class="subtotal text-nowrap">
-                            @Model.SubTotal.FormatPrice(shopPriceInclTax)
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    }
-    else
-    {
-        <div class="no-data">
-            Shopping cart is empty
-        </div>
-    }
-
+                </div>
+                <div class="row">
+                    <div class="col-4">Bezorgen</div>
+                    <div class="col-3">Afhalen</div>
+                    <div class="col-4">Hier opeten</div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        Bereidingstijd
+                    </div>
+                    <div class="col-6">
+                        Subtotal
+                        <strong>@Model.SubTotal.FormatPrice(shopPriceInclTax)</strong>
+                    </div>
+                    <div class="col-6">
+                        Bezorgkosten
+                        <strong>&euro;0,00</strong>
+                    </div>
+                    <div class="col-6">
+                        Totaal
+                        <strong>@Model.SubTotal.FormatPrice(shopPriceInclTax)</strong>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="empty-basket text-center">
+                De bestellijst is leeg
+            </div>
+        }
+    </div>
 </div>

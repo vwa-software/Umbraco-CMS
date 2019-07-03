@@ -1,0 +1,65 @@
+﻿@inherits AmaziliaTemplatePage
+@using Umbraco.Web;
+@using Amazilia.Web.Mvc;
+@using Amazilia.Web.Extentions;
+@using Amazilia.Web.Controllers;
+@{
+    /**/
+    var site = Model.Content.Site();
+    var selection = site.Children;
+    var customer = Amazilia.Web.AmaziliaContext.Current.CurrentCustomer;
+    var currencies = this.CurrencyService.GetAllCurrencies();
+}
+<div class="sidebar-mask" id="sidebar-mask">
+</div>
+
+<div class="navbar-light nav-bar border-right"  id="sidebar-wrapper">
+        <nav>
+            <div class="list-group">
+                <!-- uncomment this line if you don't want it to appear in the top navigation -->
+                <a class=" list-group-item list-group-item-action @Html.Raw(Model.Content.Id == site.Id ? " navi-link--active" : "" )" href="@site.Url">@site.Name</a>
+                @foreach (var item in selection.Where(x => x.IsVisible()))
+                {
+                    <a class=" list-group-item list-group-item-action @(item.IsAncestorOrSelf(Model.Content) ? " nav-link--active" : null)" href="@item.Url">@item.Name</a>
+                }
+                @if (customer.Anonymous)
+                {
+                    foreach (var item in selection.Where(x => !x.IsVisible()))
+                    {
+                        <a class=" list-group-item list-group-item-action @(item.IsAncestorOrSelf(Model.Content) ? " nav-link--active" : null)" href="@item.Url">@item.Name</a>
+                    }
+                }
+                else
+                {
+                    <a class=" list-group-item list-group-item-action" href="@Url.Action("logout", "MemberShip", new { redirectId = CurrentPage.Id, path = "",  area = "Amazilia" })">@customer.Member.Name  Log out</a>
+                }
+                @if (currencies.Count > 1)
+                {
+                    using (Html.BeginUmbracoForm<MembershipController>("ChangeCurrency", new { area = "Amazilia" }))
+                    {
+
+                        @Html.Hidden("CurrencyId", "")
+
+                        <div class="list-group-item list-group-item-action dropdown">
+                            <a class="btn btn-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                @Amazilia.Web.AmaziliaContext.Current.CurrentCustomer.Currency.Name
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="currencyChangeList">
+                                @foreach (var currency in currencies)
+                                {
+                                    <li class="dropdown-item"><a data-currencyid="@currency.Id" href="#">@currency.Name</a></li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                }
+            </div>
+        </nav>
+        <button class="navbar-toggler" type="button" id="menu-toggle" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+</div>
+
+
+

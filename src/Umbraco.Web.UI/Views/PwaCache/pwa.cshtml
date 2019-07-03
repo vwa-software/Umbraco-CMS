@@ -1,0 +1,30 @@
+﻿@inherits UmbracoViewPage
+@using ClientDependency.Core.Mvc;
+@using ClientDependency.Less;
+@{
+    /* Register js and css files, these are cached by the service worker*/
+
+    Html.RequiresCss("~/Css/lib/bootstrap.min.css", 4);
+    Html.RequiresCss("~/Css/lib/fontastic/styles.css", 5);
+    Html.RequiresCss("~/Css/theme-food.less", 5);
+
+    // Cache woff font, browser that support pwa, do support woff.
+    // loaded as css, is ok, only the src is read by the controller.
+    Html.RequiresCss("~/Css/lib/fontastic/fonts/theme-food.woff", 5);
+
+    Html.RequiresJs("~/scripts/lib/jquery-3.4.1.min.js", 3);
+    Html.RequiresJs("~/scripts/lib/bootstrap.min.js", 3);
+    Html.RequiresJs("~/scripts/site.js", 4);
+    Html.RequiresJs("~/scripts/binder.js", 4);                  // property binder
+    Html.RequiresJs("~/scripts/amazilia.js", 5);
+    Html.RequiresJs("~/scripts/pwa.js", 6);
+    @*
+        // alleen laden waar nodig
+        Html.RequiresJs("~/scripts/lib/jquery.validate.min.js", 3);
+        Html.RequiresJs("~/scripts/lib/jquery.validate.unobtrusive.min.js", 3);
+    *@
+
+}
+@Html.RenderJsHere()
+@Html.RenderCssHere()
+

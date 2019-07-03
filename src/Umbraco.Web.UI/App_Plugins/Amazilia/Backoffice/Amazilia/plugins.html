@@ -3,8 +3,7 @@
 
         <div>
 
-            <umb-load-indicator ng-if="page.loading"></umb-load-indicator>
-
+           
             <form name="contentForm" class="form-horizontal"
                   ng-submit="Save()"
                   novalidate
@@ -18,31 +17,33 @@
                                        hide-description="false"
                                        hide-alias="true">
                     </umb-editor-header>
-
-
-                    <umb-editor-container>
+                  
+                     <umb-editor-container>
                         <umb-pane>
                             <umb-editor-sub-header>
                                 <umb-editor-sub-header-content-left>
                                     <umb-editor-sub-header-section>
-                                        <div class="storeselection" ng-if="!tabs[0].active">                                           
-                                            <label> Configuration for: </label>
+                                        <div class="storeselection" ng-if="!tabs[0].active">
+                                            <label class="input-label">Configuration for </label>
                                             <select ng-model="page.selectedStoreId" ng-change="changeStore()" ng-options="store.Value as store.Text for store in Data.stores">
                                                 <option value="">-- Default</option>
                                             </select>
-                                        </div>                                        
+                                        </div>        
+                                        <div class="umb-loader-wrapper -bottom" ng-show="page.loading">
+                                            <div class="umb-loader"></div>
+                                        </div>
                                     </umb-editor-sub-header-section>
                                 </umb-editor-sub-header-content-left>
                                 <umb-editor-sub-header-content-right>
-
                                     <umb-editor-sub-header-section>
-                                      
+                                        <label class="checkbox" for="overrideDefault" ng-if="page.selectedStoreId>0"><input id="overrideDefault" ng-model="Data.overrideDefault" type="checkbox" />Override default configuration</label>
                                     </umb-editor-sub-header-section>
-
                                 </umb-editor-sub-header-content-right>
                             </umb-editor-sub-header>
+                           
+
                         </umb-pane>
-                     
+
                         <umb-tabs-content view="true">
                             <umb-tab id="tab0" active rel="0">
                                 <umb-pane>
@@ -88,7 +89,6 @@
                             <umb-tab id="tab1" active rel="1">
                                 <umb-pane>
                                     <div ng-include="viewPath">
-
                                     </div>
                                 </umb-pane>
                             </umb-tab>
@@ -115,26 +115,26 @@
                                         shortcut="ctrl+s"
                                         label="Save"
                                         label-key="buttons_save"
-                                        disabled="contentForm.$invalid">
+                                        disabled="contentForm.$invalid || page.loading">
                             </umb-button>
 
 
                             <!--<div class="btn-group umb-button">
-                                <input type="button" id="btnSave" ng-click="Save()" class="btn btn-success enable_button_child" value="Opslaan" />
-                            </div>-->
+                <input type="button" id="btnSave" ng-click="Save()" class="btn btn-success enable_button_child" value="Opslaan" />
+            </div>-->
                         </umb-editor-footer-content-right>
 
                     </umb-editor-footer>
 
                     <!--<div class="umb-tab-buttons umb-editor-drawer">
-                        <div class="umb-editor-drawer-content">
-                            <div class="umb-editor-drawer-content__right-side">
-                                <div class="btn-group umb-button">
-                                    <input type="button" id="btnSave" ng-click="Save()" class="btn btn-success enable_button_child" value="Opslaan" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
+        <div class="umb-editor-drawer-content">
+            <div class="umb-editor-drawer-content__right-side">
+                <div class="btn-group umb-button">
+                    <input type="button" id="btnSave" ng-click="Save()" class="btn btn-success enable_button_child" value="Opslaan" />
+                </div>
+            </div>
+        </div>
+    </div>-->
 
                 </umb-editor-view>
 

@@ -106,88 +106,77 @@ angular.module("umbraco")
 
 angular.module("umbraco")
     .controller("Amazilia.PriceGroupEditorController",
-        ['$scope', '$http', 'appState', 'navigationService', 'notificationsService', '$routeParams', 'formHelper', '$timeout', '$location', function ($scope, $http, appState, navigationService, notificationsService, $routeParams, formHelper, $timeout, $location) {
+        ['$scope', '$http', 'appState', 'navigationService', 'notificationsService',
+            '$routeParams', 'formHelper', '$timeout', '$location', 'amzpriceservice', function ($scope, $http, appState, navigationService, notificationsService, $routeParams, formHelper, $timeout, $location, amzpriceservice) {
 
-            //setup scope vars
-            $scope.page = {};
-            $scope.page.loading = false;
-            $scope.page.nameLocked = false;
-            $scope.page.menu = {};
-            $scope.page.menu.currentSection = appState.getSectionState("currentSection");
-            $scope.page.menu.currentNode = null;
-            $scope.id = $routeParams.id;
+                //setup scope vars
+                $scope.page = {};
+                $scope.page.loading = false;
+                $scope.page.nameLocked = false;
+                $scope.page.menu = {};
+                $scope.page.menu.currentSection = appState.getSectionState("currentSection");
+                $scope.page.menu.currentNode = null;
+                $scope.id = $routeParams.id;
 
-            $scope.Tabs = [{ id: 0, label: 'General', alias: 'General' }];
+                $scope.Tabs = [{ id: 0, label: 'General', alias: 'General' }];
 
-            $scope.actionInProgress = false;
+                $scope.actionInProgress = false;
 
-            $scope.Data = {
-                PriceGroup: {}, Stores: [], MemberGroups: [], Countries: [], TaxCategories: []
-            };
-            $scope.Data.PriceGroup.Name = '';
-            $scope.buttonState = "init";
+                $scope.Data = {
+                    PriceGroup: {}, Stores: [], MemberGroups: [], Countries: [], TaxCategories: []
+                };
+                $scope.Data.PriceGroup.Name = '';
+                $scope.buttonState = "init";
 
+                amzpriceservice.getPriceGroupById($scope.id).then(
+                    function (data) {
+                        $scope.Data = data;
+                        $scope.buttonState = "success";
 
-            $http.get('backoffice/Amazilia/PriceGroup/GetPriceGroupById/' + $scope.id, {
-                cache: false
-            }).then(function (response) {
-                if (response.data.Ok) {
-                    $scope.Data = response.data.Data;
-                    $scope.buttonState = "success";
-
-                    // get an (virtual) treenode for the menu actions
-                    $http.get('backoffice/Amazilia/AmaziliaTree/GetTreeNode?id=' + $scope.id + '&application=' + $scope.page.menu.currentSection + '&subsection=pricegroup', {
-                        cache: false
-                    }).then(function (response) {
-                        $scope.page.menu.currentNode = response.data;
-                    }, function (error) {
+                        // get an (virtual) treenode for the menu actions
+                        $http.get('backoffice/Amazilia/AmaziliaTree/GetTreeNode?id=' + $scope.id + '&application=' + $scope.page.menu.currentSection + '&subsection=pricegroup', {
+                            cache: false
+                        }).then(function (response) {
+                            $scope.page.menu.currentNode = response.data;
+                        }, function (error) {
                             console.log('Failed to load node for id');
-                    });
-                }
-                else {
-                    notificationsService.error("Error loading store", response.data.Message);
-                }
-            }, function (error) {
-                notificationsService.error("Error loading store", error);
-            });
+                        });
+                    },
+                    function (error) { notificationsService.error("Error loading store", error); }
+                );
 
-            $scope.Save = function () {
-                $scope.buttonState = "busy";
+                $scope.Save = function () {
+                    $scope.buttonState = "busy";
 
-                $http.post('backoffice/Amazilia/PriceGroup/SavePriceGroup/', $scope.Data).then(function (res) {
-                    // returns Amazilia.Backoffice.Models.JsonResultOfType<PriceGroup>
+                    amzpriceservice.savePriceGroup($scope.Data).then(function (res) {
+                        // set success flags
+                        $scope.buttonState = "success";
+                        $scope.contentForm.$dirty = false;
 
-                    if (!res.data.Ok) {
-                        notificationsService.error("Error saving pricegroup", res.data.Message);
+                        // display save result message if any
+                        if (res.data.Message) {
+                            notificationsService.success(res.data.Message);
+                        } else {
+                            notificationsService.success("Save successfull");
+                        }
+
+                        // redirect if necessary
+                        if (res.data.RedirectRouteUrl.length) {
+                            $location.path(res.data.RedirectRouteUrl);
+                        }
+
+                    }, function (err) {
+                        notificationsService.error("Error saving pricegroup", err);
                         $scope.buttonState = "error";
-                        return;
-                    }
 
-                    // set success flags
-                    $scope.buttonState = "success";
-                    $scope.contentForm.$dirty = false;
+                    });
 
-                    // display save result message if any
-                    if (res.data.Message) {
-                        notificationsService.success(res.data.Message);
-                    } else {
-                        notificationsService.success("Save successfull");
-                    }
 
-                    // redirect if necessary
-                    if (res.data.RedirectRouteUrl.length) {
-                        $location.path(res.data.RedirectRouteUrl);
-                    }
 
-                }, function (err) {
-                    notificationsService.error("Error saving store", err);
-                    $scope.buttonState = "error";
+                };
 
-                });
-            }
-
-            $scope.$parent.syncTree(["pr_0"]);
-        }]);
+                $scope.$parent.syncTree(["pr_0"]);
+            }]);
 
 
 angular.module("umbraco")
@@ -379,7 +368,9 @@ angular.module("umbraco")
 
 angular.module("umbraco")
     .controller("Amazilia.OrdersController",
-        ['$scope', '$http', 'appState', 'navigationService', 'notificationsService', '$routeParams', 'formHelper', '$timeout', '$location', 'amzlocalizationservice', function ($scope, $http, appState, navigationService, notificationsService, $routeParams, formHelper, $timeout, $location, amzlocalizationservice) {
+        ['$scope', '$http', 'appState',  'notificationsService',
+              '$location', 'amzlocalizationservice', 'amzstoreservice',
+            function ($scope, $http, appState, notificationsService, $location, amzlocalizationservice, amzstoreservice) {
 
             //setup scope vars
             $scope.page = {};
@@ -397,7 +388,8 @@ angular.module("umbraco")
             $scope.options.includeProperties = {};
             $scope.options.pager = { totalPages: 0, pageNumber: 0 };
 
-            $scope.filterOptions = { "pageNumber": "1", "pageSize": "25" };
+            // Filteroptions, send as dictionary to controller
+            $scope.filterOptions = { "pageNumber": "1", "pageSize": "25", "storeId" : "0" };
 
 
             var getOrders = function () {
@@ -426,7 +418,7 @@ angular.module("umbraco")
                         notificationsService.error("Error loading list", response.data.Message);
                     }
                 }, function (error) {
-                        $scope.page.loading = false;
+                    $scope.page.loading = false;
                     notificationsService.error("Error loading list", error);
                 });
             };
@@ -480,6 +472,13 @@ angular.module("umbraco")
             };
 
             getOrders();
+
+            // load the stores
+                amzstoreservice.getAllStores().then(function (result) {
+                $scope.stores = result;
+                }, function (error) {
+                notificationsService.error("Error loading store selection list", error);
+            });
         }]);
 
 
@@ -496,9 +495,9 @@ angular.module("umbraco")
 
             $scope.id = $routeParams.id;
             $scope.tabs = [{ id: 0, label: 'General', alias: 'General' },
-                { id: 1, label: 'Billing', alias: 'Billing info' },
-                { id: 2, label: 'Products', alias: 'Products' },
-                { id: 3, label: 'Notes', alias: 'Notes' }      ];
+            { id: 1, label: 'Billing', alias: 'Billing info' },
+            { id: 2, label: 'Products', alias: 'Products' },
+            { id: 3, label: 'Notes', alias: 'Notes' }];
 
 
             var getOrder = function () {
@@ -507,10 +506,21 @@ angular.module("umbraco")
                     $scope.loading = false;
                     if (response.data.Ok) {
                         $scope.data.order = response.data.Data;
-                        $scope.$parent.syncTree(response.data.Data.path);
+                        //$scope.$parent.syncTree(response.data.Data.path);
                         $scope.page.loading = false;
                         $scope.page.name = response.data.Data.name;
                         $scope.buttonState = "success";
+
+
+                        // get an (virtual) treenode for the menu actions
+                        $http.get('backoffice/Amazilia/AmaziliaTree/GetTreeNode?id=' + $scope.id + '&application=' + $scope.page.menu.currentSection + '&subsection=order', {
+                            cache: false
+                        }).then(function (response) {
+                            $scope.page.menu.currentNode = response.data;
+                        }, function (error) {
+                            console.log('Failed to load node for id');
+                            });
+
                     }
                     else {
                         $scope.loading = false;
@@ -597,13 +607,11 @@ angular.module("umbraco")
 
 
             var loadConfig = function () {
-
+                $scope.page.loading = true;
                 // load configuration from controller
                 $http.get($scope.configApiEndpoint + '/config/' + $scope.page.selectedStoreId, {
                     cache: false
                 }).then(function (response) {
-
-
                     if (response.data.Ok) {
                         $scope.page.loading = false;
                         $scope.page.name = response.data.Data.pluginName;
@@ -744,7 +752,7 @@ angular.module("umbraco")
                     }).then(function (response) {
                         $scope.page.menu.currentNode = response.data;
                     }, function (error) {
-                            console.log('Failed to load node for id');
+                        console.log('Failed to load node for id');
                     });
                 }
                 else {
@@ -809,8 +817,8 @@ angular.module("umbraco")
             $scope.id = $routeParams.id;
             $scope.page.loading = true;
             $scope.Tabs = [{ id: 0, label: 'General', alias: 'General' }];
-                     
-            $scope.Data = {               
+
+            $scope.Data = {
             };
 
             $scope.buttonState = "init";
@@ -834,10 +842,10 @@ angular.module("umbraco")
 
             $scope.Save = function () {
                 $scope.buttonState = "busy";
-              //  $scope.page.loading = true;
+                //  $scope.page.loading = true;
 
                 $http.post('backoffice/Amazilia/Settings/SaveSettings/', $scope.Data).then(function (res) {
-                  
+
                     // set success flags
                     $scope.buttonState = "success";
                     $scope.contentForm.$dirty = false;

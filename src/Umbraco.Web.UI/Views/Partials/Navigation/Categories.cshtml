@@ -1,0 +1,24 @@
+﻿@inherits AmaziliaTemplatePage
+@using Umbraco.Web;
+@using Amazilia.Web.Mvc;
+@using Amazilia.Web.Extentions;
+@using Amazilia.Web.Controllers;
+@using VWA;
+
+@{  
+    var selection = ((IPublishedContent)Umbraco.Content(VWA.Constants.ContentNodeCategoryId)).Children();
+}
+
+<div class="categories pt-md-4">
+    <nav class="" >
+        <div class="list-group">
+            @foreach (var item in selection.Where(x => x.IsVisible()))
+            {
+                <a data-id="@item.Id" class="list-group-item list-group-item-action @(item.IsAncestorOrSelf(Model.Content) ? " nav-link--active" : null)" href="@item.Url.TrimStart("/")?categoryid=@item.Id">@item.Name</a>
+            }           
+        </div>
+    </nav>
+</div>
+
+
+

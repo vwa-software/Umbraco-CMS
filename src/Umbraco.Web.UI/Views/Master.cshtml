@@ -1,13 +1,31 @@
 ﻿@inherits UmbracoTemplatePage
+@using ClientDependency.Core.Mvc;
+@using ClientDependency.Less;
+
 @{
     Layout = null;
-
     // Get basic design settings from the homepage
     var home = (Home)Model.Content.Site();
-    var colorTheme = Umbraco.GetPreValueAsString(home.ColorTheme);
-    var font = Umbraco.GetPreValueAsString(home.Font);
-}
 
+    // css
+    Html.RequiresCss("~/Css/lib/bootstrap.min.css", 4);     // bootstrap 4 css
+    Html.RequiresCss("~/Css/theme-food.less", 5);           // general css
+    Html.RequiresCss("~/Css/lib/fontastic/styles.css", 5);  // icons, see http://projecten.vwa.nu:888/redmine/projects/de-rede-bestel-module/wiki/Icons
+
+    // scripts
+    Html.RequiresJs("~/scripts/lib/jquery-3.4.1.min.js", 3);    // jquery 3.4
+    Html.RequiresJs("~/scripts/lib/bootstrap.min.js", 3);       // boostrap 4
+    Html.RequiresJs("~/scripts/binder.js", 4);                  // property binder
+    Html.RequiresJs("~/scripts/site.js", 4);                    //  general functions script
+    Html.RequiresJs("~/scripts/amazilia.js", 5);                // amazilia specific script
+    Html.RequiresJs("~/scripts/pwa.js", 6);                     // pwa logic.
+    @*
+        // alleen laden waar nodig
+        Html.RequiresJs("~/scripts/lib/jquery.validate.min.js", 3);
+        Html.RequiresJs("~/scripts/lib/jquery.validate.unobtrusive.min.js", 3);
+    *@
+
+}
 <!doctype html>
 <html>
 <head>
@@ -15,67 +33,63 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>@Model.Content.Name - @home.Sitename</title>
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="@Url.Content("~/css/umbraco-starterkit-style.css")" />
-    
-
-    
+    <meta name="description" content="'t Eiland bestel app">
+    <meta name="author" content="VWA Software development">
+    @* PDA stuff *@
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="'t Eiland">
+    <link rel="apple-touch-icon" href="content/images/icons/icon-152x152.png">
+    <meta name="theme-color" content="#2F3BA2" />
+    @Html.RenderCssHere()
     @RenderSection("Header", required: false)
 </head>
+<body>
+    @*<div class="mobile-nav">
+            @Html.Partial("~/views/partials/navigation/topNavigation.cshtml")
+        </div>*@
 
-<body class="frontpage theme-font-@font theme-color-@colorTheme">
-
-    <div class="mobile-nav">
-        @Html.Partial("~/views/partials/navigation/topNavigation.cshtml")
-    </div>
 
     <header class="header">
-        <div class="logo">
-            @if (home.SiteLogo != null && !string.IsNullOrEmpty(home.SiteLogo.Url))
-            {
-            <div class="nav-link--home">
-                <img class="logo-image" src="@home.SiteLogo.Url" alt="@home.Sitename">
-            </div>
-            }
-            else
-            {
-            <a class="nav-link nav-link--home nav-link--home__text logo-text" href="/">@home.Sitename</a>
-            }
-        </div>
-        <nav class="nav-bar top-nav">
+        <nav class="navbar-light navbar navbar-expand-lg fixed-top">
+            <a class="navbar-brand" href="/">
+                @if (home.SiteLogo != null && !string.IsNullOrEmpty(home.SiteLogo.Url))
+                {
+
+                    <img class="logo-image" src="@home.SiteLogo.Url" alt="@home.Sitename">
+                }
+                else
+                {
+                    @home.Sitename
+                }
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
             @Html.Partial("~/Views/Partials/Navigation/TopNavigation.cshtml")
         </nav>
-        <div class="mobile-nav-handler">
-            <div class="hamburger lines" id="toggle-nav">
-                <span></span>
-            </div>
-        </div>
     </header>
+
+    <header class="sub-header">
+        @Html.Partial("~/Views/Partials/Navigation/SideNavigation.cshtml")
+    </header>
+
     <main>
-        @RenderBody()
+        <div class="container-fluid">
+            @RenderBody()
+        </div>
     </main>
     <footer class="section--themed">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 ta-center">
-                    @home.FooterAddress
+                    Footer..
                 </div>
             </div>
         </div>
     </footer>
-    <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
-
-    <script src="@Url.Content("~/scripts/umbraco-starterkit-app.js")"></script>
-    <script src="@Url.Content("~/scripts/amazilia.js")"></script>
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-  
-</body>     
+    @Html.RenderJsHere()
+</body>
 </html>
