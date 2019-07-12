@@ -1,5 +1,5 @@
 ﻿@inherits AmaziliaViewPageOfTContent<Amazilia.Web.Models.Common.AddresEditModel>
-@using Amazilia.Core.Web.Mvc;
+@using Amazilia.Web.Mvc;
 
 @{
     var editAddress = Model.EditAddress;
@@ -15,101 +15,112 @@
 </div>
 
 <div class="edit-address form-horizontal">
-    <div class="form-group">
-        @Html.LabelFor(model => model.EditAddress.FirstName, Umbraco.GetDictionaryValue("FirstName"), new { @class = "col-sm-3 control-label" })
-        <div class="col-sm-9">
-            @Html.EditorFor(model => model.EditAddress.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.EditAddress.FirstName)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.EditAddress.LastName, Umbraco.GetDictionaryValue("LastName"), new { @class = "col-sm-3 control-label" })
-        <div class="col-sm-9">
-            @Html.EditorFor(model => model.EditAddress.LastName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.EditAddress.LastName)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.EditAddress.Email, Umbraco.GetDictionaryValue("Email"), new { @class = "col-sm-3 control-label" })
-        <div class="col-sm-9">
-            @Html.EditorFor(model => model.EditAddress.Email, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.EditAddress.Email)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.EditAddress.Company, Umbraco.GetDictionaryValue("Company"), new { @class = "col-sm-3 control-label" })
-        <div class="col-sm-9">
+    <div class="row">
+        <div class="col-6">
+            <h3>Contactgegevens</h3>
+            <div class="form-group">
+                @Html.LabelFor(model => model.EditAddress.FirstName, Umbraco.GetDictionaryValue("FirstName"), new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.EditAddress.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EditAddress.FirstName)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.EditAddress.Email, Umbraco.GetDictionaryValue("Email"), new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.EditAddress.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EditAddress.Email)
+                </div>
+            </div>
 
-            @Html.EditorFor(model => model.EditAddress.Company, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.EditAddress.Company)
+            <div class="form-group">
+                @Html.LabelFor(model => model.EditAddress.LastName, Umbraco.GetDictionaryValue("LastName"), new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.EditAddress.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EditAddress.LastName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EditAddress.PhoneNumber, Umbraco.GetDictionaryValue("PhoneNumber"), new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.EditAddress.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EditAddress.PhoneNumber)
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-6">
+            <h3>Bezorgadres</h3>
+            <div class="form-group">
+                @Html.LabelFor(model => model.EditAddress.Address1, Umbraco.GetDictionaryValue("Address1"), new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
+
+                    @Html.EditorFor(model => model.EditAddress.Address1, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EditAddress.Address1)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EditAddress.Address2, Umbraco.GetDictionaryValue("Address2"), new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
+
+                    @Html.EditorFor(model => model.EditAddress.Address2, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EditAddress.Address2)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EditAddress.ZipPostalCode, Umbraco.GetDictionaryValue("ZipPostalCode"), new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
+
+                    @Html.EditorFor(model => model.EditAddress.ZipPostalCode, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EditAddress.ZipPostalCode)
+                </div>
+            </div>
+
+            @if (Model.Countries.Count() > 1)
+            {
+                <div class="form-group">
+
+                    @Html.LabelFor(model => model.EditAddress.CountryId, Umbraco.GetDictionaryValue("Country"), new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-9">
+
+                        @Html.DropDownListFor(model => model.EditAddress.CountryId, Model.Countries, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.EditAddress.CountryId)
+                    </div>
+                </div>
+            }
+            else
+            {
+                var country = Model.Countries.FirstOrDefault();
+                if (country != null)
+                {                    
+                    Model.EditAddress.CountryId = int.Parse(country.Value);
+                    @Html.HiddenFor(model => model.EditAddress.CountryId)
+                }
+            }
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EditAddress.City, Umbraco.GetDictionaryValue("City"), new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
+
+                    @Html.EditorFor(model => model.EditAddress.City, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EditAddress.City)
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.EditAddress.CountryId, Umbraco.GetDictionaryValue("Country"), new { @class = "col-sm-3 control-label" })
-        <div class="col-sm-9">
-
-            @Html.DropDownListFor(model => model.EditAddress.CountryId, Model.Countries, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.EditAddress.CountryId)
-        </div>
-    </div>
-
-    <div class="form-group">
-        @*@Html.LabelFor(model => model.c, Umbraco.GetDictionaryValue("LastName"), new { @class = "col-md-4" })
-            @Html.DropDownListFor(model => model.StateProvinceId, Model.AvailableStates)
-            <span id="states-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait...")</span>
-            @Html.ValidationMessageFor(model => model.StateProvinceId)*@
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.EditAddress.City, Umbraco.GetDictionaryValue("City"), new { @class = "col-sm-3 control-label" })
-        <div class="col-sm-9">
-
-            @Html.EditorFor(model => model.EditAddress.City, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.EditAddress.City)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.EditAddress.Address1, Umbraco.GetDictionaryValue("Address1"), new { @class = "col-sm-3 control-label" })
-        <div class="col-sm-9">
-
-            @Html.EditorFor(model => model.EditAddress.Address1, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.EditAddress.Address1)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.EditAddress.Address2, Umbraco.GetDictionaryValue("Address2"), new { @class = "col-sm-3 control-label" })
-        <div class="col-sm-9">
-
-            @Html.EditorFor(model => model.EditAddress.Address2, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.EditAddress.Address2)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.EditAddress.ZipPostalCode, Umbraco.GetDictionaryValue("ZipPostalCode"), new { @class = "col-sm-3 control-label" })
-        <div class="col-sm-9">
-
-            @Html.EditorFor(model => model.EditAddress.ZipPostalCode, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.EditAddress.ZipPostalCode)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.EditAddress.PhoneNumber, Umbraco.GetDictionaryValue("PhoneNumber"), new { @class = "col-sm-3 control-label" })
-        <div class="col-sm-9">
-            @Html.EditorFor(model => model.EditAddress.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.EditAddress.PhoneNumber)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.EditAddress.FaxNumber, Umbraco.GetDictionaryValue("FaxNumber"), new { @class = "col-sm-3 control-label" })
-        <div class="col-sm-9">
-            @Html.EditorFor(model => model.EditAddress.FaxNumber, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.EditAddress.FaxNumber)
-        </div>
-    </div>
-
+    
+  
     <div class="formgroup text-right">
         <span class="col-md-3"></span>
-        <button type="submit" name="SaveAddress" class="btn btn-primary text-right">Save address</button>
+        @*SaveAddressFields, determins wheter to store the fields or only save the selected address id*@
+        <input type="hidden" name="SaveAddressFields" value="1" />
+
+        <button type="submit" name="SaveAddress" id="save_address" class="btn btn-primary text-right">Addres opslaan</button>
+
     </div>
 
 </div>

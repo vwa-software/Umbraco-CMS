@@ -1,9 +1,9 @@
 ﻿<div ng-controller="Amazilia.RootController">
     <div ng-controller="Amazilia.OrdersController">
-
+      
         <form name="contentForm"
               novalidate
-              >
+              val-form-manager>
             <umb-editor-view>
 
                 <!--menu="$parent.menu"-->
@@ -13,14 +13,14 @@
                                    hide-description="false"
                                    hide-alias="true">
 
-
+                   
 
                 </umb-editor-header>
 
                 <umb-editor-container>
 
                     <!-- filter options look at: views\users\views\users-->
-
+                   
 
                     <umb-pane>
                         <div class="row">
@@ -65,19 +65,11 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="span4">
-
-                                <select ng-model="filterOptions.storeId" ng-change="doSearch()" ng-options="store.Id as store.Name for store in stores">
-                                    <option value="">All stores</option>
-                                </select>
-
-                            </div>
                         </div>
                         <div class="row">
                             <div class="control-group umb-control-group -no-border span4">
                                 <div class="umb-el-wrap">
-                                    <label class="control-label">Lastname</label>
+                                    <label class="control-label"> Lastname</label>
                                     <div class="controls">
                                         <input type="text" ng-model="filterOptions.lastName" maxlength="75" />
                                     </div>
@@ -98,21 +90,21 @@
 
                     </umb-pane>
                     <div class="form-horizontal">
-
-                        <umb-editor-sub-header>
-                            <umb-editor-sub-header-content-left>
-                                <umb-editor-sub-header-section>
-                                </umb-editor-sub-header-section>
-                            </umb-editor-sub-header-content-left>
-                            <umb-editor-sub-header-content-right>
-                                <umb-editor-sub-header-section>
-                                    <div class="umb-loader-wrapper -bottom">
-                                        <div class="umb-loader" ng-if="page.loading"></div>
-                                    </div>
-                                </umb-editor-sub-header-section>
-                            </umb-editor-sub-header-content-right>
-                        </umb-editor-sub-header>
-
+                        
+                            <umb-editor-sub-header>
+                                <umb-editor-sub-header-content-left>
+                                    <umb-editor-sub-header-section>
+                                    </umb-editor-sub-header-section>
+                                </umb-editor-sub-header-content-left>
+                                <umb-editor-sub-header-content-right>
+                                    <umb-editor-sub-header-section>
+                                        <div class="umb-loader-wrapper -bottom">
+                                            <div class="umb-loader" ng-if="page.loading"></div>
+                                        </div>
+                                    </umb-editor-sub-header-section>
+                                </umb-editor-sub-header-content-right>
+                            </umb-editor-sub-header>
+                        
                         <div class="umb-pane">
 
                             <umb-table items="Data.Items" item-properties="options.includeProperties" on-click="item_click">

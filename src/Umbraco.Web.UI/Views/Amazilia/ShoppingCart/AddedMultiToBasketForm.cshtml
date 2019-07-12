@@ -1,0 +1,45 @@
+﻿@inherits AmaziliaViewPageOfTContent<IEnumerable<ShoppingCartAddItemModel>>
+@using Amazilia.Web.Controllers;
+@using Amazilia.Web.Mvc;
+@using Amazilia.Web.Models.ShoppingCart;
+@{
+    /**/
+
+    Layout = null;
+    var items = Model.Where(a => a.Warnings.Count > 0);
+
+    bool showPriceInclTax = true;
+
+    if (items.Count() > 0)
+    {
+        <div class="modal fade" id="amazilia_model" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <!-- Modal -->
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">De volgende items zijn helaas niet toegevoegd aan uw winkelwagen</h4>
+                    </div>
+                    @foreach (var item in items)
+                    {
+                        var product = ProductService.GetProductByContentId(item.ItemID);
+                        <div class="row">
+                            <div class="col-md">@product.Name</div>
+                            <div class="col-md reason">
+                                <ul>
+                                    @foreach (string warning in item.Warnings)
+                                    {
+                                        <li>@warning</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

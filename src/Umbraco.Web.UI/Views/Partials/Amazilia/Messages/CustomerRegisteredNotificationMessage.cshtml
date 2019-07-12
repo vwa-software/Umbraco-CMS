@@ -1,23 +1,15 @@
 @inherits AmaziliaViewPageOfTContent<Amazilia.Web.Models.Membership.MemberActivationModel>
 @using Amazilia.Web.Mvc;
 @using Amazilia.Web.Extentions;
-@using Amazilia.Core.Web.Mvc;
 @using ContentModels = Umbraco.Web.PublishedContentModels;
 @{
 
     //Sends 'New customer' notification message to a store owner
-    
+
     /**/
 
-    Layout = null;// "Master.cshtml";
+    Layout = "mail-master.cshtml";
     string hostname = System.Web.HttpContext.Current.Request.Url.Scheme + "://" + System.Web.HttpContext.Current.Request.Url.Authority;
 }
-<!doctype html>
-<html>
-<head>
-</head>
-<body>
-    <h2>Dear store owner</h2>
-    A new customer has registerd...
-</body>
-</html>
+<h2>Dear store owner</h2>
+A new customer has registerd...

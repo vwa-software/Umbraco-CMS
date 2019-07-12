@@ -1,0 +1,28 @@
+﻿@inherits Amazilia.Web.Mvc.AmaziliaTemplatePage
+@{
+    Layout = "Master.cshtml";
+}
+@*
+    Checkout success page.
+    The user gets redirected to this page after successfully completed an order.
+*@
+
+<h1>@Umbraco.Field("pageTitel")</h1>
+
+<div class="content"> @Html.GetGridHtml(Model.Content, "bodyText", "bootstrap4-fluid")</div>
+
+@* Call to Amazilia Checkout controller, the view being renderd is located here: views\amazilia\checkout\success.cshtml*@
+@Html.Action("Success", "Checkout", new { area = "Amazilia"})
+
+@* Alternative to the controller call,  you can use code like below*@
+@*
+    @{
+        var orderservice = this.OrderService;
+        int orderId = 0;
+        int.TryParse(Request["OrderId"], out orderId);
+        var order = orderservice.GetOrderById(orderId);
+        var orderModel = orderservice.CreateOrderDetailModel(order);
+
+    }
+    <div>@orderModel.whatever</div>
+*@

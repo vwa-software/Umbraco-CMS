@@ -1,6 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28307.421
 VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Web.UI", "Umbraco.Web.UI\Umbraco.Web.UI.csproj", "{4C4C194C-B5E4-4991-8F87-4373E24CC19F}"
@@ -118,6 +117,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETC.Connector", "..\..\m-plus\ETC.Connector\ETC.Connector.csproj", "{9E19F0F0-0050-419E-8EBD-AC97DCA967BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amazilia.Web.UI", "..\..\vwa-plugins-git\Amazilia.Web.UI\Amazilia.Web.UI.csproj", "{F5C8558A-F998-46BA-9EE1-42DEA090226A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amazilia.Plugins.Payment.IdealSimulator", "..\..\vwa-plugins-git\Plugins\Amazilia.Plugins.Payment.IdealSimulator\Amazilia.Plugins.Payment.IdealSimulator.csproj", "{ED8855CE-4F62-442B-9033-2363C2023296}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -563,6 +564,26 @@ Global
 		{F5C8558A-F998-46BA-9EE1-42DEA090226A}.Release|x64.Build.0 = Release|Any CPU
 		{F5C8558A-F998-46BA-9EE1-42DEA090226A}.Release|x86.ActiveCfg = Release|Any CPU
 		{F5C8558A-F998-46BA-9EE1-42DEA090226A}.Release|x86.Build.0 = Release|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Debug|ARM.Build.0 = Debug|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Debug|x64.Build.0 = Debug|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Debug|x86.Build.0 = Debug|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Release|ARM.ActiveCfg = Release|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Release|ARM.Build.0 = Release|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Release|ARM64.Build.0 = Release|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Release|x64.ActiveCfg = Release|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Release|x64.Build.0 = Release|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Release|x86.ActiveCfg = Release|Any CPU
+		{ED8855CE-4F62-442B-9033-2363C2023296}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -580,6 +601,7 @@ Global
 		{8676B298-5256-4ABD-9C4C-ED0E2B853EA2} = {F4B9D8FB-CF5D-4C40-999B-A67C9BA0947B}
 		{9E19F0F0-0050-419E-8EBD-AC97DCA967BB} = {F4B9D8FB-CF5D-4C40-999B-A67C9BA0947B}
 		{F5C8558A-F998-46BA-9EE1-42DEA090226A} = {7CD513D3-A2F0-4AED-B249-30470224542C}
+		{ED8855CE-4F62-442B-9033-2363C2023296} = {2566D014-1A49-4C9B-AAD9-BEC0B44A0EEB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B9072511-2B53-4676-9D37-2BAF47662040}

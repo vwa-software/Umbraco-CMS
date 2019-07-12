@@ -368,9 +368,7 @@ angular.module("umbraco")
 
 angular.module("umbraco")
     .controller("Amazilia.OrdersController",
-        ['$scope', '$http', 'appState',  'notificationsService',
-              '$location', 'amzlocalizationservice', 'amzstoreservice',
-            function ($scope, $http, appState, notificationsService, $location, amzlocalizationservice, amzstoreservice) {
+        ['$scope', '$http', 'appState', 'navigationService', 'notificationsService', '$routeParams', 'formHelper', '$timeout', '$location', 'amzlocalizationservice', function ($scope, $http, appState, navigationService, notificationsService, $routeParams, formHelper, $timeout, $location, amzlocalizationservice) {
 
             //setup scope vars
             $scope.page = {};
@@ -388,8 +386,7 @@ angular.module("umbraco")
             $scope.options.includeProperties = {};
             $scope.options.pager = { totalPages: 0, pageNumber: 0 };
 
-            // Filteroptions, send as dictionary to controller
-            $scope.filterOptions = { "pageNumber": "1", "pageSize": "25", "storeId" : "0" };
+            $scope.filterOptions = { "pageNumber": "1", "pageSize": "25" };
 
 
             var getOrders = function () {
@@ -472,13 +469,6 @@ angular.module("umbraco")
             };
 
             getOrders();
-
-            // load the stores
-                amzstoreservice.getAllStores().then(function (result) {
-                $scope.stores = result;
-                }, function (error) {
-                notificationsService.error("Error loading store selection list", error);
-            });
         }]);
 
 
@@ -506,21 +496,10 @@ angular.module("umbraco")
                     $scope.loading = false;
                     if (response.data.Ok) {
                         $scope.data.order = response.data.Data;
-                        //$scope.$parent.syncTree(response.data.Data.path);
+                        $scope.$parent.syncTree(response.data.Data.path);
                         $scope.page.loading = false;
                         $scope.page.name = response.data.Data.name;
                         $scope.buttonState = "success";
-
-
-                        // get an (virtual) treenode for the menu actions
-                        $http.get('backoffice/Amazilia/AmaziliaTree/GetTreeNode?id=' + $scope.id + '&application=' + $scope.page.menu.currentSection + '&subsection=order', {
-                            cache: false
-                        }).then(function (response) {
-                            $scope.page.menu.currentNode = response.data;
-                        }, function (error) {
-                            console.log('Failed to load node for id');
-                            });
-
                     }
                     else {
                         $scope.loading = false;

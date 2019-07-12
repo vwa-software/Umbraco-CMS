@@ -504,6 +504,7 @@
     <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\variantOptions\variantOptions.controller.js" />
     <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\variantOptions\variantOptions.html" />
     <Content Include="App_Plugins\Amazilia\Lang\en-US.xml" />
+    <Content Include="App_Plugins\Amazilia\Plugins\Amazilia.Plugins.Payment.IdealSimulator\Config.html" />
     <Content Include="App_Plugins\Amazilia\Plugins\Amazilia.Plugins.Payment.Manual\Config.html" />
     <Content Include="App_Plugins\Amazilia\Plugins\Amazilia.Plugins.Shipping.Manual\Config.html" />
     <Content Include="App_Plugins\ETCConnector\BackOffice\ETCConnector\edit.controller.js" />
@@ -541,8 +542,16 @@
     <Content Include="Config\Lang\sv-SE.user.xml" />
     <Content Include="Config\Lang\zh-CN.user.xml" />
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\images\icons\Icon-128x128.png" />
+    <Content Include="Content\images\icons\Icon-144x144.png" />
+    <Content Include="Content\images\icons\Icon-152x152.png" />
+    <Content Include="Content\images\icons\Icon-192x192.png" />
+    <Content Include="Content\images\icons\Icon-256x256.png" />
+    <Content Include="Content\images\icons\Icon-512x512.png" />
+    <Content Include="Content\images\icons\Icon.png" />
     <Content Include="css\lib\bootstrap.css" />
     <Content Include="css\lib\bootstrap.min.css" />
+    <None Include="css\mail\mailtemplate.less" />
     <Content Include="css\siderbar.less" />
     <Content Include="css\lib\bootstrap.css.map" />
     <Content Include="css\lib\bootstrap.min.css.map" />
@@ -911,16 +920,12 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Partials\Grid\Bootstrap3.cshtml" />
     <Content Include="Views\Partials\Grid\Editors\Embed.cshtml" />
     <Content Include="Views\Partials\Grid\Editors\Macro.cshtml" />
     <Content Include="Views\Partials\Grid\Editors\Media.cshtml" />
     <Content Include="Views\Partials\Grid\Editors\Rte.cshtml" />
     <Content Include="Views\Partials\Grid\Editors\Textstring.cshtml" />
-    <Content Include="Views\Partials\Grid\Bootstrap2.cshtml" />
     <Content Include="Views\Partials\Grid\Editors\Base.cshtml" />
-    <Content Include="Views\Partials\Grid\Bootstrap3-Fluid.cshtml" />
-    <Content Include="Views\Partials\Grid\Bootstrap2-Fluid.cshtml" />
     <Content Include="Umbraco\Views\Preview\Background.cshtml" />
     <Content Include="Umbraco\Views\Preview\Border.cshtml" />
     <Content Include="Umbraco\Views\Preview\Color.cshtml" />
@@ -935,12 +940,9 @@
     <Content Include="Umbraco\Views\Preview\Slider.cshtml" />
     <Content Include="Umbraco\Views\Preview\web.config" />
     <Content Include="Views\Amazilia\Checkout\BillingAddress.cshtml" />
-    <Content Include="Views\Amazilia\Checkout\Cart.cshtml" />
-    <Content Include="Views\Amazilia\Checkout\CheckoutProgress.cshtml" />
     <Content Include="Views\Amazilia\Checkout\Confirm.cshtml" />
     <Content Include="Views\Amazilia\Checkout\PaymentMethod.cshtml" />
     <Content Include="Views\Amazilia\Checkout\ReturnToParentRedirect.cshtml" />
-    <Content Include="Views\Amazilia\Checkout\ShippingAddress.cshtml" />
     <Content Include="Views\Amazilia\Checkout\ShippingMethod.cshtml" />
     <Content Include="Views\Amazilia\Checkout\Success.cshtml" />
     <Content Include="Views\Amazilia\Checkout\_CreateOrUpdateAddress.cshtml" />
@@ -951,21 +953,17 @@
     <Content Include="Views\Amazilia\Plugins\Payment.Manual\PaymentInfo.cshtml" />
     <Content Include="Views\Amazilia\ShoppingCart\AddedToCart.cshtml" />
     <Content Include="Views\Amazilia\ShoppingCart\Cart.cshtml" />
-    <Content Include="Views\Amazilia\ShoppingCart\Cart_Editable.cshtml" />
     <Content Include="Views\Checkout.cshtml" />
     <Content Include="Views\ContentPage.cshtml" />
     <Content Include="Views\Forgotpassword.cshtml" />
     <Content Include="Views\Home.cshtml" />
     <Content Include="Views\Login.cshtml" />
     <Content Include="Views\Master.cshtml" />
-    <Content Include="Views\Product.cshtml" />
-    <Content Include="Views\Products.cshtml" />
     <Content Include="Views\Resetpassword.cshtml" />
     <Content Include="Views\Partials\Amazilia\Basket\AddToBasketForm.cshtml" />
     <Content Include="Views\Partials\Amazilia\Messages\CustomerPasswordRecoveryMessage.cshtml" />
     <Content Include="Views\Partials\Amazilia\Messages\CustomerRegisteredNotificationMessage.cshtml" />
     <Content Include="Views\Partials\Amazilia\Messages\CustomerWelcomeMessage.cshtml" />
-    <Content Include="Views\Partials\Amazilia\Messages\Master.cshtml" />
     <Content Include="Views\Partials\Amazilia\Messages\OrderPlacedCustomerNotification.cshtml" />
     <Content Include="Views\Partials\Amazilia\Messages\OrderPlacedStoreOwnerNotification.cshtml" />
     <Content Include="Views\Partials\Amazilia\Product\TierPrices.cshtml" />
@@ -978,6 +976,13 @@
     <Content Include="Views\PwaCache\pwa.cshtml" />
     <Content Include="Views\Partials\Navigation\Categories.cshtml" />
     <Content Include="Views\Async\Products.cshtml" />
+    <Content Include="Views\Amazilia\ShoppingCart\AddedMultiToBasketForm.cshtml" />
+    <Content Include="Views\Partials\Grid\Bootstrap4.cshtml" />
+    <Content Include="Views\Partials\Grid\Bootstrap4-Fluid.cshtml" />
+    <Content Include="Views\Amazilia\Plugins\Payment.IdealSimulator\PaymentInfo.cshtml" />
+    <Content Include="Views\CheckoutSuccess.cshtml" />
+    <Content Include="Views\Amazilia\Order\Order.cshtml" />
+    <Content Include="Views\Partials\Amazilia\Messages\Mail-master.cshtml" />
     <None Include="Web.Debug.config.transformed" />
     <None Include="web.Template.Debug.config">
       <DependentUpon>Web.Template.config</DependentUpon>
@@ -1135,7 +1140,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="App_Plugins\Amazilia\Backoffice\Amazilia\Stores\" />
-    <Folder Include="Content\images\icons\" />
     <Folder Include="Views\MacroPartials\" />
   </ItemGroup>
   <ItemGroup>

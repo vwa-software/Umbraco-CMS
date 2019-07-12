@@ -6,78 +6,28 @@
 
 @{
     Layout = "Master.cshtml";
-    Amazilia.Core.Domain.Orders.CheckoutStep step = AmaziliaHelper.GetCheckoutStepForContent(Model.Content);
 }
-
-@Html.Partial("~/Views/Partials/SectionHeader.cshtml")
-
-<section class="section">
-    <div class="container">
-        <div class="col-md-3">
-            <nav class="nav-bar nav-bar--list">
-                @Html.Action("CheckoutProgress", "Checkout", new { step = step, area = "Amazilia" })
-            </nav>
-        </div>
-        <div class="col-md-9">
-            <div class="row">
-                <div class="col-md-12">
-                    <article>
-                        @Html.GetGridHtml(Model.Content, "bodyText", "bootstrap3-fluid")
-                    </article>
+<section class="section" id="checkoutController">
+    <div class="row">
+        <div class="col-4">
+            @* Card is updated async, important: dont change the id *@
+            <div id="cart-wrapper" data-asyncaction="@Url.Action("Cart","Basket", new { area = "Amazilia"})">
+                <div>                 
                 </div>
             </div>
-
-            @{ switch (step)
-                {
-                    case Amazilia.Core.Domain.Orders.CheckoutStep.Cart:
-                        <div>
-                            @Html.Action("Cart", "Checkout", new { area = "Amazilia" })
-                        </div>
-                        break;
-                    case Amazilia.Core.Domain.Orders.CheckoutStep.BillingAddress:
-                        <div>
-                            @Html.Action("BillingAddress", "Checkout", new { area = "Amazilia" })
-                        </div>
-                        break;
-                    case Amazilia.Core.Domain.Orders.CheckoutStep.ShippingAddress:
-                        <div>
-                            @Html.Action("ShippingAddress", "Checkout", new { area = "Amazilia" })
-                        </div>
-                        break;
-                    case Amazilia.Core.Domain.Orders.CheckoutStep.ShippingProvider:
-                        <div>
-                            @Html.Action("ShippingMethod", "Checkout", new { area = "Amazilia" })
-                        </div>
-                        break;
-
-                    case Amazilia.Core.Domain.Orders.CheckoutStep.PaymentProvider:
-                        <div>
-                            @Html.Action("PaymentMethod", "Checkout", new { area = "Amazilia" })
-                        </div>
-                        break;
-                    case Amazilia.Core.Domain.Orders.CheckoutStep.Confirm:
-                        <div>
-                            @Html.Action("Confirm", "Checkout", new { area = "Amazilia" })
-                        </div>
-                        break;
-
-                    case Amazilia.Core.Domain.Orders.CheckoutStep.Success:
-                        <div>
-                            @Html.Action("Success", "Checkout", new { area = "Amazilia" })
-                        </div>
-                        break;
-                }
-            }
-
-            @Html.ValidationSummary()
-
         </div>
-      
+        <div class="col-8">
+            <div id="address_wrp">
+                @* Call to Amazilia Checkout controller, the view being renderd is located here: views\amazilia\checkout\BillingAddress.cshtml*@
+                @Html.Action("BillingAddress", "Checkout", new { area = "Amazilia" })
+            </div>
+            <div id="paymentmethod_wrp">
+                @* Call to Amazilia Checkout controller, the view being renderd is located here: views\amazilia\checkout\PaymentMethod.cshtml*@
+                @Html.Action("PaymentMethod", "Checkout", new { area = "Amazilia" })
+            </div>
+            @* Call to Amazilia Checkout controller, the view being renderd is located here: views\amazilia\checkout\Confirm.cshtml*@
+            @Html.Action("Confirm", "Checkout", new { area = "Amazilia" })
+            @Html.ValidationSummary()
+        </div>
     </div>
 </section>
-
-@*<section class="cart">
-    <div class="container">
-        @Html.Action("Cart", "Basket", new { area = "Amazilia" })
-    </div>    
-</section>*@

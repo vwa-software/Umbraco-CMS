@@ -1,4 +1,22 @@
-﻿function Binder() {
+﻿
+// vwa namespace
+var VWA = {};
+
+
+/*
+ *
+ *
+ * Usage:
+ *
+        binder = new Binder();
+
+        binder.addInput('quantity', $('#quantity'));
+        binder.addHtml('quantity',$('#quantityHtml'));
+        binder.setPropertyValue('quantity', 6);
+        *
+ *
+ * */
+function Binder() {
 
     var _items = {};
     var _listeners = {};
@@ -74,3 +92,35 @@
         }
     };
 }
+
+
+
+VWA.Utils = function Utils() {
+
+    return {
+        /**
+         * Function GetQueryParamenters
+         * returns: the parameters from the hashed query string
+         **/
+        GetQueryParameters: function () {
+
+            let params = {};
+            let hash = window.location.hash;
+            let index = hash.indexOf('?') + 1;
+         
+
+            if (index < 1) {
+                return params;
+            }
+
+            let query = hash.substr(index, hash.length - index).split('&');
+
+            for (let i in query) {
+                var nameval = query[i].split('=');
+                params[nameval[0]] = nameval[1];
+            }
+            return params;
+        }
+    };
+}();
+

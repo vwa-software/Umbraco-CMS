@@ -5,11 +5,11 @@
 @using Amazilia.Web.Controllers;
 
 @{
-    var site = Model.Content.Site();
-    var selection = site.Children;
+    IPublishedContent site = Model.Content.Site();
+    IEnumerable<IPublishedContent> selection = site.Children.Where(a => a.IsVisible());
     var customer = Amazilia.Web.AmaziliaContext.Current.CurrentCustomer;
     var currencies = this.CurrencyService.GetAllCurrencies();
-
+    var hasBasket = customer.ShoppingCartItems.Count > 0;// check for basket, id 1169 is the checkout content node
 }
 
 
@@ -18,10 +18,12 @@
 
         <!-- uncomment this line if you don't want it to appear in the top navigation -->
         <li class="nav-item">
-            <a class="nav-link @Html.Raw(Model.Content.Id == site.Id ? " navi-link--active" : "" )" href="@site.Url">@site.Name</a>
+            <a class="nav-link @Html.Raw(Model.Content.Id == site.Id ? " navi-link--active" : "")" href="@site.Url">@site.Name</a>
         </li>
 
-        @foreach (var item in selection.Where(x => x.IsVisible()))
+        @foreach (var item in selection.Where(x =>
+        (customer.Anonymous || !x.HideWhenAuthorized()) &&
+        (x.Id != 1169 || hasBasket)))
         {
             <li class="nav-item">
                 <a class="nav-link @(item.IsAncestorOrSelf(Model.Content) ? " nav-link--active" : null)" href="@item.Url">@item.Name</a>
@@ -29,46 +31,13 @@
         }
 
 
-        @if (customer.Anonymous)
-        {
-            foreach (var item in selection.Where(x => !x.IsVisible()))
-            {
-                <li class="nav-item">
-                    <a class="nav-link @(item.IsAncestorOrSelf(Model.Content) ? " nav-link--active" : null)" href="@item.Url">@item.Name</a>
-                </li>
-            }
-        }
-        else
+        @if (!customer.Anonymous)
         {
             <li class="nav-item">
                 <a class="nav-link" href="@Url.Action("logout", "MemberShip", new { redirectId = CurrentPage.Id, path = "",  area = "Amazilia" })">@customer.Member.Name  Log out</a>
             </li>
         }
-
-        @if (currencies.Count > 1)
-        {
-            using (Html.BeginUmbracoForm<MembershipController>("ChangeCurrency", new { area = "Amazilia" }))
-            {
-
-                @Html.Hidden("CurrencyId", "")
-
-                <li class="nav-item dropdown">
-                    <a class="btn btn-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        @Amazilia.Web.AmaziliaContext.Current.CurrentCustomer.Currency.Name
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="currencyChangeList">
-                        @foreach (var currency in currencies)
-                        {
-                            <li class="dropdown-item"><a data-currencyid="@currency.Id" href="#">@currency.Name</a></li>
-                        }
-                    </ul>
-                </li>
-
-            }
-        }
-
-      
+     
 
     </ul>
 

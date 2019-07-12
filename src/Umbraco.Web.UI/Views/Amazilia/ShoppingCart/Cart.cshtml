@@ -8,6 +8,11 @@
 
     decimal total = 0;
     bool shopPriceInclTax = true;
+
+    // Checkout content ID
+    string checkoutUrl = Umbraco.TypedContent(1169).Url;
+
+
 }
 
 <div class="basket-cart-content pt-md-4">
@@ -15,75 +20,94 @@
         Loading
     </div>
     <div class="basket-table">
-        <div class="basket-row-header">
-            <span class="icon-round icon-shopping-cart"></span>
-            <span>Mijn bestelling</span>
-            <input type="checkbox" class="d-none" name="removeallfromcart" value="all" />
-            <button class="btn cart-remove-all float-right">Verwijder lijst</button>
-        </div>
-
 
         @if (Model.Items.Count > 0)
         {
             using (Html.BeginUmbracoForm<BasketController>("UpdateCart", new { area = "Amazilia" }, new { role = "form", @class = "updatecart" }))
             {
-                @* cart-items, dont change the ID of this container, clientscript depends on it. *@
-                <div class="cart-items" id="cart-items">
-                    @foreach (var item in Model.Items.Where(a => a.isGroupRootItem))
-                    {
-                        <div class="row">
-                            <div class="quantity">
-                                <div class="number-spinner">
-                                    <span class="min">-</span>
-                                    <input data-id="@item.ProductId" type="text" class="spinner quantity" name="itemquantity@(item.Id)" value="@item.Quantity" />
-                                    <span class="plus">+</span>
+                <div class="card">
+
+                    <div class="basket-row-header cart-title">
+                        <span class="icon-round icon-shopping-cart"></span>
+                        <span>Mijn bestelling</span>
+                        <input type="checkbox" class="d-none" name="removeallfromcart" value="all" />
+                        <button class="btn cart-remove-all float-right">Verwijder lijst</button>
+                    </div>
+
+                    @* cart-items, dont change the ID of this container, clientscript depends on it. *@
+                    <div class="cart-items cart-body" id="cart-items">
+
+                        @foreach (var item in Model.Items.Where(a => a.isGroupRootItem))
+                        {
+                        <div class="basket-item-container gr-code-@item.GroupCode">
+                            <div class="row">
+                                <div class="quantity">
+                                    <div class="number-spinner">
+                                        <span class="min">-</span>
+                                        <input data-id="@item.ProductId" type="text" class="spinner quantity" name="itemquantity@(item.Id)" value="@item.Quantity" />
+                                        <span class="plus">+</span>
+                                    </div>
+                                </div>
+                                <div class="product">
+                                    <span class="text-nowrap">@item.Product.UmbracoContent.Name</span>
+                                </div>
+                                <div class="subtotal">
+                                    <span class="product-subtotal text-nowrap">@item.SubTotal.FormatPrice(shopPriceInclTax)</span>
+                                </div>
+                                <div class="remove">
+                                    @*do not remove or rename removefromcart, these are used in javascript logic*@
+                                    <input type="checkbox" class="d-none" name="removefromcart" value="@item.Id" />
+                                    <span class="icon-trash removefromcart" title="Verwijder"></span>
                                 </div>
                             </div>
-                            <div class="product">
-                                <span class="text-nowrap">@item.Product.UmbracoContent.Name</span>
-                            </div>
-                            <div class="subtotal">
-                                <span class="product-subtotal text-nowrap">@item.SubTotal.FormatPrice(shopPriceInclTax)</span>
-                            </div>
-                            <div class="remove">
-                                @*do not remove or rename removefromcart, these are used in javascript logic*@
-                                <input type="checkbox" class="d-none" name="removefromcart" value="@item.Id" />
-                                <span class="icon-trash removefromcart" title="Verwijder"></span>
-                            </div>
-                        </div>
-                        <div class="row gr-code-@item.GroupCode">
-                            <div class="additional">
-                                @foreach (var additional in item.Children)
-                                {
-                                <div class="preparation-method-tile cart prep-id-@additional.ProductId">
-                                    <input data-id="@additional.ProductId" data-parentid="@item.ProductId" type="hidden" class="quantity" name="itemquantity@(additional.Id)" value="@additional.Quantity" />
-                                    <span class="quantity-label">@(additional.Quantity)</span>x @additional.Product.UmbracoContent.Name @additional.SubTotal.FormatPrice(shopPriceInclTax)
+                            <div class="row">
+                                <div class="additional">
+                                    @{
+                                        var count = item.Children.Count;
+                                        int index = 0;
+                                        foreach (var additional in item.Children)
+                                        {
+                                            <span class="preparation-method-cart prep-id-@additional.ProductId">
+                                                @(additional.Quantity > 1 ? additional.Quantity.ToString() + "x " : null)@additional.Product.UmbracoContent.Name@(index++ < count - 1 ? "," : null)
+                                            </span>
+                                        }
+                                    }
                                 </div>
-                                }
                             </div>
                         </div>
-                    }
+                        }
+                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-4">Bezorgen</div>
-                    <div class="col-3">Afhalen</div>
-                    <div class="col-4">Hier opeten</div>
+                <div class="card deliverymethods card-body">
+                    
+                        @Html.Action("ShippingMethod", "Checkout", new { area = "Amazilia" })
+                    
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        Bereidingstijd
+                <div class="card calculations card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            Bereidingstijd
+                        </div>
+                        <div class="col-6">
+                            Subtotal
+                            <strong>@Model.SubTotal.FormatPrice(shopPriceInclTax)</strong>
+                        </div>
+                        <div class="col-6">
+                            Bezorgkosten
+                            @if (Model.EstimateShipping.ShippingOptionsAvailable)
+                            {
+                                <strong title="Bezorgkosten zijn gebasseerd op @Model.EstimateShipping.ShippingOption.Name">@Model.EstimateShipping.ShippingRate.FormatPrice(shopPriceInclTax)</strong>
+                            }
+                        </div>
+                        <div class="col-6">
+                            Totaal
+                            <strong>@Model.Total.FormatPrice(shopPriceInclTax)</strong>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        Subtotal
-                        <strong>@Model.SubTotal.FormatPrice(shopPriceInclTax)</strong>
-                    </div>
-                    <div class="col-6">
-                        Bezorgkosten
-                        <strong>&euro;0,00</strong>
-                    </div>
-                    <div class="col-6">
-                        Totaal
-                        <strong>@Model.SubTotal.FormatPrice(shopPriceInclTax)</strong>
+                </div>
+                <div class="card checkout card-body">
+                    <div class="row">
+                        <a class="btn btn-success col-12" href="@checkoutUrl" title="Naar afrekenen" class="col-12">AFREKENEN</a>
                     </div>
                 </div>
             }

@@ -6,20 +6,32 @@
 
 @{
     /**/
+    IPublishedContent categoryContent = null;
 
     var children = this.ProductService.GetContentIdsWithFilterId(Model.Model.CategoryId, true).ToArray();
-    IEnumerable<IPublishedContent>
-    products = Umbraco.Content(children);
+    IEnumerable<IPublishedContent> products = Umbraco.Content(children);
     products = products.Where(a => a.IsVisible());
+
+    if (Model.Model.CategoryId > 0)
+    {
+        categoryContent = Umbraco.Content(Model.Model.CategoryId);
+    }
+
 }
 
 @if (products.Count() == 0)
 {
     var root = Umbraco.ContentAtRoot().FirstOrDefault();
-
     var orderingnode = root.Children("Ordering").FirstOrDefault();
 
     <div class="empty">@Html.Raw(orderingnode.GetPropertyValue<string>("emptyArticlesMessage"))</div>
+}
+
+@if (categoryContent != null &&  categoryContent.HasValue("bodyText"))
+{
+    
+        @Html.GetGridHtml(categoryContent.GetProperty("bodyText"), "bootstrap4")
+    
 }
 
 
@@ -30,30 +42,24 @@
 
     <article class="product id_@item.Id">
         <div class="row">
-            <div class="col-md-3">@if (item.HasValue("photos"))
-            {
-                var img = item.GetPropertyValue<IEnumerable<IPublishedContent>>("photos").FirstOrDefault();
+            <div class="col-md-3">
+                @if (item.HasValue("photos"))
+                {
+                    var img = item.GetPropertyValue<IEnumerable<IPublishedContent>>("photos").FirstOrDefault();
 
-                <img src="@(Url.GetCropUrl(img, "List"))" />
-            }
+                    <img src="@(Url.GetCropUrl(img, "List"))" />
+                }
             </div>
             <div class="col-md-6"><h5>@item.Name</h5><p>@(item.GetPropertyValue<string>("description"))</p></div>
-            <div class="col-md-3">
+            <div class="col-md-3 text-right">
                 @amzProduct.Price(1).FormatPriceInclTax()
-                @*@Html.Partial("Amazilia/Basket/AddToBasketForm", amzProduct)*@
-                <div class="product-button input-group-btn">
 
-                    <button class="btn btn-success addtocart" data-id="@item.Id" data-groupcode="gr-@item.Id" data-isrootitem="1">Toevoegen</button>
-
-                    <div class="quantity">
-                        <div class="number-spinner">
-                            <span class="min">-</span>
-                            <input type="text" id="listquantity@(item.Id)" class="spinner" value="1" />
-                            <span class="plus">+</span>
-                        </div>
+                @if (preparationMethods.Count() > 0)
+                {
+                    <div class="product-button input-group-btn">
+                        <button class="btn btn-success">Kies saus</button>
                     </div>
-
-                </div>
+                }
             </div>
         </div>
         @if (preparationMethods.Count() > 0)
@@ -66,26 +72,49 @@
                         {
                             var amzPreparationMethod = ProductService.GetProductByContent(preperationMethod);
 
-                        <div class="col-4 preparation-method id-@preperationMethod.Id">
-                            <div class="preparation-method-tile addtocart" data-id="@preperationMethod.Id" data-groupcode="gr-@item.Id">
-                                <div class="quantity">
-                                    <div class="number-spinner">
-                                        <span class="min">-</span>
-                                        <input type="text" id="listquantity@(item.Id)_@(preperationMethod.Id)" class="spinner" value="1" />
-                                        <span class="plus">+</span>
+                            <div class="col-lg-4 col-6 preparation-method id-@preperationMethod.Id" data-id="@preperationMethod.Id">
+                                <div class="preparation-method-tile prep-addtodish">
+                                    <div class="quantity">
+                                        <div class="number-spinner">
+                                            <span class="min">-</span>
+                                            <input type="text" id="listquantity@(item.Id)_@(preperationMethod.Id)" class="spinner" value="1" />
+                                            <span class="plus">+</span>
+                                        </div>
+                                    </div>
+                                    <div class="sub-tile">
+                                        <span class="caption">@preperationMethod.Name</span>
+                                        <span class="float-right">@amzPreparationMethod.Price(1).FormatPriceInclTax()</span>
                                     </div>
                                 </div>
-                                <div class="sub-tile">
-                                    <span class="caption">@preperationMethod.Name</span>
-                                    <span class="float-right">@amzPreparationMethod.Price(1).FormatPriceInclTax()</span>
-                                </div>
                             </div>
-
-                           
-                        </div>
                         }
                     </div>
+
+                    <div class="add-basket-wrap add-quantity-wrap">
+                        <div class="quantity">
+                            <div class="number-spinner">
+                                <span class="min">-</span>
+                                <input type="text" id="listquantity@(item.Id)" class="spinner" value="1" />
+                                <span class="plus">+</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-success addtocart" data-id="@item.Id">Toevoegen</button>
+                    </div>
                 </div>
+
+            </div>
+        }
+        else
+        {
+            <div class="add-basket-wrap add-quantity-wrap">
+                <div class="quantity">
+                    <div class="number-spinner">
+                        <span class="min">-</span>
+                        <input type="text" id="listquantity@(item.Id)" class="spinner" value="1" />
+                        <span class="plus">+</span>
+                    </div>
+                </div>
+                <button class="btn btn-success addtocart" data-id="@item.Id">Toevoegen</button>
             </div>
         }
     </article>

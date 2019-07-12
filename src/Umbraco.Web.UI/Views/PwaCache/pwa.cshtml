@@ -24,7 +24,17 @@
         Html.RequiresJs("~/scripts/lib/jquery.validate.unobtrusive.min.js", 3);
     *@
 
+string hostname = System.Web.HttpContext.Current.Request.Url.Scheme + "://" + System.Web.HttpContext.Current.Request.Url.Authority.TrimEnd("/");
+IPublishedContent site = this.Umbraco.ContentAtRoot().FirstOrDefault();
+IEnumerable<IPublishedContent> selection = site.Children;
+
 }
 @Html.RenderJsHere()
 @Html.RenderCssHere()
+<link href="/" />
+@foreach(var url in selection)
+{
+<link href="@url.Url" />
+}
+
 

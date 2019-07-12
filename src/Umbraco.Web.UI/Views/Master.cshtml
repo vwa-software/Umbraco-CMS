@@ -53,17 +53,7 @@
 
     <header class="header">
         <nav class="navbar-light navbar navbar-expand-lg fixed-top">
-            <a class="navbar-brand" href="/">
-                @if (home.SiteLogo != null && !string.IsNullOrEmpty(home.SiteLogo.Url))
-                {
-
-                    <img class="logo-image" src="@home.SiteLogo.Url" alt="@home.Sitename">
-                }
-                else
-                {
-                    @home.Sitename
-                }
-            </a>
+          
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

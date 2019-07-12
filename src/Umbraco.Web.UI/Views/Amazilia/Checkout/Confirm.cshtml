@@ -7,29 +7,26 @@
         @Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Cart })
     }*@
 
-<div class="page checkout-page paymentmethod-page">
+<div class="checkout-confim">
+    <div class="row">
+        <div class="col-6">
 
-    @*@Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Address })*@
+        </div>
+        <div class="col-6">
+            @{using (Html.BeginUmbracoForm<CheckoutController>
+                                  ("ConfirmSubmit", new { area = "Amazilia" }, new { @class = "checkout-confirm"}))
+                {
 
-    <div class="page-title">
-        @*<h1>@T("Checkout.BillingAddress")</h1>*@
+                    <div>Als uw betaling is verwerkt wordt uw bestelling geplaatst en ontvangt u een bestelnummer met de geschatte tijd van gereedheid</div>
+
+                    <div class="buttons">
+                        <input type="submit" name="nextstep" value="Door naar betalen" class="btn btn-success" />
+                    </div>
+
+                }
+            }
+
+        </div>
     </div>
-    @{using (Html.BeginUmbracoForm<CheckoutController>
-                               ("ConfirmSubmit", new { area = "Amazilia" }))
-        {
-            <p>
-                TODO:
-                <ul>
-                    <li>List the ordererd product</li>
-                    <li>List the payment/shipping methods</li>
-                </ul>
-            </p>
-
-            <p>Are you ready to order</p>
-            <div class="buttons">
-                <input type="submit" name="nextstep" value="Bestellen" class="btn btn-success" />
-            </div>
-
-        }
-    }
+   
 </div>

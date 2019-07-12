@@ -14,7 +14,10 @@
         <div class="list-group">
             @foreach (var item in selection.Where(x => x.IsVisible()))
             {
-                <a data-id="@item.Id" class="list-group-item list-group-item-action @(item.IsAncestorOrSelf(Model.Content) ? " nav-link--active" : null)" href="@item.Url.TrimStart("/")?categoryid=@item.Id">@item.Name</a>
+                <a data-id="@item.Id" class="list-group-item list-group-item-action @(item.IsAncestorOrSelf(Model.Content) ? " nav-link--active" : null) category-@item.Id" href="@item.Url.TrimStart("/")?categoryid=@item.Id">@item.Name<i class="icon-up-open"></i></a>
+                <div class="d-md-none products products-sm" id="product_content_@item.Id">
+                    
+                </div>
             }           
         </div>
     </nav>

@@ -4,40 +4,36 @@
 
 @{
     Layout = "Master.cshtml";
+
+    var root = Umbraco.ContentAtRoot().FirstOrDefault();
+    var orderingnode = root.Children("Ordering").FirstOrDefault();
+
+   
 }
 
 @*Render filter*@
-
-<div class="row">
-    <div class="col-md-2">
-        @Html.Partial("~/Views/Partials/Navigation/Categories.cshtml")
-    </div>
-    <div class="col-md-6 col-products">
-        @{
-            // one AddBasketItem form
-            using (Html.BeginUmbracoForm<BasketController>("AddBasketItem", new { area = "Amazilia" }, new { role = "form", @class = "additem" }))
-            {
-                @Html.AntiForgeryToken()
-                @Html.Hidden("ItemID", 0);
-                @Html.Hidden("Quantity", 1);
-                @Html.Hidden("IsGroupRootItem", "0");
-                @Html.Hidden("GroupCode", "");
-                //Url to redirect to, when added
-                @Html.Hidden("RedirectToUrl", "")
-            }
-
+<section class="section" id="orderController">
+    <div class="row">
+        <div class="col-md-2">
+            @Html.Partial("~/Views/Partials/Navigation/Categories.cshtml")
+        </div>
+        <div class="col-md-6 col-products">
             @*Products are loaded async, important: dont change the id*@
             <div class="products" id="products">
-                <div class="loading">
-                    Loading..
+            </div>
+        </div>
+        <div class="col-md-4">
+            @*Card is updated async, important: dont change the id*@
+            <div id="cart-wrapper" data-asyncaction="@Url.Action("Cart","Basket", new { area = "Amazilia"})">
+                <div>
+                    @*@Html.Action("Cart", "Basket", new { area = "Amazilia" })*@
                 </div>
             </div>
-        }
+
+            <div class="card card-body">@Html.Raw(orderingnode.GetPropertyValue<string>("openingstijden"))</div>
+
+
+        </div>
     </div>
-    <div class="col-md-4">
-        @*Card is updated async, important: dont change the id*@
-        <div id="cart-wrapper">
-            @Html.Action("Cart", "Basket", new { area = "Amazilia" })
-        </div>        
-    </div>
-</div>
+
+</section>
