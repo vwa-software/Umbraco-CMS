@@ -1,51 +1,11 @@
 ﻿
 <div class="form-horizontal">
-    <div class="umb-pane" ng-repeat="pricegroup in Data.configModel.priceGroups">
-        <h3>{{pricegroup.Name}}</h3>
-        <div class="umb-table">
-            <div class="umb-table-head">
-                <div class="umb-table-row">
-                    <div class="umb-table-cell"></div>
-                        <div class="umb-table-cell">
-                            <localize key="amazilia_shippingmethod"></localize>
-                        </div>
-                        <div class="umb-table-cell">
-                            <localize key="amazilia_rate"></localize>
-                        </div>
-                        <div class="umb-table-cell">
-                            <localize key="amazilia_incltax">inl. Tax</localize>:
-                        </div>
-                    </div>
-                </div>
-            
-            <div class="umb-table-body umb-grid">
-                <div class="umb-table-row" ng-repeat="shippingMethod in Data.configModel.shippingMethods">
-                    <div class="umb-table-cell"></div>
-                    <div class="umb-table-cell">
-                        {{shippingMethod.Name}}
-                    </div>
-                    <div class="umb-table-cell">
-                        <input name="shippingMethod"
-                               type="number"
-                               pattern="[0-9]+([,\.][0-9]+)?"
-                               class="umb-editor umb-number"
-                               ng-model="Data.configModel.prices[pricegroup.Id][shippingMethod.Id].price" />
-
-                        <span class="help-inline" val-msg-for="shippingMethod" val-toggle-msg="amz_mandatory"><localize key="validation_invalidNumber">Not a number</localize></span>
-
-                    </div>
-
-                    <div class="umb-table-cell">
-                        <input name="InclTaxField"
-                               type="checkbox"
-                               class="umb-editor"
-                               ng-model="Data.configModel.prices[pricegroup.Id][shippingMethod.Id].inclTax" />
-                    </div>
-                </div>
-            </div>
-
-        </div>
+    <div class="umb-pane" ng-repeat="shippingMethod in Data.configModel.shippingMethods">
+        <h3> <localize key="amazilia_shippingmethod"></localize> : {{shippingMethod.Name}}</h3>
+        <amz-priceeditor use-tierprice="false" price-info="Data.configModel.prices[shippingMethod.Id]"></amz-priceeditor>
     </div>
+
+  
 </div>
 
 

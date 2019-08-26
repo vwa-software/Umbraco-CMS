@@ -521,41 +521,7 @@ angular.module("umbraco")
                 { alias: "priceExclTax", header: "PriceExclTax" }
             ];
 
-
-
-            $scope.openRefund = function () {
-
-                var dialog = dialogService.open({ template: '/app_plugins/amazilia/backoffice/amazilia/dialogs/orderrefund.html', show: true, order: $scope.data.order, callback: done });
-
-                function done(data) {
-                    //The dialog has been submitted 
-                    //data contains whatever the dialog has selected / attached
-                }
-            };
-
-
         }]);
-
-
-angular.module("umbraco").controller("Amazilia.DialoOrderRefundController", ['$scope', '$http', 'notificationsService', 'dialogService',
-    function ($scope, $http, notificationsService, dialogService) {
-
-        var vm = this;
-
-        vm.order = $scope.dialogOptions.order;
-        vm.toRefundedAmount = $scope.dialogOptions.toRefundedAmount;
-        vm.refundButtonState = "success";
-
-        vm.doRefund = function () {
-            this.close();
-        };
-
-        vm.close = function () {
-            this.close();
-        };
-
-    }]);
-
 
 angular.module("umbraco")
     .controller("Amazilia.DeleteController",
@@ -889,83 +855,4 @@ angular.module("umbraco")
 
 
 
-
-
-angular.module("umbraco")
-    .controller("Amazilia.SortProductsController",
-        ['$scope', '$filter', 'amaziliaContentResource', 'navigationService', '$route', function ($scope, $filter, amaziliaContentResource, navigationService, $route) {
-
-            var vm = this;
-            var id = $scope.currentNode.id;
-            vm.loading = false;
-            vm.children = [];
-            vm.saveButtonState = 'init';
-            vm.sortOrder = {};
-            vm.sortableOptions = {
-                distance: 10,
-                tolerance: 'pointer',
-                opacity: 0.7,
-                scroll: true,
-                cursor: 'move',
-                helper: fixSortableHelper,
-                update: function update() {
-                    // clear the sort order when drag and drop is used
-                    vm.sortOrder.column = '';
-                    vm.sortOrder.reverse = false;
-                }
-            };
-            vm.save = save;
-            vm.sort = sort;
-            vm.close = close;
-            function onInit() {
-                vm.loading = true;
-
-                amaziliaContentResource.getChildren(id, {}).then(function (data) {
-                    vm.children = data.items;
-                    vm.loading = false;
-                });
-            }
-            function save() {
-                vm.saveButtonState = 'busy';
-
-                var args = {
-                    parentId: id,
-                    sortedIds: _.map(vm.children, function (child) {
-                        return child.id;
-                    })
-                };
-
-                amaziliaContentResource.sort(args).then(function () {
-                    $route.reload();
-                    vm.saveButtonState = 'success';
-                }, function (error) {
-                    vm.error = error;
-                    vm.saveButtonState = 'error';
-                });
-
-
-            }
-            function fixSortableHelper(e, ui) {
-                // keep the correct width of each table cell when sorting
-                ui.children().each(function () {
-                    $(this).width($(this).width());
-                });
-                return ui;
-            }
-            function sort(column) {
-                // reverse if it is already ordered by that column
-                if (vm.sortOrder.column === column) {
-                    vm.sortOrder.reverse = !vm.sortOrder.reverse;
-                } else {
-                    vm.sortOrder.column = column;
-                    vm.sortOrder.reverse = false;
-                }
-                vm.children = $filter('orderBy')(vm.children, vm.sortOrder.column, vm.sortOrder.reverse);
-            }
-            function close() {
-                navigationService.hideDialog();
-            }
-            onInit();
-
-        }]);
 

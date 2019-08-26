@@ -22,7 +22,12 @@
 }
 
 /* lanuage captions (email template)*/
-.controls.controls-row .language {
+.controls.controls-row .language, .input-label {
     padding-top:6px;
     font-weight:600;
+}
+.input-label {
+    padding-top: 6px;
+    font-weight: 600;   
+    padding-right: 10px
 }

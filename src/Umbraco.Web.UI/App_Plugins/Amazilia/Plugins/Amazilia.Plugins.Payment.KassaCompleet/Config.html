@@ -1,0 +1,62 @@
+﻿<div class="form-horizontal">
+
+    <div class="umb-pane">
+        <ul>
+            <li>Webhook url : {{Data.configModel.WebHookUrl}}</li>
+
+        </ul>
+
+    </div>
+    <div class="umb-pane">
+
+        <umb-control-group label="Sandbox">
+            <input name="Test" type="checkbox" ng-model="Data.configModel.Sandbox" required class="umb-editor umb-textstring" />
+            <span class="help-inline" val-msg-for="SecretKeyProduction" ng-show="contentForm.Sandbox.$invalid"></span>
+        </umb-control-group>
+
+        <!--<umb-control-group label="SecretKey">
+        <input name="SecretKeyProduction" type="text" maxlength="255" ng-model="Data.configModel.SecretKeyProduction" required class="umb-editor umb-textstring" />
+        <span class="help-inline" val-msg-for="SecretKeyProduction" ng-show="contentForm.SecretKeyProduction.$invalid"><localize key="general_required">Required</localize></span>
+    </umb-control-group>-->
+
+
+
+        <umb-control-group label="MerchantKey">
+            <input name="MerchantKey" type="text" maxlength="255" ng-model="Data.configModel.MerchantKey" required class="umb-editor umb-textstring" />
+            <span class="help-inline" val-msg-for="MerchantKey" ng-show="contentForm.MerchantKey.$invalid"><localize key="general_required">Required</localize></span>
+        </umb-control-group>
+
+
+        <!--<umb-control-group label="RefreshToken">
+        <input name="RefreshTokenProduction" type="text" maxlength="255" ng-model="Data.configModel.RefreshTokenProduction" required class="umb-editor umb-textstring" />
+        <span class="help-inline" val-msg-for="RefreshTokenProduction" ng-show="contentForm.RefreshTokenProduction.$invalid"><localize key="general_required">Required</localize></span>
+    </umb-control-group>
+
+    <umb-control-group label="SecretKey (sandbox)">
+        <input name="SecretKeySandBox" type="text" maxlength="255" ng-model="Data.configModel.SecretKeySandBox" required class="umb-editor umb-textstring" />
+        <span class="help-inline" val-msg-for="SecretKeySandBox" ng-show="contentForm.SecretKeySandBox.$invalid"><localize key="general_required">Required</localize></span>
+    </umb-control-group>-->
+
+        <umb-control-group label="MerchantKey (Sandbox)">
+            <input name="MerchantKeySandbox" type="text" maxlength="255" ng-model="Data.configModel.MerchantKeySandbox" required class="umb-editor umb-textstring" />
+            <span class="help-inline" val-msg-for="MerchantKeySandbox" ng-show="contentForm.MerchantKeySandbox.$invalid"><localize key="general_required">Required</localize></span>
+        </umb-control-group>
+
+
+        <umb-control-group label="MerchantKey (Sandbox)">
+            <div ng-repeat="paymentType in Data.configModel.PaymentTypes">
+                <label for=""><input type="checkbox" ng-model="paymentType.Selected" />{{paymentType.Text}}</label>
+            </div>
+        </umb-control-group>
+        
+            <!--<umb-control-group label="RefreshToken(sandbox)">
+            <input name="RefreshTokenSandBox" type="text" maxlength="255" ng-model="Data.configModel.RefreshTokenSandBox" required class="umb-editor umb-textstring" />
+            <span class="help-inline" val-msg-for="RefreshTokenSandBox" ng-show="contentForm.RefreshTokenSandBox.$invalid"><localize key="general_required">Required</localize></span>
+        </umb-control-group>-->
+
+
+
+    </div>
+</div>
+
+

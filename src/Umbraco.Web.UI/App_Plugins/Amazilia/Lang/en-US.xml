@@ -57,6 +57,9 @@
         <key alias="addStore">Add store</key>
         <key alias="editStore">Edit store</key>
 
+        <key alias="SendingEmail">Sending email adres</key>
+        <key alias="SendingName">Sending display name</key>
+
         <!--Pricegroup settings-->
         <key alias="editPriceGroup">Edit pricegroup</key>
         <key alias="addPriceGroup">Add pricegroup</key>
@@ -122,6 +125,9 @@
         <key alias="orderstatus">Order status</key>
         <key alias="orderGuid">Order guid</key>
         <key alias="ordersubtotal">Subtotal</key>
+        <key alias="orderTax">Tax</key>
+        <key alias="customerIp">IP address</key>
+
         <key alias="ordertotal">Total</key>
         <key alias="ordershippingcost">Shipping cost</key>
         <key alias="anonymousCheckoutAllowed">Anonumous checkout</key>        
@@ -139,9 +145,8 @@
         <key alias="country">Country</key>
         <key alias="zip">Zip</key>
         <key alias="phone">Phone</key>
-
-
-
+        <key alias="paymentstatus">Payment status</key>
+        <key alias="refundedAmount">Refunded amount</key>
 
         <!--Email templates-->
         <key alias="emailtemplates">Email templates</key>

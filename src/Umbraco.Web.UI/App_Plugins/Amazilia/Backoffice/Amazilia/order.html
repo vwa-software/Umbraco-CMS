@@ -29,6 +29,10 @@
                                         <umb-control-group label="@amazilia_order">
                                             {{data.order.customOrderNumber}}
                                         </umb-control-group>
+                                        <umb-control-group label="@amazilia_customerIp">
+                                            {{data.order.customerIp}}
+                                        </umb-control-group>
+                                        
                                         <umb-control-group label="@amazilia_orderstatus">
                                             {{data.order.orderStatus}}
                                         </umb-control-group>
@@ -48,12 +52,28 @@
                                         </umb-control-group>
                                         <umb-control-group label="@amazilia_ordershippingcost">
                                             {{data.order.orderShippingInclTax}}
+                                        </umb-control-group>                                        
+                                        <umb-control-group label="@amazilia_ordertax">
+                                            {{data.order.orderTax}}
                                         </umb-control-group>
                                         <umb-control-group label="@amazilia_ordertotal">
                                             {{data.order.orderTotal}}
                                         </umb-control-group>
+
+                                        <umb-control-group  ng-if="data.order.refundedAmount.length"  label="@amazilia_refundedAmount">
+                                            {{data.order.refundedAmount}}
+                                        </umb-control-group>
+
+                                        <umb-control-group label ="@amazilia_refund" ng-if="data.order.canRefund || data.order.CanRefundOnline">
+                                            <a ng-click="data.order.openRefund()"><localize key="amazilia_dorefund">Refund</localize></a>
+                                        </umb-control-group>
+                                        
                                         <umb-control-group label="@amazilia_paymentmethod">
                                             {{data.order.paymentMethod}}
+                                        </umb-control-group>
+
+                                        <umb-control-group label="@amazilia_paymentstatus">
+                                            {{data.order.paymentStatus}}
                                         </umb-control-group>
                                     </umb-box-content>
                                 </umb-box>

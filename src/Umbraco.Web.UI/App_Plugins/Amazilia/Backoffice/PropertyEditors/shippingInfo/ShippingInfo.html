@@ -10,17 +10,6 @@
 
                 <div class="row">
                     <div class="span4">
-                        <localize key="amazilia_isFreeShipping"></localize>
-                    </div>
-                    <div class="span4">
-                        <umb-toggle checked="model.value.isFreeShipping"
-                                    on-click="toggle('isFreeShipping')"
-                                    show-labels="false">
-                        </umb-toggle>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="span4">
                         <localize key="amazilia_isShipEnabled"></localize>
                     </div>
                     <div class="span4">
@@ -31,14 +20,7 @@
                     </div>
                 </div>
 
-                <div class="row" ng-if="model.value.isShipEnabled && !model.value.isFreeShipping">
-                    <div class="span4">
-                        <localize key="amazilia_additionalShippingCharge"></localize>
-                    </div>
-                    <div class="span4">
-                        <input type="number" umb-editor umb-number ng-model="model.value.additionalShippingCharge" />
-                    </div>
-                </div>
+
 
                 <div class="row">
                     <div class="span4">
@@ -69,8 +51,38 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="span4">
+                        <localize key="amazilia_length"></localize>
+                    </div>
+                    <div class="span4">
+                        <input type="number" umb-editor umb-number ng-model="model.value.length" />
+                    </div>
+                </div>
 
-               
+                <div class="row">
+                    <div class="span4">
+                        <localize key="amazilia_isFreeShipping"></localize>
+                    </div>
+                    <div class="span4">
+                        <umb-toggle checked="model.value.isFreeShipping"
+                                    on-click="toggle('isFreeShipping')"
+                                    show-labels="false">
+                        </umb-toggle>
+                    </div>
+                </div>
+
+                
+                <div class="row" ng-if="model.value.isShipEnabled && !model.value.isFreeShipping">
+                    <div class="span12">
+                        <localize key="amazilia_additionalShippingCharge"></localize>
+                    </div>
+                    <div class="span12">
+                        <amz-priceeditor use-tierprice="false" price-info="model.value.additionalShippingCharge"></amz-priceeditor>
+                        
+                        <!--<input type="number" umb-editor umb-number ng-model="model.value.additionalShippingCharge" />-->
+                    </div>
+                </div>
 
             </umb-box-content>
         </umb-box>
