@@ -7,56 +7,70 @@
         @Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Cart })
     }*@
 
-<div class="page checkout-page paymentmethod-page">
+<div class="checkout-paymentmethod" id="checkout_paymentmethod">
+    
+    <div class="row">
+       
+        <div class="col-6">
+            @{using (Html.BeginUmbracoForm<CheckoutController>
+                                         ("PaymentMethodSubmit", new { area = "Amazilia" }, new { @class = "checkout-paymentmethod" }))
+                {
+                    <div class="paymentMethod">
+                        <select class="form-control" onchange="getPaymentInfo(event)" name="PaymentMethodId">
+                            <option value="">Betaalwijze</option>
+                            @foreach (var item in Model.PaymentMethods)
+                            {
+                                <option @(item.Selected ? "selected=selected" : "") value="@item.Id" data-path="@item.PaymentInfoPath">@item.Name</option>
+                            }
+                        </select>
+                    </div>
 
-    @*@Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Address })*@
+                    <div class="paymentInfo" id="paymentMethodInfo">
+                        @foreach (var item in Model.PaymentMethods)
+                        {
+                            if (item.Selected)
+                            {
+                                
+                                string actionUrl = Url.Action(item.ActionName, item.ControllerName, item.RouteValues);
 
-    <div class="page-title">
-        @*<h1>@T("Checkout.BillingAddress")</h1>*@
-    </div>
-    @{using (Html.BeginUmbracoForm<CheckoutController>
-                               ("PaymentMethodSubmit", new { area = "Amazilia" }))
-        {
-            <div class="page-body checkout-data">
+                                <div data-asyncaction="@actionUrl">@Html.Action(item.ActionName, item.ControllerName, item.RouteValues)</div>
+                            }
+                        }
+                        <div>Kies a.u.b. de betaalwijze</div>
+                    </div>
 
+                    @Html.ValidationSummary()
 
-                <ul>
-                    @foreach (var item in Model.PaymentMethods)
-                    {
-                        <li><input type="radio" @(item.Selected ? "checked=checked" : "") value="@item.Id" onchange="getPaymenyInfo('@item.PaymentInfoPath')" name="PaymentMethodId" />@item.Name</li>
-
-                    }
-                </ul>
-
-
-
-            </div>
-
-            <div class="paymentInfo">
-
-                @{
-                    var paymentMethod = Model.PaymentMethods.FirstOrDefault(a => a.Selected);
-
-                    if (paymentMethod != null)
-                    {
-                        <div>@Html.Action(paymentMethod.ActionName, paymentMethod.ControllerName, paymentMethod.RouteValues)</div>
-                    }
+                    <div class="buttons">
+                        <input type="submit" name="nextstep" value="Next" class="btn btn-success" />
+                    </div>
                 }
+            }
+        </div>
 
-            </div>
-            <div class="buttons">
-                <input type="submit" name="nextstep" value="Next" class="btn btn-success" />
-            </div>
-
-        }
-    }
+  			
+    </div>    
 </div>
 
 <script>
 
-    function getPaymenyInfo(path){
-        // todo , load paymentinfo through ajax
+    function getPaymentInfo(event) {
+        path = $(event.target).children("option:selected").data('path');
+               
 
+        if (!path.length) {
+            $('#paymentMethodInfo').html(' <div>Kies a.u.b. de betaalwijze</div>');
+            return;
+        }
+      
+        var headers = {};
+        headers.PwaDisableCache = 1;
+       
+        $.ajax(path, {
+            headers: headers, complete: function (response) {
+                $('#paymentMethodInfo').html(response.responseText);
+            }, error: function () { }
+        });
     }
 
 </script>

@@ -52,7 +52,7 @@
                                         </umb-control-group>
                                         <umb-control-group label="@amazilia_ordershippingcost">
                                             {{data.order.orderShippingInclTax}}
-                                        </umb-control-group>                                        
+                                        </umb-control-group>
                                         <umb-control-group label="@amazilia_ordertax">
                                             {{data.order.orderTax}}
                                         </umb-control-group>
@@ -60,15 +60,17 @@
                                             {{data.order.orderTotal}}
                                         </umb-control-group>
 
-                                        <umb-control-group  ng-if="data.order.refundedAmount.length"  label="@amazilia_refundedAmount">
+                                        <umb-control-group ng-if="data.order.refundedAmount.length" label="@amazilia_refundedAmount">
                                             {{data.order.refundedAmount}}
                                         </umb-control-group>
 
-                                        <umb-control-group label ="@amazilia_refund" ng-if="data.order.canRefund || data.order.CanRefundOnline">
-                                            <a ng-click="data.order.openRefund()"><localize key="amazilia_dorefund">Refund</localize></a>
+                                        <umb-control-group label="@amazilia_refund" ng-if="data.order.canPartiallyRefund || data.order.canPartiallyRefundOffline || data.order.canRefund || data.order.canRefundOffline">
+                                            <umb-button type="button"
+                                                        action="openRefund()"
+                                                        button-style="action"
+                                                        label-key="amazilia_refund">
                                         </umb-control-group>
-                                        
-                                        <umb-control-group label="@amazilia_paymentmethod">
+                                          <umb-control-group label="@amazilia_paymentmethod">
                                             {{data.order.paymentMethod}}
                                         </umb-control-group>
 

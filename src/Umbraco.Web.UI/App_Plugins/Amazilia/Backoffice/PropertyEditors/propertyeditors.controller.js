@@ -236,10 +236,9 @@ angular.module("umbraco").controller("Amazilia.CheckoutStepEditor",
 
 
 angular.module("umbraco").controller("Amazilia.PropertyEditors.CategoryController",
-    function ($rootScope, $scope, $routeParams, $injector, $cookieStore,
-        notificationsService, iconHelper, dialogService, editorState, localizationService, $location,
-        appState, $timeout, $q, mediaResource, listViewHelper, userService, navigationService, treeService, mediaHelper,
-        amaziliaContentResource) {
+    function ($scope, $routeParams, $injector, 
+        notificationsService, iconHelper, editorState, localizationService,
+        appState, $timeout,  listViewHelper,  navigationService,   amaziliaContentResource) {
 
         // Custom implementation of the Umbraco ListViewController.
         // "Umbraco.PropertyEditors.ListViewController"
@@ -254,14 +253,13 @@ angular.module("umbraco").controller("Amazilia.PropertyEditors.CategoryControlle
         }
 
         //Now we need to check if this is for media, members or content because that will depend on the resources we use
-        var contentResource, getContentTypesCallback, getListResultsCallback, deleteItemCallback, getIdCallback, createEditUrlCallback;
+        var contentResource,  deleteItemCallback, getIdCallback, createEditUrlCallback;
 
         $scope.entityType = "content";
-        contentResource = $injector.get('contentResource');
-
-        getContentTypesCallback = $injector.get('contentTypeResource').getAllowedTypes;
-        getListResultsCallback = contentResource.getChildren;
+        contentResource = $injector.get('contentResource');   
+     
         deleteItemCallback = contentResource.deleteById;
+
         getIdCallback = function (selected) {
             return selected.id;
         };
@@ -279,11 +277,7 @@ angular.module("umbraco").controller("Amazilia.PropertyEditors.CategoryControlle
             totalPages: 0,
             items: []
         };
-
-        $scope.createAllowedButtonSingle = false;
-        $scope.createAllowedButtonSingleWithBlueprints = false;
-        $scope.createAllowedButtonMultiWithBlueprints = false;
-
+        
 
         //when this is null, we don't check permissions
         $scope.currentNodePermissions = null;
@@ -300,7 +294,6 @@ angular.module("umbraco").controller("Amazilia.PropertyEditors.CategoryControlle
                     "canCopy": _.contains(currentUserPermissions, 'O'), //Magic Char = O
                     "canCreate": _.contains(currentUserPermissions, 'C'), //Magic Char = C
                     "canDelete": _.contains(currentUserPermissions, 'D'), //Magic Char = D
-                    "canMove": _.contains(currentUserPermissions, 'M'), //Magic Char = M                
                     "canPublish": _.contains(currentUserPermissions, 'U'), //Magic Char = U
                     "canUnpublish": _.contains(currentUserPermissions, 'U') //Magic Char = Z (however UI says it can't be set, so if we can publish 'U' we can unpublish)
                 };
@@ -369,7 +362,7 @@ angular.module("umbraco").controller("Amazilia.PropertyEditors.CategoryControlle
             pageSize: $scope.model.config.pageSize ? $scope.model.config.pageSize : 10,
             pageNumber: ($routeParams.page && Number($routeParams.page) != NaN && Number($routeParams.page) > 0) ? $routeParams.page : 1,
             filter: '',
-            orderBy: ($scope.model.config.orderBy ? $scope.model.config.orderBy : 'VersionDate').trim(),
+            orderBy: "sortOrder",
             orderDirection: $scope.model.config.orderDirection ? $scope.model.config.orderDirection.trim() : "desc",
             orderBySystemField: true,
             includeProperties: $scope.model.config.includeProperties ? $scope.model.config.includeProperties : [
@@ -405,12 +398,7 @@ angular.module("umbraco").controller("Amazilia.PropertyEditors.CategoryControlle
             if (e.alias != "contentTypeAlias") {
                 e.allowSorting = true;
             }
-
-            // Another special case for members, only fields on the base table (cmsMember) can be used for sorting
-            if (e.isSystem && $scope.entityType == "member") {
-                e.allowSorting = e.alias == 'username' || e.alias == 'email';
-            }
-
+            
             if (e.isSystem) {
                 //localize the header
                 var key = getLocalizedKey(e.alias);
@@ -647,115 +635,7 @@ angular.module("umbraco").controller("Amazilia.PropertyEditors.CategoryControlle
                     return localizationService.localize(key, [total]);
                 });
         };
-
-        $scope.move = function () {
-            $scope.moveDialog = {};
-            $scope.moveDialog.title = localizationService.localize("general_move");
-            $scope.moveDialog.section = $scope.entityType;
-            $scope.moveDialog.currentNode = $scope.contentId;
-            $scope.moveDialog.view = "move";
-            $scope.moveDialog.show = true;
-
-            $scope.moveDialog.submit = function (model) {
-
-                if (model.target) {
-                    performMove(model.target);
-                }
-
-                $scope.moveDialog.show = false;
-                $scope.moveDialog = null;
-            };
-
-            $scope.moveDialog.close = function (oldModel) {
-                $scope.moveDialog.show = false;
-                $scope.moveDialog = null;
-            };
-
-        };
-
-
-        function performMove(target) {
-
-            //NOTE: With the way this applySelected/serial works, I'm not sure there's a better way currently to return 
-            // a specific value from one of the methods, so we'll have to try this way. Even though the first method
-            // will fire once per every node moved, the destination path will be the same and we need to use that to sync.
-            var newPath = null;
-            applySelected(
-                function (selected, index) {
-                    return contentResource.move({ parentId: target.id, id: getIdCallback(selected[index]) })
-                        .then(function (path) {
-                            newPath = path;
-                            return path;
-                        });
-                },
-                function (count, total) {
-                    var key = (total === 1 ? "bulk_movedItemOfItem" : "bulk_movedItemOfItems");
-                    return localizationService.localize(key, [count, total]);
-                },
-                function (total) {
-                    var key = (total === 1 ? "bulk_movedItem" : "bulk_movedItems");
-                    return localizationService.localize(key, [total]);
-                })
-                .then(function () {
-                    //executes if all is successful, let's sync the tree
-                    if (newPath) {
-
-                        //we need to do a double sync here: first refresh the node where the content was moved,
-                        // then refresh the node where the content was moved from
-                        navigationService.syncTree({
-                            tree: target.nodeType ? target.nodeType : (target.metaData.treeAlias),
-                            path: newPath,
-                            forceReload: true,
-                            activate: false
-                        })
-                            .then(function (args) {
-                                //get the currently edited node (if any)
-                                var activeNode = appState.getTreeState("selectedNode");
-                                if (activeNode) {
-                                    navigationService.reloadNode(activeNode);
-                                }
-                            });
-                    }
-                });
-        }
-
-        $scope.copy = function () {
-            $scope.copyDialog = {};
-            $scope.copyDialog.title = localizationService.localize("general_copy");
-            $scope.copyDialog.section = $scope.entityType;
-            $scope.copyDialog.currentNode = $scope.contentId;
-            $scope.copyDialog.view = "copy";
-            $scope.copyDialog.show = true;
-
-            $scope.copyDialog.submit = function (model) {
-                if (model.target) {
-                    performCopy(model.target, model.relateToOriginal);
-                }
-
-                $scope.copyDialog.show = false;
-                $scope.copyDialog = null;
-            };
-
-            $scope.copyDialog.close = function (oldModel) {
-                $scope.copyDialog.show = false;
-                $scope.copyDialog = null;
-            };
-
-        };
-
-        function performCopy(target, relateToOriginal) {
-            applySelected(
-                function (selected, index) { return contentResource.copy({ parentId: target.id, id: getIdCallback(selected[index]), relateToOriginal: relateToOriginal }); },
-                function (count, total) {
-                    var key = (total === 1 ? "bulk_copiedItemOfItem" : "bulk_copiedItemOfItems");
-                    return localizationService.localize(key, [count, total]);
-                },
-                function (total) {
-                    var key = (total === 1 ? "bulk_copiedItem" : "bulk_copiedItems");
-                    return localizationService.localize(key, [total]);
-                });
-        }
-
+             
         function getCustomPropertyValue(alias, properties) {
             var value = '';
             var index = 0;
@@ -824,32 +704,6 @@ angular.module("umbraco").controller("Amazilia.PropertyEditors.CategoryControlle
                 id = -1;
             }
 
-            //$scope.listViewAllowedTypes = getContentTypesCallback(id);
-            getContentTypesCallback(id).then(function (listViewAllowedTypes) {
-                $scope.listViewAllowedTypes = listViewAllowedTypes;
-
-                var blueprints = false;
-                _.each(listViewAllowedTypes, function (allowedType) {
-                    if (_.isEmpty(allowedType.blueprints)) {
-                        // this helps the view understand that there are no blueprints available
-                        allowedType.blueprints = null;
-                    }
-                    else {
-                        blueprints = true;
-                    }
-                });
-
-                if (listViewAllowedTypes.length === 1 && blueprints === false) {
-                    $scope.createAllowedButtonSingle = true;
-                }
-                if (listViewAllowedTypes.length === 1 && blueprints === true) {
-                    $scope.createAllowedButtonSingleWithBlueprints = true;
-                }
-                if (listViewAllowedTypes.length > 1) {
-                    $scope.createAllowedButtonMultiWithBlueprints = true;
-                }
-            });
-
 
             $scope.contentId = id;
             $scope.isTrashed = id === "-20" || id === "-21";
@@ -891,126 +745,8 @@ angular.module("umbraco").controller("Amazilia.PropertyEditors.CategoryControlle
             }
             return alias;
         }
-
-        function getItemKey(itemId) {
-            for (var i = 0; i < $scope.listViewResultSet.items.length; i++) {
-                var item = $scope.listViewResultSet.items[i];
-                if (item.id === itemId) {
-                    return item.key;
-                }
-            }
-        }
-
-
-        function createBlank(entityType, docTypeAlias) {
-            $location
-                .path("/" + entityType + "/" + entityType + "/edit/" + $scope.contentId)
-                .search("doctype=" + docTypeAlias + "&create=true");
-        }
-
-        function createFromBlueprint(entityType, docTypeAlias, blueprintId) {
-            $location
-                .path("/" + entityType + "/" + entityType + "/edit/" + $scope.contentId)
-                .search("doctype=" + docTypeAlias + "&create=true&blueprintId=" + blueprintId);
-        }
-
-        $scope.createBlank = createBlank;
-        $scope.createFromBlueprint = createFromBlueprint;
-
+        
         //GO!
         initView();
     });
 
-function contentResource($q, $http, umbDataFormatter, umbRequestHelper) {
-
-    return {
-
-
-        /**
-          * @ngdoc method
-          * @name umbraco.resources.contentResource#getChildren
-          * @methodOf umbraco.resources.contentResource
-          *
-          * @description
-          * Gets children of a content item with a given id
-          *
-          * ##usage
-          * <pre>
-          * contentResource.getChildren(1234, {pageSize: 10, pageNumber: 2})
-          *    .then(function(contentArray) {
-          *        var children = contentArray; 
-          *        alert('they are here!');
-          *    });
-          * </pre> 
-          * 
-          * @param {Int} parentId id of content item to return children of
-          * @param {Object} options optional options object
-          * @param {Int} options.pageSize if paging data, number of nodes per page, default = 0
-          * @param {Int} options.pageNumber if paging data, current page index, default = 0
-          * @param {String} options.filter if provided, query will only return those with names matching the filter
-          * @param {String} options.orderDirection can be `Ascending` or `Descending` - Default: `Ascending`
-          * @param {String} options.orderBy property to order items by, default: `SortOrder`
-          * @returns {Promise} resourcePromise object containing an array of content items.
-          *
-          */
-        getChildren: function (parentId, options) {
-
-            var defaults = {
-                includeProperties: [],
-                pageSize: 0,
-                pageNumber: 0,
-                filter: '',
-                orderDirection: "Ascending",
-                orderBy: "SortOrder",
-                orderBySystemField: true
-            };
-            if (options === undefined) {
-                options = {};
-            }
-            //overwrite the defaults if there are any specified
-            angular.extend(defaults, options);
-            //now copy back to the options we will use
-            options = defaults;
-            //change asc/desct
-            if (options.orderDirection === "asc") {
-                options.orderDirection = "Ascending";
-            }
-            else if (options.orderDirection === "desc") {
-                options.orderDirection = "Descending";
-            }
-
-            //converts the value to a js bool
-            function toBool(v) {
-                if (angular.isNumber(v)) {
-                    return v > 0;
-                }
-                if (angular.isString(v)) {
-                    return v === "true";
-                }
-                if (typeof v === "boolean") {
-                    return v;
-                }
-                return false;
-            }
-
-
-
-            return umbRequestHelper.resourcePromise(
-                $http.post('backoffice/Amazilia/Content/GetChildren/', {
-                    id: parseInt(parentId),
-                    includeProperties: _.pluck(options.includeProperties, 'alias').join(","),
-                    pageNumber: options.pageNumber,
-                    pageSize: options.pageSize,
-                    orderBy: options.orderBy,
-                    orderDirection: options.orderDirection,
-                    orderBySystemField: toBool(options.orderBySystemField),
-                    filter: options.filter
-                }),
-                'Failed to retrieve children for content item ' + parentId);
-        }
-
-    };
-}
-
-
-angular.module('umbraco.resources').factory('amaziliaContentResource', contentResource);

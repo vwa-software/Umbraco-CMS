@@ -221,6 +221,139 @@ angular.module("umbraco")
     }]);
 
 
+
+function contentResource($q, $http, umbDataFormatter, umbRequestHelper) {
+
+    return {
+
+
+        /**
+          * @ngdoc method
+          * @name umbraco.resources.amaziliaContentResource#getChildren
+          * @methodOf umbraco.resources.amaziliaContentResource
+          *
+          * @description
+          * Gets children with this category 
+          *
+          * ##usage
+          * <pre>
+          * contentResource.getChildren(1234, {pageSize: 10, pageNumber: 2})
+          *    .then(function(contentArray) {
+          *        var children = contentArray; 
+          *        alert('they are here!');
+          *    });
+          * </pre> 
+          * 
+          * @param {Int} parentId id of content item to return children of
+          * @param {Object} options optional options object
+          * @param {Int} options.pageSize if paging data, number of nodes per page, default = 0
+          * @param {Int} options.pageNumber if paging data, current page index, default = 0
+          * @param {String} options.filter if provided, query will only return those with names matching the filter
+          * @param {String} options.orderDirection can be `Ascending` or `Descending` - Default: `Ascending`
+          * @param {String} options.orderBy property to order items by, default: `SortOrder`
+          * @returns {Promise} resourcePromise object containing an array of content items.
+          *
+          */
+        getChildren: function (parentId, options) {
+
+            var defaults = {
+                includeProperties: [],
+                pageSize: 0,
+                pageNumber: 0,
+                filter: '',
+                orderDirection: "Ascending",
+                orderBy: "SortOrder",
+                orderBySystemField: true
+            };
+            if (options === undefined) {
+                options = {};
+            }
+            //overwrite the defaults if there are any specified
+            angular.extend(defaults, options);
+            //now copy back to the options we will use
+            options = defaults;
+            //change asc/desct
+            if (options.orderDirection === "asc") {
+                options.orderDirection = "Ascending";
+            }
+            else if (options.orderDirection === "desc") {
+                options.orderDirection = "Descending";
+            }
+
+            //converts the value to a js bool
+            function toBool(v) {
+                if (angular.isNumber(v)) {
+                    return v > 0;
+                }
+                if (angular.isString(v)) {
+                    return v === "true";
+                }
+                if (typeof v === "boolean") {
+                    return v;
+                }
+                return false;
+            }
+
+
+
+            return umbRequestHelper.resourcePromise(
+                $http.post('backoffice/Amazilia/Content/GetChildren/', {
+                    id: parseInt(parentId),
+                    includeProperties: _.pluck(options.includeProperties, 'alias').join(","),
+                    pageNumber: options.pageNumber,
+                    pageSize: options.pageSize,
+                    orderBy: options.orderBy,
+                    orderDirection: options.orderDirection,
+                    orderBySystemField: toBool(options.orderBySystemField),
+                    filter: options.filter
+                }),
+                'Failed to retrieve children for content item ' + parentId);
+        },
+
+    /**
+      * @ngdoc method
+      * @name umbraco.resources.amaziliaContentResource#getFilterNodes
+      * @methodOf umbraco.resources.amaziliaContentResource
+      *
+      * @description
+      * Gets the categories of a content item with a given id
+      *
+      * ##usage
+      * <pre>
+      * contentResource.getFilterNodes(1234, 'documentTypeAlias').
+      *    .then(function(contentArray) {
+      *        var children = contentArray;
+      *        alert('they are here!');
+      *    });
+      * </pre>
+      *
+      * @param {Int} Id id of content item to return children of
+      * @param {String} contentTypeAlias the property type alias
+      * @returns {Promise} resourcePromise object containing an array of content items.
+      */
+        getFilterNodes: function (Id, contentTypeAlias) {
+
+            return umbRequestHelper.resourcePromise(
+                $http.post('backoffice/Amazilia/Content/GetFilterNodes/', {
+                    id: parseInt(Id),
+                    contentTypeAlias: contentTypeAlias                    
+                }),
+                'Failed to retrieve filternodes for content item ' + Id);
+        },
+
+        sort: function (options) {
+            
+            return umbRequestHelper.resourcePromise(
+                $http.post('backoffice/Amazilia/Content/Sort/', options),
+                'Failed to retrieve filternodes for content item');
+
+        }
+    };
+}
+
+
+angular.module('umbraco.resources').factory('amaziliaContentResource', contentResource);
+
 var Amazilia = function () {
 
     return {

@@ -11,7 +11,7 @@ angular.module("umbraco")
 
                 function navigateUp() {
                     var activeNode = appState.getTreeState("selectedNode");
-                    $location.path('/' + activeNode.routePath);
+                    $location.path(activeNode.routePath);
                     return false;
                 }
 
@@ -474,7 +474,7 @@ angular.module("umbraco")
 
 angular.module("umbraco")
     .controller("Amazilia.OrderController",
-        ['$scope', '$http', 'appState', 'navigationService', 'notificationsService', '$routeParams', 'formHelper', '$timeout', '$location', 'amzlocalizationservice', function ($scope, $http, appState, navigationService, notificationsService, $routeParams, formHelper, $timeout, $location, amzlocalizationservice) {
+        ['$scope', '$http', 'appState', 'navigationService', 'notificationsService', '$routeParams', 'formHelper', '$timeout', '$location', 'amzlocalizationservice', 'dialogService', function ($scope, $http, appState, navigationService, notificationsService, $routeParams, formHelper, $timeout, $location, amzlocalizationservice, dialogService) {
 
             $scope.page = {};
             $scope.page.name = 'Order';
@@ -496,7 +496,6 @@ angular.module("umbraco")
                     $scope.loading = false;
                     if (response.data.Ok) {
                         $scope.data.order = response.data.Data;
-                        $scope.$parent.syncTree(response.data.Data.path);
                         $scope.page.loading = false;
                         $scope.page.name = response.data.Data.name;
                         $scope.buttonState = "success";
@@ -525,11 +524,15 @@ angular.module("umbraco")
 
             $scope.openRefund = function () {
 
-                var dialog = dialogService.open({ template: '/app_plugins/amazilia/backoffice/amazilia/dialogs/orderrefund.html', show: true, order: $scope.data.order, callback: done });
+                var dialog = dialogService.open({ template: '/app_plugins/amazilia/backoffice/amazilia/dialogs/orderrefund.html', show: true, order: $scope.data.order, closeCallback: done });
 
                 function done(data) {
                     //The dialog has been submitted 
                     //data contains whatever the dialog has selected / attached
+
+                    if (data) {
+                        $scope.data.order = data;
+                    }
                 }
             };
 
@@ -543,15 +546,50 @@ angular.module("umbraco").controller("Amazilia.DialoOrderRefundController", ['$s
         var vm = this;
 
         vm.order = $scope.dialogOptions.order;
-        vm.toRefundedAmount = $scope.dialogOptions.toRefundedAmount;
-        vm.refundButtonState = "success";
+        vm.toRefundedAmount = $scope.dialogOptions.order.toRefundedAmount;
+        vm.maxToRefundAmount = vm.toRefundedAmount;
+        vm.loading = false;
 
         vm.doRefund = function () {
-            this.close();
+            vm.loading = true;
+            $http.post('backoffice/Amazilia/Order/Refund', { orderId: vm.order.id, amount: vm.toRefundedAmount }).then(
+                function (response) {
+                    vm.loading = false;
+                    if (response.data.Ok) {
+                        notificationsService.success(response.data.Message);
+                        vm.order = response.data.Data;
+                    } else {
+                        notificationsService.error("Refund error", response.data.Message);
+                    }
+                },
+                function (err) {
+                    vm.loading = false;
+                    notificationsService.error("Refund error", response.data.Message);
+                }
+            );
         };
 
+        vm.doRefundOffline = function () {
+            vm.loading = true;
+            $http.post('backoffice/Amazilia/Order/RefundOffline', { orderId: vm.order.id, amount: vm.toRefundedAmount }).then(
+                function (response) {
+                    vm.loading = false;
+                    if (response.data.Ok) {
+                        notificationsService.success(response.data.Message);
+                        vm.order = response.data.Data;
+                    } else {
+                        notificationsService.error("Refund error", response.data.Message);
+                    }
+                },
+                function (err) {
+                    vm.loading = false;
+                    notificationsService.error("Refund error", response.data.Message);
+                }
+            );
+
+        };
         vm.close = function () {
-            this.close();
+            $scope.dialogOptions.close(vm.order);
         };
 
     }]);

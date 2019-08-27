@@ -129,6 +129,8 @@
         <key alias="customerIp">IP address</key>
 
         <key alias="ordertotal">Total</key>
+        <key alias="ordertax">Order tax</key>
+
         <key alias="ordershippingcost">Shipping cost</key>
         <key alias="anonymousCheckoutAllowed">Anonumous checkout</key>        
         <key alias="anonymousCheckoutAllowed.description">Allow anonumous checkout?</key>
@@ -147,7 +149,12 @@
         <key alias="phone">Phone</key>
         <key alias="paymentstatus">Payment status</key>
         <key alias="refundedAmount">Refunded amount</key>
+        <key alias="toRefundAmount">Amount to refund</key>
+        <key alias="refund">Refund</key>
+        <key alias="refundOffline">Refund offline</key>
 
+
+        
         <!--Email templates-->
         <key alias="emailtemplates">Email templates</key>
         <key alias="emailtemplatesaved">Email template saved</key>

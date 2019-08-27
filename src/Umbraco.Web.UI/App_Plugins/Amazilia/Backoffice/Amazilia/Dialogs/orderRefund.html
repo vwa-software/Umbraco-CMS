@@ -1,0 +1,63 @@
+
+<div ng-controller="Amazilia.DialoOrderRefundController as vm">
+
+    <div class="umb-dialog-body with-footer">
+
+        <div class="umb-modalcolumn-header">
+            <h1><localize key="amazilia_refund"></h1>
+        </div>
+
+        <div class="umb-pane">
+
+            <div ng-if="vm.error">
+                <div class="alert alert-error">
+                    <div>{{vm.error.errorMsg}}</div>
+                </div>
+            </div>
+
+            <umb-load-indicator ng-show="vm.loading">
+            </umb-load-indicator>
+
+            <div ng-if="!vm.loading">
+              
+                <umb-control-group label="@amazilia_ordertotal">
+                    {{vm.order.orderTotal}}
+                </umb-control-group>
+
+                <umb-control-group ng-if="vm.order.refundedAmount.length" label="@amazilia_refundedAmount">
+                    {{vm.order.refundedAmount}}
+                </umb-control-group>
+
+                <umb-control-group ng-if="vm.toRefundedAmount > 0" label="@amazilia_toRefundAmount">
+                    <input type="number" max="{{vm.maxToRefundAmount}}" ng-model="vm.toRefundedAmount" />
+                </umb-control-group>
+
+                <div class="btn-toolbar umb-btn-toolbar">
+                    <umb-button style="margin-right:5px" type="button" ng-if="vm.order.canRefund || vm.order.canPartiallyRefund"
+                                action="vm.doRefund()"
+                                button-style="primary"
+                                label-key="amazilia_refund">
+                    </umb-button>
+                    <umb-button type="button" ng-if="vm.order.canRefundOffline || vm.order.canPartiallyRefundOffline"
+                                action="vm.doRefundOffline()"
+                                button-style="primary"
+                                label-key="amazilia_refundOffline">
+                    </umb-button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="umb-dialog-footer btn-toolbar umb-btn-toolbar">
+        <umb-button type="button"
+                    button-style="link"
+                    ng-if="!vm.loading"
+                    action="vm.close()"
+                    label-key="general_close">
+        </umb-button>
+      
+    </div>
+
+</div>

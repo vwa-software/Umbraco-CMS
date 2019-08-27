@@ -1,0 +1,18 @@
+﻿@inherits UmbracoViewPage<PaymentInfoModel>
+@using Amazilia.Plugins.Payment.KassaCompleet.Models
+
+@{
+    Layout = null;
+}
+<p>
+    U gaat betalen met de ideal payment simulator!
+</p>
+<p>
+    @Html.DropDownListFor(a => a.PaymentType, Model.AvailablePaymentTypes, new { @class = "form-control" })
+    @Html.DropDownListFor(a => a.Issuer, Model.AvailableIssures, new { @class = "form-control" })
+
+<p class="error">
+    @Html.ValidationMessage("SelectedIssuer")
+</p>
+
+

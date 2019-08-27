@@ -1,0 +1,13 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<Amazilia.Web.Models.Orders.OrderDetailModel>
+@using System.Web.Mvc.Html
+@using Umbraco.Web
+@using Amazilia.Web.Controllers;
+
+Uw order : @Model.CustomOrderNumber
+
+<br/>
+Met de items:
+@foreach(var item in Model.OrderItems)
+{
+    <div>@item.Name @item.PriceInclTax</div>
+}

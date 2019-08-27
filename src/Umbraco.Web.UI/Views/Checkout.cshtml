@@ -15,7 +15,7 @@
     <div class="container">
         <div class="col-md-3">
             <nav class="nav-bar nav-bar--list">
-                @Html.Action("CheckoutProgress", "Checkout", new { step = step, area = "Amazilia" })
+                @Html.Action("CheckoutProgress", "Checkout", new { currentStep = step, area = "Amazilia" })
             </nav>
         </div>
         <div class="col-md-9">
@@ -71,9 +71,8 @@
 
             @Html.ValidationSummary()
 
-        </div>
-      
-    </div>
+        </div>      
+    </div>   
 </section>
 
 @*<section class="cart">

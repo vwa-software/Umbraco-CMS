@@ -1,5 +1,5 @@
 ﻿@inherits AmaziliaViewPageOfTContent<Amazilia.Web.Models.Common.AddresEditModel>
-@using Amazilia.Core.Web.Mvc;
+@using Amazilia.Web.Mvc;
 
 @{
     var editAddress = Model.EditAddress;
@@ -7,7 +7,17 @@
     {
         editAddress.Email = Amazilia.Web.AmaziliaContext.Current.CurrentCustomer.Email;
     }
-    // model.EditAddress.Email;
+
+    /*
+    form jquery client validation
+    https://exceptionnotfound.net/asp-net-mvc-demystified-unobtrusive-validation/
+
+    For now the required/maxlength attributes are set in the AddresEditModel.
+    The ultimite goal is to create some kind of management around it like the umbraco forms.
+    */
+
+    // HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+    // HtmlHelper.ClientValidationEnabled = true;
 }
 
 <div>

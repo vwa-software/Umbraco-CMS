@@ -3,10 +3,11 @@
 @using Amazilia.Web.Extentions;
 @using ContentModels = Umbraco.Web.PublishedContentModels;
 @{
-/**/
+    /**/
 
-Layout = "mail-master.cshtml";
-
+    Layout = "mail-master.cshtml";
 }
 
-        <div>Er is een order geplaatsts :  @Model.CustomOrderNumber</div>
+<div>The order:"@Model.CustomOrderNumber" of customer: "@Model.BillingAddress.LastName" is refunded </div>
+
+

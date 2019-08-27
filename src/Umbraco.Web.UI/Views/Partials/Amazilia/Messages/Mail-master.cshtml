@@ -1,0 +1,35 @@
+﻿@*
+    UmbracoTemplatePage does not work for the mail templates (yet!!)..
+    todo: create MailTemplatePage, with UmbracoHelper but without model binding. see function SetViewData 
+    @inherits UmbracoTemplatePage
+*@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="@Url.Content("~/css/mail/mailtemplate.less")" />
+</head>
+<body class="frontpage">
+    <header class="header">
+        <div class="logo">
+           Ruimte voor logo
+        </div>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+    <footer class="section--themed">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 ta-center">
+                    Ruimte voor content
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

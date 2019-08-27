@@ -41,7 +41,7 @@
     <OldToolsVersion>4.0</OldToolsVersion>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort>
     </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
@@ -485,6 +485,9 @@
     <Content Include="App_Plugins\Amazilia\Backoffice\amazilia.services.js" />
     <Content Include="App_Plugins\Amazilia\Backoffice\Amazilia\country.html" />
     <Content Include="App_Plugins\Amazilia\Backoffice\Amazilia\delete.html" />
+    <Content Include="App_Plugins\Amazilia\Backoffice\Amazilia\Dialogs\orderRefund.html" />
+    <Content Include="App_Plugins\Amazilia\Backoffice\Amazilia\Dialogs\sortproducts.html" />
+    <Content Include="App_Plugins\Amazilia\Backoffice\Amazilia\Directives\amz-priceeditor.html" />
     <Content Include="App_Plugins\Amazilia\Backoffice\Amazilia\Directives\amz-gridview.html" />
     <Content Include="App_Plugins\Amazilia\Backoffice\Amazilia\directivetest.html" />
     <Content Include="App_Plugins\Amazilia\Backoffice\Amazilia\edit.html" />
@@ -498,6 +501,7 @@
     <Content Include="App_Plugins\Amazilia\Backoffice\Amazilia\store.html" />
     <Content Include="App_Plugins\Amazilia\Backoffice\Amazilia\taxcategorie.html" />
     <Content Include="App_Plugins\Amazilia\Backoffice\Amazilia\warehouse.html" />
+    <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\CategoryViewEditor\CategoryViewEditor.html" />
     <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\CheckoutStepEditor.html" />
     <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\PriceEditor.html" />
     <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\ProductInfoEditor.html" />
@@ -507,6 +511,7 @@
     <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\variantOptions\variantOptions.controller.js" />
     <Content Include="App_Plugins\Amazilia\Backoffice\PropertyEditors\variantOptions\variantOptions.html" />
     <Content Include="App_Plugins\Amazilia\Lang\en-US.xml" />
+    <Content Include="App_Plugins\Amazilia\Plugins\Amazilia.Plugins.Payment.KassaCompleet\Config.html" />
     <Content Include="App_Plugins\Amazilia\Plugins\Amazilia.Plugins.Payment.Manual\Config.html" />
     <Content Include="App_Plugins\Amazilia\Plugins\Amazilia.Plugins.Shipping.Manual\Config.html" />
     <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.controller.js" />
@@ -531,6 +536,8 @@
     <Content Include="Config\Lang\ru-RU.user.xml" />
     <Content Include="Config\Lang\sv-SE.user.xml" />
     <Content Include="Config\Lang\zh-CN.user.xml" />
+    <Content Include="scripts\Amazilia.js" />
+    <Content Include="scripts\umbraco-starterkit-app.js" />
     <Content Include="Umbraco\Config\Lang\cs.xml" />
     <Content Include="Umbraco\ClientRedirect.aspx" />
     <Content Include="Umbraco\Config\Lang\tr.xml" />
@@ -937,6 +944,14 @@
     <Content Include="Views\Partials\Navigation\TopNavigation.cshtml" />
     <Content Include="Views\Amazilia\ShoppingCart\AddedToCartSimple.cshtml" />
     <Content Include="Views\Amazilia\ShoppingCart\AddedToCartVariant.cshtml" />
+    <Content Include="Views\Amazilia\Plugins\Payment.IdealSimulator\PaymentInfo.cshtml" />
+    <Content Include="Views\Amazilia\Plugins\Payment.KassaCompleet\PaymentInfo.cshtml" />
+    <Content Include="Views\Partials\Amazilia\Messages\OrderPaidCustomerNotification.cshtml" />
+    <Content Include="Views\Partials\Amazilia\Messages\OrderPaidStoreOwnerNotification.cshtml" />
+    <Content Include="Views\Amazilia\Order\Order.cshtml" />
+    <Content Include="Views\Amazilia\Order\Orders.cshtml" />
+    <Content Include="Views\Partials\Amazilia\Messages\OrderRefundedCustomerNotification.cshtml" />
+    <Content Include="Views\Partials\Amazilia\Messages\OrderRefundedStoreOwnerNotification.cshtml" />
     <None Include="Web.Debug.config.transformed" />
     <None Include="web.Template.Debug.config">
       <DependentUpon>Web.Template.config</DependentUpon>
@@ -1125,7 +1140,7 @@ xcopy "$(ProjectDir)"..\packages\SqlServerCE.4.0.0.1\x86\*.* "$(TargetDir)x86\" 
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>7140</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:7140</IISUrl>
+          <IISUrl>http://localhost/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

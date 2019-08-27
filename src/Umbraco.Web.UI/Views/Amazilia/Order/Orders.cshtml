@@ -1,0 +1,19 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<List<Amazilia.Web.Models.Orders.OrderDetailModel>>
+@using System.Web.Mvc.Html
+@using Umbraco.Web
+@using Amazilia.Web.Controllers;
+
+Uw orders
+
+<div class="row">
+
+    @foreach (var order in Model)
+    {
+        <div class="col-md-3">
+            <div class="ordernr">@order.CustomOrderNumber</div>
+            <div class="amiunt">@order.OrderTotal</div>
+            <a href="@Url.Action("Reorder", "Order", new { area = "Amazilia", OrderId = order.Id})">Reorder</a>
+        </div>
+
+    }
+</div>

@@ -35,14 +35,7 @@
                         {
                             <col width="1" />
                         }
-                        @if (Model.ShowSku)
-                        {
-                            <col width="1" />
-                        }
-                        @if (Model.ShowProductImages)
-                        {
-                            <col width="1" />
-                        }
+                      
                         <col />
                         <col width="1" />
                         <col width="1" />
@@ -56,18 +49,7 @@
                                     @Umbraco.GetDictionaryValue("ShoppingCart.Remove", "Remove")
                                 </th>
                             }
-                            @if (Model.ShowSku)
-                            {
-                                <th class="sku">
-                                    @Umbraco.GetDictionaryValue("ShoppingCart.SKU", "Sku")
-                                </th>
-                            }
-                            @if (Model.ShowProductImages)
-                            {
-                                <th class="product-picture">
-                                    @Umbraco.GetDictionaryValue("ShoppingCart.Image", "Image")
-                                </th>
-                            }
+                           
                             <th class="product">
                                 @Umbraco.GetDictionaryValue("ShoppingCart.Product(s)", "Products")
                             </th>
@@ -89,59 +71,17 @@
                                 @if (Model.IsEditable)
                                 {
                                     <td class="remove-from-cart">
-                                        @if (item.DisableRemoval)
-                                        {
-                                            <text>&nbsp;</text>
-                                        }
-                                        else
-                                        {
+                                       
                                             <label class="td-title">@Umbraco.GetDictionaryValue("ShoppingCart.Remove", "Remove"):</label>
                                             <input type="checkbox" name="removefromcart" value="@(item.Id)" />
-                                        }
+                                       
                                     </td>
                                 }
-                                @if (Model.ShowSku)
-                                {
-                                    <td class="sku">
-                                        <label class="td-title">@Umbraco.GetDictionaryValue("ShoppingCart.SKU", "Sku"):</label>
-                                        <span class="sku-number">@item.Sku</span>
-                                    </td>
-                                }
-                                @*@if (Model.ShowProductImages)
-                                    {
-                                        <td class="product-picture">
-                                            <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })"><img alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" title="@item.Picture.Title" /></a>
-                                        </td>
-                                    }*@
+                               
                                     <td class="product">
                                         <label class="td-title">@Umbraco.GetDictionaryValue("ShoppingCart.Product(s)", "Products"):</label><br/>
                                         <a href="@item.Product.UmbracoContent.Name" class="product-name">@item.Product.UmbracoContent.Name</a>
-                                        @if (!String.IsNullOrEmpty(item.AttributeInfo))
-                                        {
-                                            <div class="attributes">
-                                                @Html.Raw(item.AttributeInfo)
-                                            </div>
-                                        }
-                                        @if (!String.IsNullOrEmpty(item.RecurringInfo))
-                                        {
-                                            <div class="recurring-info">
-                                                @Html.Raw(item.RecurringInfo)
-                                            </div>
-                                        }
-                                        @if (!String.IsNullOrEmpty(item.RentalInfo))
-                                        {
-                                            <div class="rental-info">
-                                                @Html.Raw(item.RentalInfo)
-                                            </div>
-                                        }
-                                        @if (Model.IsEditable && item.AllowItemEditing)
-                                        {
-                                            var editCartItemUrl = Url.RouteUrl("Product", new { SeName = item.ProductSeName });
-                                            editCartItemUrl = "todo";// webHelper.ModifyQueryString(editCartItemUrl, "updatecartitemid=" + item.Id, null);
-                                            <div class="edit-item">
-                                                <a href="@editCartItemUrl">@Umbraco.GetDictionaryValue("Common.Edit", "Edit")</a>
-                                            </div>
-                                        }
+                                       
                                         @if (item.Warnings.Count > 0)
                                         {
                                             <div class="message-error">
