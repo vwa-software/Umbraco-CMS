@@ -31,3 +31,12 @@
     font-weight: 600;   
     padding-right: 10px
 }
+
+.amz-raw-data{
+    overflow-x:auto;
+   margin-top:5px;
+   padding:3px;
+   border:solid 1px #413659;
+    background-color:aliceblue;
+    max-height:100px;
+}

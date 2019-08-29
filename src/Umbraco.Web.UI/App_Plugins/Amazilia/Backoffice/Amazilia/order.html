@@ -32,7 +32,7 @@
                                         <umb-control-group label="@amazilia_customerIp">
                                             {{data.order.customerIp}}
                                         </umb-control-group>
-                                        
+
                                         <umb-control-group label="@amazilia_orderstatus">
                                             {{data.order.orderStatus}}
                                         </umb-control-group>
@@ -70,7 +70,7 @@
                                                         button-style="action"
                                                         label-key="amazilia_refund">
                                         </umb-control-group>
-                                          <umb-control-group label="@amazilia_paymentmethod">
+                                        <umb-control-group label="@amazilia_paymentmethod">
                                             {{data.order.paymentMethod}}
                                         </umb-control-group>
 
@@ -121,10 +121,8 @@
                         <umb-tab id="tab2" rel="2">
                             <umb-box>
                                 <umb-box-content>
-                                    <umb-table
-                                        items="data.order.orderItems"
-                                                item-properties="data.includeProperties"
-                                                >
+                                    <umb-table items="data.order.orderItems"
+                                               item-properties="data.includeProperties">
                                     </umb-table>
 
                                 </umb-box-content>
@@ -134,19 +132,59 @@
 
                             <umb-box ng-repeat="note in data.order.orderNotes">
                                 <umb-box-header>
-                                  Note created on : {{note.createdOnUtc}}
+                                    Note created on : {{note.createdOn}}
                                 </umb-box-header>
                                 <umb-box-content>
-                                                                         
-                                        <div class="row">
-                                            <div class="span4">Display to customer</div>
-                                            <div class="span8">{{note.displayToCustomer}}</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="span4">Note</div>
-                                            <div class="span8">{{note.note}}</div>
-                                        </div>
-                                    
+
+                                    <div class="row">
+                                        <div class="span4">Display to customer</div>
+                                        <div class="span8">{{note.displayToCustomer}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="span4">Note</div>
+                                        <div class="span8">{{note.note}}</div>
+                                    </div>
+
+                                </umb-box-content>
+                            </umb-box>
+                        </umb-tab>
+                        <umb-tab id="tab4" rel="4">
+                         
+                            <umb-box ng-if="data.order.paymentReference">
+                                <umb-box-header>
+                                    Transaction: {{data.order.paymentReference.reference}}
+                                </umb-box-header>
+                                <umb-box-content ng-if="data.order.paymentReference.customData">
+                                    <b>Custom Data</b>
+                                  
+                                    <div class="row" ng-repeat="(key, value) in data.order.paymentReference.customData">
+                                        <div class="span3 control-label">{{key}}</div>
+                                        <div class="span9">{{value}}</div>
+                                    </div>
+                                </umb-box-content>
+                            </umb-box>
+
+                            <umb-box ng-repeat="transaction in data.order.paymentTansactions">
+                                <umb-box-header>
+                                    Transaction created on : {{transaction.createdOn}}
+                                </umb-box-header>
+                                <umb-box-content>
+                                    <div class="row">
+                                        <div class="span3 control-label">Reference</div>
+                                        <div class="span9">{{transaction.transactionReference}}</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="span3 control-label">Description</div>
+                                        <div class="span9">{{transaction.description}}</div>
+                                    </div>
+
+                                   
+                                    <span class="control-label">Response</span>
+                                    <div class="amz-raw-data" ng-if="transaction.data">
+                                        {{transaction.data}}
+                                    </div>
+
                                 </umb-box-content>
                             </umb-box>
                         </umb-tab>

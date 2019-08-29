@@ -487,9 +487,9 @@ angular.module("umbraco")
             $scope.tabs = [{ id: 0, label: 'General', alias: 'General' },
             { id: 1, label: 'Billing', alias: 'Billing info' },
             { id: 2, label: 'Products', alias: 'Products' },
-            { id: 3, label: 'Notes', alias: 'Notes' }];
-
-
+            { id: 3, label: 'Notes', alias: 'Notes' },
+            { id: 4, label: 'Payment', alias: 'Payment' }];
+            
             var getOrder = function () {
                 $scope.loading = true;
                 $http.get('backoffice/Amazilia/Order/GetOrderById/' + $scope.id).then(function (response) {
@@ -512,7 +512,7 @@ angular.module("umbraco")
 
             getOrder();
 
-            // Orderitems properteis
+            // Orderitems properties
             $scope.data.includeProperties = [
                 { alias: "name", header: "Name" },
                 { alias: "quantity", header: "Quantity" },
@@ -521,7 +521,7 @@ angular.module("umbraco")
             ];
 
 
-
+            // open refund dialog
             $scope.openRefund = function () {
 
                 var dialog = dialogService.open({ template: '/app_plugins/amazilia/backoffice/amazilia/dialogs/orderrefund.html', show: true, order: $scope.data.order, closeCallback: done });
